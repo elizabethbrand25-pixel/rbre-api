@@ -1,13 +1,15 @@
 """
 RBRE API – Tally-safe FastAPI app (FULL FILE, hardened)
 
-✅ Key fix in this version:
-- Resolves Tally select/multi-select OPTION UUIDs -> human LABELS automatically
-  by using the field's options metadata included in payload["data"]["fields"] items.
-  (No hidden fields, no Tally UI changes, no manual UUID mapping.)
+✅ Includes Option 3 (guaranteed logging):
+- Middleware that logs EVERY request:
+  - HIT <METHOD> <PATH>
+  - DONE <METHOD> <PATH> -> <STATUS_CODE>
+  - Flushes stdout so Render Live Logs show it immediately
 
 Also includes:
 - Extract answers from Tally payload["data"]["fields"] list
+- Resolves select/multi-select option UUIDs -> human LABELS via field options metadata
 - Logs:
   - TALLY PAYLOAD KEYS
   - TALLY SHAPE + FIELDS_COUNT
@@ -32,7 +34,28 @@ from fastapi.responses import JSONResponse
 # -------------------------------------------------
 # App initialization
 # -------------------------------------------------
-app = FastAPI(title="RBRE API", version="1.2")
+app = FastAPI(title="RBRE API", version="1.3")
+
+
+# -------------------------------------------------
+# ✅ OPTION 3: Log every request (Render Live Logs)
+# -------------------------------------------------
+@app.middleware("http")
+async def log_every_request(request: Request, call_next):
+    try:
+        print(f"HIT {request.method} {request.url.path}", flush=True)
+    except Exception:
+        # Never break requests due to logging
+        pass
+
+    response = await call_next(request)
+
+    try:
+        print(f"DONE {request.method} {request.url.path} -> {response.status_code}", flush=True)
+    except Exception:
+        pass
+
+    return response
 
 
 # -------------------------------------------------
@@ -84,11 +107,7 @@ def _unwrap_value(v: Any) -> Any:
 
 
 def _as_bool(v: Any) -> bool:
-    """
-    Conservative boolean parsing:
-    - If value is bool, use it.
-    - If value is text like Yes/No, True/False, parse it.
-    """
+    """Conservative boolean parsing (expects labels like Yes/No after UUID->label resolution)."""
     v = _unwrap_value(v)
     if isinstance(v, bool):
         return v
@@ -121,9 +140,8 @@ def _collect_options(field_item: Dict[str, Any]) -> List[Dict[str, Any]]:
     Options may appear in different places depending on Tally:
       - item["options"]
       - item["field"]["options"]
-      - item["field"]["choices"] (some shapes)
+      - item["field"]["choices"]
       - item["choices"]
-    We return a list of dicts, each ideally containing id/value + label/text.
     """
     candidates: List[Any] = []
     for path in (
@@ -143,18 +161,13 @@ def _collect_options(field_item: Dict[str, Any]) -> List[Dict[str, Any]]:
         if ok and isinstance(cur, list):
             candidates.append(cur)
 
-    # Prefer the first non-empty list
     for c in candidates:
         if isinstance(c, list) and len(c) > 0:
-            # keep only dict-like options
             return [x for x in c if isinstance(x, dict)]
     return []
 
 
 def _option_id(opt: Dict[str, Any]) -> Optional[str]:
-    """
-    Option IDs might be under keys like: id, value, uuid
-    """
     for k in ("id", "value", "uuid", "key"):
         if k in opt and opt[k] is not None:
             return str(opt[k]).strip()
@@ -162,9 +175,6 @@ def _option_id(opt: Dict[str, Any]) -> Optional[str]:
 
 
 def _option_label(opt: Dict[str, Any]) -> Optional[str]:
-    """
-    Option labels might be under keys like: label, text, name, title
-    """
     for k in ("label", "text", "name", "title"):
         if k in opt and opt[k] is not None:
             return str(opt[k]).strip()
@@ -175,8 +185,6 @@ def _resolve_value_via_options(field_item: Dict[str, Any], raw_value: Any) -> An
     """
     If raw_value is an option UUID (or list of UUIDs) and options metadata is present,
     map UUID(s) -> human labels.
-
-    If options are missing, or mapping fails, return raw_value unchanged.
     """
     options = _collect_options(field_item)
     if not options:
@@ -194,7 +202,6 @@ def _resolve_value_via_options(field_item: Dict[str, Any], raw_value: Any) -> An
 
     v = _unwrap_value(raw_value)
 
-    # Multi-select
     if isinstance(v, list):
         out: List[Any] = []
         for item in v:
@@ -202,7 +209,6 @@ def _resolve_value_via_options(field_item: Dict[str, Any], raw_value: Any) -> An
             out.append(id_to_label.get(s, item))
         return out
 
-    # Single select
     s = str(v).strip() if v is not None else ""
     return id_to_label.get(s, raw_value)
 
@@ -211,17 +217,6 @@ def _resolve_value_via_options(field_item: Dict[str, Any], raw_value: Any) -> An
 # Tally answer extraction (with UUID->label resolution)
 # -------------------------------------------------
 def _extract_tally_answers(payload: Dict[str, Any]) -> Tuple[Dict[str, Any], Dict[str, Any]]:
-    """
-    Returns (answers_dict, debug_info).
-
-    Handles:
-      payload["data"]["fields"] -> list of objects
-    Flattens into: {"Question Label": resolved_value, ...}
-
-    ✅ resolved_value:
-      - if select/multi-select provides UUIDs and options metadata exists,
-        UUIDs are converted to their human labels automatically.
-    """
     debug: Dict[str, Any] = {"payload_keys": sorted(list(payload.keys()))}
 
     data = payload.get("data")
@@ -245,12 +240,10 @@ def _extract_tally_answers(payload: Dict[str, Any]) -> Tuple[Dict[str, Any], Dic
         if not isinstance(item, dict):
             continue
 
-        # Determine field label
         label = item.get("label") or item.get("title")
         if label is None and isinstance(item.get("field"), dict):
             label = item["field"].get("label") or item["field"].get("title")
 
-        # Determine raw value
         value = None
         if "value" in item:
             value = item.get("value")
@@ -260,7 +253,6 @@ def _extract_tally_answers(payload: Dict[str, Any]) -> Tuple[Dict[str, Any], Dic
             value = item.get("response")
 
         if isinstance(label, str) and label.strip():
-            # ✅ NEW: resolve UUID(s) -> label(s) when options metadata exists
             resolved = _resolve_value_via_options(item, value)
             answers[label.strip()] = resolved
 
@@ -281,7 +273,7 @@ with open(DATA_FILE, "r", encoding="utf-8") as f:
 
 def normalize_metro_name(s: str) -> str:
     s = s.lower().strip()
-    s = re.sub(r"\s*\(.*?\)\s*", " ", s)  # remove parenthetical notes
+    s = re.sub(r"\s*\(.*?\)\s*", " ", s)
     s = s.replace("hud metro fmr area", " ")
     s = s.replace(" msa", " ")
     s = s.replace("msa", " ")
@@ -298,27 +290,18 @@ for cbsa, prof in COST_DATA.items():
 
 
 def label_or_cbsa_to_cbsa(x: Any) -> Optional[str]:
-    """
-    Accept CBSA code directly OR map metro label -> CBSA using COST_DATA-derived lookup.
-    After UUID->label resolution, metro fields should be label strings.
-    """
     x = _unwrap_value(x)
     if x is None:
         return None
 
-    # If list, use first item (single-select sometimes represented as list)
     if isinstance(x, list):
         if not x:
             return None
         x = x[0]
 
     s = str(x).strip()
-
-    # CBSA direct
     if s in COST_DATA:
         return s
-
-    # Label match (normalized)
     return METRO_LOOKUP.get(normalize_metro_name(s))
 
 
@@ -329,7 +312,7 @@ def label_or_cbsa_to_cbsa(x: Any) -> Optional[str]:
 def health():
     return {
         "status": "alive",
-        "version": "1.2",
+        "version": "1.3",
         "metros_loaded": len(COST_DATA),
         "metro_lookup_loaded": len(METRO_LOOKUP),
     }
@@ -359,56 +342,48 @@ async def generate_report(request: Request):
             },
         )
 
-    # ---- Field mapping (match your exact labels + flexible fallbacks) ----
+    # ---- Field mapping ----
     try:
         household_type_raw = pick(
             answers,
             ["Household Type?", "Household Type", "household type", "household", "individual or couple"],
             required=True,
         )
-
         downsizing_raw = pick(
             answers,
             ["Are You Downsizing?", "Are you downsizing?", "are you downsizing", "downsizing"],
             required=True,
         )
-
         net_income_raw = pick(
             answers,
             ["Net Monthly Income", "Net monthly income", "monthly income", "income"],
             required=True,
         )
-
         fixed_costs_raw = pick(
             answers,
             ["Fixed Monthly Obligations", "Fixed monthly obligations", "monthly obligations", "fixed costs", "obligations"],
             required=True,
         )
-
         savings_raw = pick(
             answers,
             ["Liquid Savings Available", "Liquid savings available", "savings", "cash savings"],
             required=True,
         )
-
         timeline_raw = pick(
             answers,
             ["Timeline (How soon do you want to relocate?)", "Timeline", "move timeline", "how soon"],
             required=True,
         )
-
         risk_raw = pick(
             answers,
             ["Risk Tolerance", "Risk tolerance", "risk"],
             required=True,
         )
-
         current_metro_raw = pick(
             answers,
             ["Current Metro Area", "Current metro area", "current metro", "current location"],
             required=True,
         )
-
         target_labels_raw = pick(
             answers,
             [
@@ -420,18 +395,11 @@ async def generate_report(request: Request):
             ],
             required=False,
         )
-
         email_raw = pick(
             answers,
-            [
-                "Email Address? (So we can share our insight!)",
-                "Email Address",
-                "Email address",
-                "email",
-            ],
+            ["Email Address? (So we can share our insight!)", "Email Address", "Email address", "email"],
             required=True,
         )
-
     except Exception as e:
         raise HTTPException(
             status_code=400,
@@ -474,20 +442,8 @@ async def generate_report(request: Request):
         raise HTTPException(
             status_code=400,
             detail={
-                "error": "Normalization failed (value shape likely dict/list)",
+                "error": "Normalization failed",
                 "reason": str(e),
-                "raw_values": {
-                    "household_type": household_type_raw,
-                    "downsizing": downsizing_raw,
-                    "net_income": net_income_raw,
-                    "fixed_costs": fixed_costs_raw,
-                    "savings": savings_raw,
-                    "timeline": timeline_raw,
-                    "risk": risk_raw,
-                    "current_metro": current_metro_raw,
-                    "targets": target_labels_raw,
-                    "email": email_raw,
-                },
             },
         )
 
@@ -508,7 +464,6 @@ async def generate_report(request: Request):
             detail={
                 "error": "Unknown current metro after UUID->label resolution. Label did not match cost_data_metro.json.",
                 "received_value": _unwrap_value(current_metro_raw),
-                "hint": "Check that Tally option label exactly matches (or closely matches) metro_name in cost_data_metro.json.",
             },
         )
 
@@ -521,7 +476,27 @@ async def generate_report(request: Request):
         else:
             unmapped_targets.append(str(_unwrap_value(t)).strip())
 
-    # MVP JSON output (next step: plug in recommendation engine + PDF)
+    # ✅ Helpful concise result log (no huge payload dump)
+    try:
+        masked_email = email
+        if "@" in masked_email:
+            local, domain = masked_email.split("@", 1)
+            masked_email = (local[:2] + "***@" + domain) if len(local) > 2 else "***@" + domain
+
+        print(
+            "FINAL:",
+            {
+                "eventId": payload.get("eventId"),
+                "email": masked_email,
+                "current_cbsa": current_cbsa,
+                "targets_count": len(target_cbsas),
+                "unmapped_targets": unmapped_targets,
+            },
+            flush=True,
+        )
+    except Exception:
+        pass
+
     return JSONResponse(
         content={
             "status": "processed",
