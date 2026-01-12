@@ -1,23 +1,15 @@
 """
 RBRE API – Tally-safe FastAPI app (FULL FILE, hardened)
 
-✅ Includes Option 3 (guaranteed logging):
-- Middleware that logs EVERY request:
-  - HIT <METHOD> <PATH>
-  - DONE <METHOD> <PATH> -> <STATUS_CODE>
-  - Flushes stdout so Render Live Logs show it immediately
+This rewrite includes a very explicit logging “fix” so you can ALWAYS verify:
+- the deployed code booted (prints at import + on startup)
+- every request is hitting the app (middleware HIT/DONE lines, flush=True)
 
-Also includes:
-- Extract answers from Tally payload["data"]["fields"] list
-- Resolves select/multi-select option UUIDs -> human LABELS via field options metadata
-- Logs:
-  - TALLY PAYLOAD KEYS
-  - TALLY SHAPE + FIELDS_COUNT
-  - TALLY ANSWER KEYS
-  - RAW mapped values (before parsing)
-- Unwrap Tally values (dict/list shapes) into primitives
-- Robust numeric/boolean parsing with clear 400 errors
-- Metro label -> CBSA mapping from cost_data_metro.json (all CBSAs supported)
+Keeps:
+- Tally fields extraction from payload["data"]["fields"]
+- UUID -> Label resolution via field options metadata
+- Metro label -> CBSA mapping via cost_data_metro.json
+- Your existing / and /v1/report.json endpoints
 """
 
 from __future__ import annotations
@@ -32,20 +24,33 @@ from fastapi.responses import JSONResponse
 
 
 # -------------------------------------------------
+# ✅ BOOT CONFIRM (prints as soon as module imports)
+# -------------------------------------------------
+print("RBRE API BOOT CONFIRM: module imported (app.py)", flush=True)
+
+
+# -------------------------------------------------
 # App initialization
 # -------------------------------------------------
-app = FastAPI(title="RBRE API", version="1.3")
+app = FastAPI(title="RBRE API", version="1.4")
 
 
 # -------------------------------------------------
-# ✅ OPTION 3: Log every request (Render Live Logs)
+# ✅ BOOT CONFIRM (prints when ASGI app starts)
+# -------------------------------------------------
+@app.on_event("startup")
+async def _startup_log():
+    print("RBRE API BOOT CONFIRM: startup event fired", flush=True)
+
+
+# -------------------------------------------------
+# ✅ Log every request (Render Live Logs)
 # -------------------------------------------------
 @app.middleware("http")
 async def log_every_request(request: Request, call_next):
     try:
         print(f"HIT {request.method} {request.url.path}", flush=True)
     except Exception:
-        # Never break requests due to logging
         pass
 
     response = await call_next(request)
@@ -84,30 +89,19 @@ def pick(data: Dict[str, Any], aliases: List[str], required: bool = True) -> Opt
 # Tally value unwrapping + parsing
 # -------------------------------------------------
 def _unwrap_value(v: Any) -> Any:
-    """
-    Tally "value" can be:
-      - primitive (str/int/float/bool)
-      - dict like {"label": "...", "value": "..."} or {"text": "..."}
-      - list of dicts for multi-select
-    Convert to a usable primitive or list of primitives.
-    """
     if v is None:
         return None
-
     if isinstance(v, list):
         return [_unwrap_value(x) for x in v]
-
     if isinstance(v, dict):
         for k in ("label", "text", "value", "name", "title"):
             if k in v and v[k] is not None:
                 return _unwrap_value(v[k])
         return str(v)
-
     return v
 
 
 def _as_bool(v: Any) -> bool:
-    """Conservative boolean parsing (expects labels like Yes/No after UUID->label resolution)."""
     v = _unwrap_value(v)
     if isinstance(v, bool):
         return v
@@ -119,12 +113,10 @@ def _as_float(v: Any) -> float:
     v = _unwrap_value(v)
     if v is None:
         raise ValueError("Empty numeric value (None)")
-
     if isinstance(v, list):
         if not v:
             raise ValueError("Empty numeric list")
         v = v[0]
-
     s = str(v).strip().replace(",", "")
     s = re.sub(r"[^0-9.\-]", "", s)
     if s == "":
@@ -133,16 +125,9 @@ def _as_float(v: Any) -> float:
 
 
 # -------------------------------------------------
-# Tally extraction helpers: UUID -> LABEL using options metadata
+# UUID -> LABEL resolution via field options metadata
 # -------------------------------------------------
 def _collect_options(field_item: Dict[str, Any]) -> List[Dict[str, Any]]:
-    """
-    Options may appear in different places depending on Tally:
-      - item["options"]
-      - item["field"]["options"]
-      - item["field"]["choices"]
-      - item["choices"]
-    """
     candidates: List[Any] = []
     for path in (
         ("options",),
@@ -182,10 +167,6 @@ def _option_label(opt: Dict[str, Any]) -> Optional[str]:
 
 
 def _resolve_value_via_options(field_item: Dict[str, Any], raw_value: Any) -> Any:
-    """
-    If raw_value is an option UUID (or list of UUIDs) and options metadata is present,
-    map UUID(s) -> human labels.
-    """
     options = _collect_options(field_item)
     if not options:
         return raw_value
@@ -253,14 +234,13 @@ def _extract_tally_answers(payload: Dict[str, Any]) -> Tuple[Dict[str, Any], Dic
             value = item.get("response")
 
         if isinstance(label, str) and label.strip():
-            resolved = _resolve_value_via_options(item, value)
-            answers[label.strip()] = resolved
+            answers[label.strip()] = _resolve_value_via_options(item, value)
 
     return answers, debug
 
 
 # -------------------------------------------------
-# Load metro cost data + build label->CBSA lookup (ALL CBSAs)
+# Load metro cost data + build label->CBSA lookup
 # -------------------------------------------------
 DATA_FILE = "cost_data_metro.json"
 
@@ -293,12 +273,10 @@ def label_or_cbsa_to_cbsa(x: Any) -> Optional[str]:
     x = _unwrap_value(x)
     if x is None:
         return None
-
     if isinstance(x, list):
         if not x:
             return None
         x = x[0]
-
     s = str(x).strip()
     if s in COST_DATA:
         return s
@@ -312,7 +290,7 @@ def label_or_cbsa_to_cbsa(x: Any) -> Optional[str]:
 def health():
     return {
         "status": "alive",
-        "version": "1.3",
+        "version": "1.4",
         "metros_loaded": len(COST_DATA),
         "metro_lookup_loaded": len(METRO_LOOKUP),
     }
@@ -324,10 +302,8 @@ def health():
 @app.post("/v1/report.json")
 async def generate_report(request: Request):
     payload = await request.json()
-
     answers, dbg = _extract_tally_answers(payload)
 
-    # Logs (Render -> Logs)
     print("TALLY PAYLOAD KEYS:", dbg.get("payload_keys"), flush=True)
     print("TALLY SHAPE:", dbg.get("shape"), "FIELDS_COUNT:", dbg.get("fields_count"), flush=True)
     print("TALLY ANSWER KEYS:", sorted(list(answers.keys())), flush=True)
@@ -346,58 +322,52 @@ async def generate_report(request: Request):
     try:
         household_type_raw = pick(
             answers,
-            ["Household Type?", "Household Type", "household type", "household", "individual or couple"],
+            ["Household Type?", "Household Type", "household type", "household"],
             required=True,
         )
         downsizing_raw = pick(
             answers,
-            ["Are You Downsizing?", "Are you downsizing?", "are you downsizing", "downsizing"],
+            ["Are You Downsizing?", "Are you downsizing?", "downsizing"],
             required=True,
         )
         net_income_raw = pick(
             answers,
-            ["Net Monthly Income", "Net monthly income", "monthly income", "income"],
+            ["Net Monthly Income", "Net monthly income", "income"],
             required=True,
         )
         fixed_costs_raw = pick(
             answers,
-            ["Fixed Monthly Obligations", "Fixed monthly obligations", "monthly obligations", "fixed costs", "obligations"],
+            ["Fixed Monthly Obligations", "fixed costs", "obligations"],
             required=True,
         )
         savings_raw = pick(
             answers,
-            ["Liquid Savings Available", "Liquid savings available", "savings", "cash savings"],
+            ["Liquid Savings Available", "savings"],
             required=True,
         )
         timeline_raw = pick(
             answers,
-            ["Timeline (How soon do you want to relocate?)", "Timeline", "move timeline", "how soon"],
+            ["Timeline (How soon do you want to relocate?)", "Timeline"],
             required=True,
         )
         risk_raw = pick(
             answers,
-            ["Risk Tolerance", "Risk tolerance", "risk"],
+            ["Risk Tolerance", "risk"],
             required=True,
         )
         current_metro_raw = pick(
             answers,
-            ["Current Metro Area", "Current metro area", "current metro", "current location"],
+            ["Current Metro Area", "current metro"],
             required=True,
         )
         target_labels_raw = pick(
             answers,
-            [
-                "Metro Areas You Are Considering (Optional)",
-                "Metro areas you are considering (optional)",
-                "Metro areas you are considering",
-                "target metros",
-                "metros considering",
-            ],
+            ["Metro Areas You Are Considering (Optional)", "Metro areas you are considering"],
             required=False,
         )
         email_raw = pick(
             answers,
-            ["Email Address? (So we can share our insight!)", "Email Address", "Email address", "email"],
+            ["Email Address? (So we can share our insight!)", "Email Address", "email"],
             required=True,
         )
     except Exception as e:
@@ -410,7 +380,6 @@ async def generate_report(request: Request):
             },
         )
 
-    # Log raw mapped values (after UUID->LABEL resolution)
     print(
         "RAW VALUES:",
         {
@@ -439,15 +408,8 @@ async def generate_report(request: Request):
         risk_tolerance = str(_unwrap_value(risk_raw)).strip()
         email = str(_unwrap_value(email_raw)).strip()
     except Exception as e:
-        raise HTTPException(
-            status_code=400,
-            detail={
-                "error": "Normalization failed",
-                "reason": str(e),
-            },
-        )
+        raise HTTPException(status_code=400, detail={"error": "Normalization failed", "reason": str(e)})
 
-    # Targets normalization into list[str]
     targets_unwrapped = _unwrap_value(target_labels_raw)
     if targets_unwrapped is None:
         target_labels: List[str] = []
@@ -456,15 +418,11 @@ async def generate_report(request: Request):
     else:
         target_labels = [str(targets_unwrapped).strip()] if str(targets_unwrapped).strip() else []
 
-    # Map metro labels -> CBSA
     current_cbsa = label_or_cbsa_to_cbsa(current_metro_raw)
     if not current_cbsa:
         raise HTTPException(
             status_code=400,
-            detail={
-                "error": "Unknown current metro after UUID->label resolution. Label did not match cost_data_metro.json.",
-                "received_value": _unwrap_value(current_metro_raw),
-            },
+            detail={"error": "Unknown current metro", "value": _unwrap_value(current_metro_raw)},
         )
 
     target_cbsas: List[str] = []
@@ -474,28 +432,25 @@ async def generate_report(request: Request):
         if cbsa:
             target_cbsas.append(cbsa)
         else:
-            unmapped_targets.append(str(_unwrap_value(t)).strip())
+            unmapped_targets.append(t)
 
-    # ✅ Helpful concise result log (no huge payload dump)
-    try:
-        masked_email = email
-        if "@" in masked_email:
-            local, domain = masked_email.split("@", 1)
-            masked_email = (local[:2] + "***@" + domain) if len(local) > 2 else "***@" + domain
+    # concise final log (mask email)
+    masked_email = email
+    if "@" in masked_email:
+        local, domain = masked_email.split("@", 1)
+        masked_email = (local[:2] + "***@" + domain) if len(local) > 2 else "***@" + domain
 
-        print(
-            "FINAL:",
-            {
-                "eventId": payload.get("eventId"),
-                "email": masked_email,
-                "current_cbsa": current_cbsa,
-                "targets_count": len(target_cbsas),
-                "unmapped_targets": unmapped_targets,
-            },
-            flush=True,
-        )
-    except Exception:
-        pass
+    print(
+        "FINAL:",
+        {
+            "eventId": payload.get("eventId"),
+            "email": masked_email,
+            "current_cbsa": current_cbsa,
+            "targets_count": len(target_cbsas),
+            "unmapped_targets": unmapped_targets,
+        },
+        flush=True,
+    )
 
     return JSONResponse(
         content={
