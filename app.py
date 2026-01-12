@@ -67,4 +67,7 @@ async def generate_report(request: Request):
         risk = data.get("Risk tolerance")
         current_metro_label = data.get("Current metro area")
         target_labels = data.get("Metro areas you are considering (optional)", [])
+except Exception:
+    raise HTTPException(status_code=400, detail="Missing or invalid fields in Tally submission")
+
 
