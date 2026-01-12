@@ -1,17 +1,15 @@
 """
-RBRE API – Tally-safe FastAPI app (FULL FILE)
+RBRE API – Tally-safe FastAPI app (FULL FILE, hardened)
 
-What this version does:
-- Extracts answers from Tally payloads where answers arrive as payload["data"]["fields"] (list)
+Fixes included:
+- Extract answers from Tally payload["data"]["fields"] list
 - Logs:
   - TALLY PAYLOAD KEYS
   - TALLY SHAPE + FIELDS_COUNT
-  - TALLY ANSWER KEYS (flattened question labels)
-- Maps your ACTUAL Tally question labels (including punctuation + extra wording)
-- Returns JSON (MVP)
-
-Render start command:
-  uvicorn app:app --host 0.0.0.0 --port $PORT
+  - TALLY ANSWER KEYS
+  - RAW mapped values (before parsing)
+- Unwrap Tally values (dict/list shapes) into primitives
+- Robust numeric/boolean parsing with clear 400 errors
 """
 
 from __future__ import annotations
@@ -32,46 +30,86 @@ app = FastAPI(title="RBRE API", version="1.0")
 
 
 # -------------------------------------------------
-# Normalization helpers
+# Key normalization + picking
 # -------------------------------------------------
 def _norm_key(s: str) -> str:
-    """Normalize keys so casing/punctuation/extra spaces don't matter."""
     s = str(s).strip().lower()
     s = re.sub(r"[^a-z0-9\s]", " ", s)
     s = re.sub(r"\s+", " ", s).strip()
     return s
 
 
-def _as_bool(v: Any) -> bool:
-    if isinstance(v, bool):
-        return v
-    return str(v).strip().lower() in {"yes", "y", "true", "1", "on"}
-
-
-def _as_float(v: Any) -> float:
-    # Accepts "6,500", "$6500", etc.
-    s = str(v).strip().replace(",", "")
-    s = re.sub(r"[^0-9.\-]", "", s)
-    if s == "":
-        raise ValueError(f"Empty numeric value from {v!r}")
-    return float(s)
-
-
 def pick(data: Dict[str, Any], aliases: List[str], required: bool = True) -> Optional[Any]:
     """
-    Fetch a value from dict using multiple aliases.
-    Matching is case/punctuation/space-insensitive.
+    Fetch a value using aliases with normalized matching.
     """
     norm_map = {_norm_key(k): k for k in data.keys()}
-
     for alias in aliases:
         nk = _norm_key(alias)
         if nk in norm_map:
             return data[norm_map[nk]]
-
     if required:
         raise KeyError(f"Missing field. Tried aliases={aliases}")
     return None
+
+
+# -------------------------------------------------
+# Tally value unwrapping + parsing
+# -------------------------------------------------
+def _unwrap_value(v: Any) -> Any:
+    """
+    Tally "value" can be:
+      - primitive (str/int/float/bool)
+      - dict like {"label": "...", "value": "..."} or {"text": "..."}
+      - list of dicts for multi-select
+    Convert to a usable primitive or list of primitives.
+    """
+    if v is None:
+        return None
+
+    # Multi-select: list of things
+    if isinstance(v, list):
+        out: List[Any] = []
+        for item in v:
+            out.append(_unwrap_value(item))
+        return out
+
+    # Dict forms
+    if isinstance(v, dict):
+        # Common keys
+        for k in ("value", "label", "text", "name", "title"):
+            if k in v and v[k] is not None:
+                return _unwrap_value(v[k])
+        # Fallback: stringified dict
+        return str(v)
+
+    return v
+
+
+def _as_bool(v: Any) -> bool:
+    v = _unwrap_value(v)
+    if isinstance(v, bool):
+        return v
+    s = str(v).strip().lower()
+    return s in {"yes", "y", "true", "1", "on"}
+
+
+def _as_float(v: Any) -> float:
+    v = _unwrap_value(v)
+    if v is None:
+        raise ValueError("Empty numeric value (None)")
+
+    # If a list somehow arrives, take first item
+    if isinstance(v, list):
+        if not v:
+            raise ValueError("Empty numeric list")
+        v = v[0]
+
+    s = str(v).strip().replace(",", "")
+    s = re.sub(r"[^0-9.\-]", "", s)
+    if s == "":
+        raise ValueError(f"Could not parse numeric value from {v!r}")
+    return float(s)
 
 
 # -------------------------------------------------
@@ -79,80 +117,52 @@ def pick(data: Dict[str, Any], aliases: List[str], required: bool = True) -> Opt
 # -------------------------------------------------
 def _extract_tally_answers(payload: Dict[str, Any]) -> Tuple[Dict[str, Any], Dict[str, Any]]:
     """
-    Returns (answers_dict, debug_info)
+    Returns (answers_dict, debug_info).
 
-    Supports common shapes:
-    - payload["data"] is dict answers (rare)
-    - payload["data"]["fields"] is list of objects (common)
-    - payload["fields"] is list (sometimes)
-    - payload["answers"] is dict (sometimes)
-
-    We flatten into: {"Question Label": value, ...}
+    Handles:
+      payload["data"]["fields"] -> list of objects (your case)
+    Flattens into: {"Question Label": value, ...}
     """
     debug: Dict[str, Any] = {"payload_keys": sorted(list(payload.keys()))}
 
-    # Gather candidates
-    candidates: List[Any] = []
-    if "data" in payload:
-        candidates.append(payload.get("data"))
-        if isinstance(payload.get("data"), dict) and "fields" in payload["data"]:
-            candidates.append(payload["data"].get("fields"))
-    if "fields" in payload:
-        candidates.append(payload.get("fields"))
-    if "answers" in payload:
-        candidates.append(payload.get("answers"))
+    data = payload.get("data")
+    fields_list = None
 
-    # If any candidate is a dict that already looks like answers, use it
-    for c in candidates:
-        if isinstance(c, dict):
-            # Heuristic: if it contains at least one expected-ish key, treat as answers dict
-            likely = {"net monthly income", "email address", "household type", "current metro area"}
-            if any(_norm_key(k) in likely for k in c.keys()):
-                debug["shape"] = "dict_answers"
-                return c, debug
-
-    # Otherwise, look for a list of field objects
-    fields_list: Optional[List[Any]] = None
-    for c in candidates:
-        if isinstance(c, list):
-            fields_list = c
-            break
-
-    answers: Dict[str, Any] = {}
-    if isinstance(fields_list, list):
-        for item in fields_list:
-            if not isinstance(item, dict):
-                continue
-
-            # Find label
-            label = None
-            if "label" in item:
-                label = item.get("label")
-            elif "title" in item:
-                label = item.get("title")
-            elif isinstance(item.get("field"), dict) and "label" in item["field"]:
-                label = item["field"].get("label")
-            elif isinstance(item.get("field"), dict) and "title" in item["field"]:
-                label = item["field"].get("title")
-
-            # Find value
-            value = None
-            if "value" in item:
-                value = item.get("value")
-            elif "answer" in item:
-                value = item.get("answer")
-            elif "response" in item:
-                value = item.get("response")
-
-            if isinstance(label, str) and label.strip():
-                answers[label.strip()] = value
-
+    if isinstance(data, dict) and isinstance(data.get("fields"), list):
+        fields_list = data.get("fields")
         debug["shape"] = "fields_list"
         debug["fields_count"] = len(fields_list)
-        return answers, debug
+    elif isinstance(payload.get("fields"), list):
+        fields_list = payload.get("fields")
+        debug["shape"] = "fields_list"
+        debug["fields_count"] = len(fields_list)
+    else:
+        debug["shape"] = "unknown"
+        debug["fields_count"] = 0
+        return {}, debug
 
-    debug["shape"] = "unknown"
-    return {}, debug
+    answers: Dict[str, Any] = {}
+    for item in fields_list:
+        if not isinstance(item, dict):
+            continue
+
+        label = item.get("label") or item.get("title")
+        if label is None and isinstance(item.get("field"), dict):
+            label = item["field"].get("label") or item["field"].get("title")
+
+        # value may be in different keys
+        value = None
+        if "value" in item:
+            value = item.get("value")
+        elif "answer" in item:
+            value = item.get("answer")
+        elif "response" in item:
+            value = item.get("response")
+
+        if isinstance(label, str) and label.strip():
+            answers[label.strip()] = value
+
+    return answers, debug
 
 
 # -------------------------------------------------
@@ -174,7 +184,11 @@ for cbsa, prof in COST_DATA.items():
 
 
 def label_or_cbsa_to_cbsa(x: Any) -> Optional[str]:
-    """Accept CBSA code directly or map metro label to CBSA."""
+    """
+    Accept CBSA code directly or map metro label to CBSA.
+    If Tally returns a dict like {"label": "..."} we unwrap first.
+    """
+    x = _unwrap_value(x)
     if x is None:
         return None
     s = str(x).strip()
@@ -211,101 +225,61 @@ async def generate_report(request: Request):
             detail={
                 "error": "Could not extract answers from Tally payload",
                 "debug": dbg,
+                "payload_keys": dbg.get("payload_keys"),
             },
         )
 
-    # ---- Field mapping (matches your actual labels + flexible fallbacks) ----
+    # ---- Field mapping (match your exact labels + flexible fallbacks) ----
     try:
-        household_type = pick(
+        household_type_raw = pick(
             answers,
-            [
-                "Household Type?",
-                "Household Type",
-                "household type",
-                "household",
-                "individual or couple",
-            ],
+            ["Household Type?", "Household Type", "household type", "household", "individual or couple"],
             required=True,
         )
 
         downsizing_raw = pick(
             answers,
-            [
-                "Are You Downsizing?",
-                "Are you downsizing?",
-                "are you downsizing",
-                "downsizing",
-            ],
+            ["Are You Downsizing?", "Are you downsizing?", "are you downsizing", "downsizing"],
             required=True,
         )
 
         net_income_raw = pick(
             answers,
-            [
-                "Net Monthly Income",
-                "Net monthly income",
-                "monthly income",
-                "income",
-            ],
+            ["Net Monthly Income", "Net monthly income", "monthly income", "income"],
             required=True,
         )
 
         fixed_costs_raw = pick(
             answers,
-            [
-                "Fixed Monthly Obligations",
-                "Fixed monthly obligations",
-                "monthly obligations",
-                "fixed costs",
-                "obligations",
-            ],
+            ["Fixed Monthly Obligations", "Fixed monthly obligations", "monthly obligations", "fixed costs", "obligations"],
             required=True,
         )
 
         savings_raw = pick(
             answers,
-            [
-                "Liquid Savings Available",
-                "Liquid savings available",
-                "savings",
-                "cash savings",
-            ],
+            ["Liquid Savings Available", "Liquid savings available", "savings", "cash savings"],
             required=True,
         )
 
-        timeline = pick(
+        timeline_raw = pick(
             answers,
-            [
-                "Timeline (How soon do you want to relocate?)",
-                "Timeline",
-                "move timeline",
-                "how soon",
-            ],
+            ["Timeline (How soon do you want to relocate?)", "Timeline", "move timeline", "how soon"],
             required=True,
         )
 
-        risk = pick(
+        risk_raw = pick(
             answers,
-            [
-                "Risk Tolerance",
-                "Risk tolerance",
-                "risk",
-            ],
+            ["Risk Tolerance", "Risk tolerance", "risk"],
             required=True,
         )
 
-        current_metro_label = pick(
+        current_metro_raw = pick(
             answers,
-            [
-                "Current Metro Area",
-                "Current metro area",
-                "current metro",
-                "current location",
-            ],
+            ["Current Metro Area", "Current metro area", "current metro", "current location"],
             required=True,
         )
 
-        target_labels = pick(
+        target_labels_raw = pick(
             answers,
             [
                 "Metro Areas You Are Considering (Optional)",
@@ -317,7 +291,7 @@ async def generate_report(request: Request):
             required=False,
         )
 
-        email = pick(
+        email_raw = pick(
             answers,
             [
                 "Email Address? (So we can share our insight!)",
@@ -338,54 +312,87 @@ async def generate_report(request: Request):
             },
         )
 
+    # Log raw mapped values (super helpful)
+    print("RAW VALUES:",
+          {
+              "household_type": household_type_raw,
+              "downsizing": downsizing_raw,
+              "net_income": net_income_raw,
+              "fixed_costs": fixed_costs_raw,
+              "savings": savings_raw,
+              "timeline": timeline_raw,
+              "risk": risk_raw,
+              "current_metro": current_metro_raw,
+              "targets": target_labels_raw,
+              "email": email_raw,
+          })
+
     # ---- Normalize values ----
     try:
+        household_type = str(_unwrap_value(household_type_raw)).strip()
         downsizing = _as_bool(downsizing_raw)
         net_income = _as_float(net_income_raw)
         fixed_costs = _as_float(fixed_costs_raw)
         savings = _as_float(savings_raw)
+        timeline = str(_unwrap_value(timeline_raw)).strip()
+        risk_tolerance = str(_unwrap_value(risk_raw)).strip()
+        email = str(_unwrap_value(email_raw)).strip()
     except Exception as e:
         raise HTTPException(
             status_code=400,
-            detail={"error": "Invalid numeric/boolean value", "reason": str(e)},
+            detail={
+                "error": "Normalization failed (value shape likely dict/list)",
+                "reason": str(e),
+                "raw_values": {
+                    "household_type": household_type_raw,
+                    "downsizing": downsizing_raw,
+                    "net_income": net_income_raw,
+                    "fixed_costs": fixed_costs_raw,
+                    "savings": savings_raw,
+                    "timeline": timeline_raw,
+                    "risk": risk_raw,
+                    "current_metro": current_metro_raw,
+                    "targets": target_labels_raw,
+                    "email": email_raw,
+                },
+            },
         )
 
-    # Normalize targets into a list[str]
-    if target_labels is None:
-        target_labels_list: List[str] = []
-    elif isinstance(target_labels, str):
-        target_labels_list = [target_labels]
-    elif isinstance(target_labels, list):
-        target_labels_list = [str(x) for x in target_labels if x is not None]
+    # Targets normalization into list[str]
+    targets_unwrapped = _unwrap_value(target_labels_raw)
+    if targets_unwrapped is None:
+        target_labels: List[str] = []
+    elif isinstance(targets_unwrapped, list):
+        target_labels = [str(x).strip() for x in targets_unwrapped if x is not None and str(x).strip()]
     else:
-        target_labels_list = []
+        target_labels = [str(targets_unwrapped).strip()] if str(targets_unwrapped).strip() else []
 
-    # ---- Map metro to CBSA ----
-    current_cbsa = label_or_cbsa_to_cbsa(current_metro_label)
+    # Map metro label -> CBSA
+    current_cbsa = label_or_cbsa_to_cbsa(current_metro_raw)
     if not current_cbsa:
         raise HTTPException(
             status_code=400,
-            detail={"error": "Unknown current metro", "value": current_metro_label},
+            detail={"error": "Unknown current metro (label not found and not a CBSA code)", "value": _unwrap_value(current_metro_raw)},
         )
 
     target_cbsas: List[str] = []
-    for t in target_labels_list:
+    for t in target_labels:
         cbsa = label_or_cbsa_to_cbsa(t)
         if cbsa:
             target_cbsas.append(cbsa)
 
-    # MVP JSON output (next step is plugging in your real recommendation engine + PDF)
+    # MVP JSON output (next step: plug in recommendation engine + PDF)
     return JSONResponse(
         content={
             "status": "processed",
-            "email": str(email).strip(),
+            "email": email,
             "household_type": household_type,
             "downsizing": downsizing,
             "net_monthly_income": net_income,
             "fixed_monthly_obligations": fixed_costs,
             "liquid_savings": savings,
             "timeline": timeline,
-            "risk_tolerance": risk,
+            "risk_tolerance": risk_tolerance,
             "current_cbsa": current_cbsa,
             "target_cbsas": target_cbsas,
         }
