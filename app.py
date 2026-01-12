@@ -66,4 +66,5 @@ async def generate_report(request: Request):
         timeline = data.get("Timeline")
         risk = data.get("Risk tolerance")
         current_metro_label = data.get("Current metro area")
-        target_labels = data.get("Metro areas you are considering_
+        target_labels = data.get("Metro areas you are considering (optional)", [])
+
