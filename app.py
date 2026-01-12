@@ -1,19 +1,3 @@
-"""
-RBRE API – Tally-safe FastAPI app (FULL FILE, hardened)
-
-Fixes included:
-- Extract answers from Tally payload["data"]["fields"] list
-- Logs:
-  - TALLY PAYLOAD KEYS
-  - TALLY SHAPE + FIELDS_COUNT
-  - TALLY ANSWER KEYS
-  - RAW mapped values (before parsing)
-- Unwrap Tally values (dict/list shapes) into primitives
-- Robust numeric/boolean parsing with clear 400 errors
-- ✅ Option 1 implemented: map Tally *metro option IDs* -> CBSA codes
-  - Supports both current_metro + target metros coming in as UUID option IDs
-"""
-
 from __future__ import annotations
 
 import json
@@ -24,10 +8,6 @@ from typing import Any, Dict, List, Optional, Tuple
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import JSONResponse
 
-
-# -------------------------------------------------
-# App initialization
-# -------------------------------------------------
 app = FastAPI(title="RBRE API", version="1.0")
 
 
@@ -42,9 +22,6 @@ def _norm_key(s: str) -> str:
 
 
 def pick(data: Dict[str, Any], aliases: List[str], required: bool = True) -> Optional[Any]:
-    """
-    Fetch a value using aliases with normalized matching.
-    """
     norm_map = {_norm_key(k): k for k in data.keys()}
     for alias in aliases:
         nk = _norm_key(alias)
@@ -59,43 +36,22 @@ def pick(data: Dict[str, Any], aliases: List[str], required: bool = True) -> Opt
 # Tally value unwrapping + parsing
 # -------------------------------------------------
 def _unwrap_value(v: Any) -> Any:
-    """
-    Tally "value" can be:
-      - primitive (str/int/float/bool)
-      - dict like {"label": "...", "value": "..."} or {"text": "..."}
-      - list of dicts for multi-select
-    Convert to a usable primitive or list of primitives.
-    """
     if v is None:
         return None
 
-    # Multi-select: list of things
     if isinstance(v, list):
-        out: List[Any] = []
-        for item in v:
-            out.append(_unwrap_value(item))
-        return out
+        return [_unwrap_value(x) for x in v]
 
-    # Dict forms
     if isinstance(v, dict):
-        # Common keys
         for k in ("value", "label", "text", "name", "title"):
             if k in v and v[k] is not None:
                 return _unwrap_value(v[k])
-        # Fallback: stringified dict
         return str(v)
 
     return v
 
 
 def _as_bool(v: Any) -> bool:
-    """
-    Conservative boolean parsing:
-    - true if value is bool True
-    - true if string in {"yes","y","true","1","on"}
-    Everything else => False
-    NOTE: If Tally sends option UUIDs for yes/no, you should map those separately.
-    """
     v = _unwrap_value(v)
     if isinstance(v, bool):
         return v
@@ -108,7 +64,6 @@ def _as_float(v: Any) -> float:
     if v is None:
         raise ValueError("Empty numeric value (None)")
 
-    # If a list somehow arrives, take first item
     if isinstance(v, list):
         if not v:
             raise ValueError("Empty numeric list")
@@ -125,13 +80,6 @@ def _as_float(v: Any) -> float:
 # Tally answer extraction
 # -------------------------------------------------
 def _extract_tally_answers(payload: Dict[str, Any]) -> Tuple[Dict[str, Any], Dict[str, Any]]:
-    """
-    Returns (answers_dict, debug_info).
-
-    Handles:
-      payload["data"]["fields"] -> list of objects (your case)
-    Flattens into: {"Question Label": value, ...}
-    """
     debug: Dict[str, Any] = {"payload_keys": sorted(list(payload.keys()))}
 
     data = payload.get("data")
@@ -159,7 +107,6 @@ def _extract_tally_answers(payload: Dict[str, Any]) -> Tuple[Dict[str, Any], Dic
         if label is None and isinstance(item.get("field"), dict):
             label = item["field"].get("label") or item["field"].get("title")
 
-        # value may be in different keys
         value = None
         if "value" in item:
             value = item.get("value")
@@ -193,38 +140,26 @@ for cbsa, prof in COST_DATA.items():
 
 
 # -------------------------------------------------
-# ✅ OPTION 1: Tally Metro Option ID -> CBSA mapping
+# ✅ OPTION 1: Tally option UUID -> CBSA mapping
 # -------------------------------------------------
-# Populate this with the option UUIDs Tally sends for your "Current Metro Area"
-# and "Metro Areas You Are Considering (Optional)" questions.
-#
-# Example (FAKE):
-#   "8d7dc6df-eead-4c54-87a0-a76e139387b3": "31080"
-#
-# You can build this once by logging RAW VALUES and then mapping each option id
-# to the correct CBSA code in your COST_DATA.
+# IMPORTANT: fill this in with your real mapping.
 TALLY_METRO_OPTION_TO_CBSA: Dict[str, str] = {
-    # "8d7dc6df-eead-4c54-87a0-a76e139387b3": "XXXXX",
-    # "fb1e6396-0983-4cb7-929c-b2825f6e2924": "YYYYY",
+    # "8d7dc6df-eead-4c54-87a0-a76e139387b3": "31080",
+    # "fb1e6396-0983-4cb7-929c-b2825f6e2924": "16980",
 }
 
 
 def label_or_cbsa_to_cbsa(x: Any) -> Optional[str]:
-    """
-    Accept CBSA code directly, map metro label to CBSA, OR map Tally option-id to CBSA.
-    If Tally returns a dict like {"label": "..."} we unwrap first.
-    """
     x = _unwrap_value(x)
     if x is None:
         return None
 
     s = str(x).strip()
 
-    # ✅ NEW: option-id -> CBSA
+    # Option UUID -> CBSA
     if s in TALLY_METRO_OPTION_TO_CBSA:
-        cbsa = TALLY_METRO_OPTION_TO_CBSA[s]
-        # Guard: ensure mapping points to loaded dataset
-        return cbsa if cbsa in COST_DATA else None
+        mapped = TALLY_METRO_OPTION_TO_CBSA[s]
+        return mapped if mapped in COST_DATA else None
 
     # CBSA directly
     if s in COST_DATA:
@@ -234,24 +169,17 @@ def label_or_cbsa_to_cbsa(x: Any) -> Optional[str]:
     return LABEL_TO_CBSA.get(s)
 
 
-# -------------------------------------------------
-# Health check
-# -------------------------------------------------
 @app.get("/")
 def health():
     return {"status": "alive", "metros_loaded": len(COST_DATA)}
 
 
-# -------------------------------------------------
-# Tally webhook endpoint
-# -------------------------------------------------
 @app.post("/v1/report.json")
 async def generate_report(request: Request):
     payload = await request.json()
 
     answers, dbg = _extract_tally_answers(payload)
 
-    # Logs (Render -> Logs)
     print("TALLY PAYLOAD KEYS:", dbg.get("payload_keys"))
     print("TALLY SHAPE:", dbg.get("shape"), "FIELDS_COUNT:", dbg.get("fields_count"))
     print("TALLY ANSWER KEYS:", sorted(list(answers.keys())))
@@ -266,56 +194,47 @@ async def generate_report(request: Request):
             },
         )
 
-    # ---- Field mapping (match your exact labels + flexible fallbacks) ----
     try:
         household_type_raw = pick(
             answers,
             ["Household Type?", "Household Type", "household type", "household", "individual or couple"],
             required=True,
         )
-
         downsizing_raw = pick(
             answers,
             ["Are You Downsizing?", "Are you downsizing?", "are you downsizing", "downsizing"],
             required=True,
         )
-
         net_income_raw = pick(
             answers,
             ["Net Monthly Income", "Net monthly income", "monthly income", "income"],
             required=True,
         )
-
         fixed_costs_raw = pick(
             answers,
             ["Fixed Monthly Obligations", "Fixed monthly obligations", "monthly obligations", "fixed costs", "obligations"],
             required=True,
         )
-
         savings_raw = pick(
             answers,
             ["Liquid Savings Available", "Liquid savings available", "savings", "cash savings"],
             required=True,
         )
-
         timeline_raw = pick(
             answers,
             ["Timeline (How soon do you want to relocate?)", "Timeline", "move timeline", "how soon"],
             required=True,
         )
-
         risk_raw = pick(
             answers,
             ["Risk Tolerance", "Risk tolerance", "risk"],
             required=True,
         )
-
         current_metro_raw = pick(
             answers,
             ["Current Metro Area", "Current metro area", "current metro", "current location"],
             required=True,
         )
-
         target_labels_raw = pick(
             answers,
             [
@@ -327,18 +246,11 @@ async def generate_report(request: Request):
             ],
             required=False,
         )
-
         email_raw = pick(
             answers,
-            [
-                "Email Address? (So we can share our insight!)",
-                "Email Address",
-                "Email address",
-                "email",
-            ],
+            ["Email Address? (So we can share our insight!)", "Email Address", "Email address", "email"],
             required=True,
         )
-
     except Exception as e:
         raise HTTPException(
             status_code=400,
@@ -349,7 +261,6 @@ async def generate_report(request: Request):
             },
         )
 
-    # Log raw mapped values (super helpful)
     print(
         "RAW VALUES:",
         {
@@ -366,7 +277,6 @@ async def generate_report(request: Request):
         },
     )
 
-    # ---- Normalize values ----
     try:
         household_type = str(_unwrap_value(household_type_raw)).strip()
         downsizing = _as_bool(downsizing_raw)
@@ -380,24 +290,11 @@ async def generate_report(request: Request):
         raise HTTPException(
             status_code=400,
             detail={
-                "error": "Normalization failed (value shape likely dict/list)",
+                "error": "Normalization failed",
                 "reason": str(e),
-                "raw_values": {
-                    "household_type": household_type_raw,
-                    "downsizing": downsizing_raw,
-                    "net_income": net_income_raw,
-                    "fixed_costs": fixed_costs_raw,
-                    "savings": savings_raw,
-                    "timeline": timeline_raw,
-                    "risk": risk_raw,
-                    "current_metro": current_metro_raw,
-                    "targets": target_labels_raw,
-                    "email": email_raw,
-                },
             },
         )
 
-    # Targets normalization into list[str]
     targets_unwrapped = _unwrap_value(target_labels_raw)
     if targets_unwrapped is None:
         target_labels: List[str] = []
@@ -406,22 +303,24 @@ async def generate_report(request: Request):
     else:
         target_labels = [str(targets_unwrapped).strip()] if str(targets_unwrapped).strip() else []
 
-    # Map metro label/CBSA/option-id -> CBSA
     current_cbsa = label_or_cbsa_to_cbsa(current_metro_raw)
     if not current_cbsa:
-        # Provide a very explicit error that tells you what to add to the mapping
         unwrapped = _unwrap_value(current_metro_raw)
-        maybe_option_id = str(unwrapped).strip() if unwrapped is not None else None
+        # If list, show first element since your payload wraps in a list
+        if isinstance(unwrapped, list) and unwrapped:
+            unwrapped_first = unwrapped[0]
+        else:
+            unwrapped_first = unwrapped
+
+        metro_names_sample = list(LABEL_TO_CBSA.keys())[:8]
 
         raise HTTPException(
             status_code=400,
             detail={
-                "error": "Unknown current metro. Not a CBSA, not a metro_name label, and not in TALLY_METRO_OPTION_TO_CBSA.",
-                "value_unwrapped": unwrapped,
-                "hint": (
-                    "If this is a Tally option UUID, add it to TALLY_METRO_OPTION_TO_CBSA with the correct CBSA code."
-                ),
-                "missing_option_id": maybe_option_id,
+                "error": "Unknown current metro (not CBSA, not metro_name label, not mapped option UUID).",
+                "missing_option_id": str(unwrapped_first).strip() if unwrapped_first is not None else None,
+                "hint": "Add missing_option_id to TALLY_METRO_OPTION_TO_CBSA with correct CBSA code.",
+                "metro_names_sample": metro_names_sample,
             },
         )
 
@@ -432,10 +331,8 @@ async def generate_report(request: Request):
         if cbsa:
             target_cbsas.append(cbsa)
         else:
-            # keep track of what didn't map so you can fill the dict
             unmapped_targets.append(str(_unwrap_value(t)).strip())
 
-    # MVP JSON output (next step: plug in recommendation engine + PDF)
     return JSONResponse(
         content={
             "status": "processed",
@@ -449,6 +346,6 @@ async def generate_report(request: Request):
             "risk_tolerance": risk_tolerance,
             "current_cbsa": current_cbsa,
             "target_cbsas": target_cbsas,
-            "unmapped_targets": unmapped_targets,  # handy for filling your mapping dict
+            "unmapped_targets": unmapped_targets,
         }
     )
