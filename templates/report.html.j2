@@ -1,0 +1,168 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Relocation Budget Reality Report</title>
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-size: 12px;
+      color: #111;
+    }
+    h1 { font-size: 18px; margin-bottom: 4px; }
+    h2 { font-size: 14px; margin-top: 18px; }
+    h3 { font-size: 13px; margin-top: 14px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 6px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 6px;
+      vertical-align: top;
+    }
+    th {
+      background: #f3f3f3;
+      text-align: left;
+    }
+    .meta { color: #555; margin-bottom: 12px; }
+    .warn {
+      background: #fff3cd;
+      border: 1px solid #ffe69c;
+      padding: 8px;
+      margin: 10px 0;
+    }
+    .ok {
+      background: #e7f5ff;
+      border: 1px solid #a5d8ff;
+      padding: 8px;
+      margin: 10px 0;
+    }
+    .small { font-size: 11px; color: #666; }
+    .pill {
+      display: inline-block;
+      padding: 2px 6px;
+      border: 1px solid #ccc;
+      border-radius: 999px;
+      margin-right: 4px;
+      margin-top: 2px;
+      font-size: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Relocation Budget Reality Report</h1>
+
+<div class="meta">
+  Report ID: {{ report.report_id }}<br>
+  Generated: {{ report.generated_at_utc }}<br>
+  Current Metro: {{ report.baseline.metro_name }} (CBSA {{ report.baseline.current_cbsa }})
+</div>
+
+<h2>Budget Envelope</h2>
+<table>
+  <tr><th>Free Cash Flow</th><td>${{ "{:,.0f}".format(report.envelope.free_cash_flow) }}</td></tr>
+  <tr><th>Monthly Living Cost (Proxy)</th><td>${{ "{:,.0f}".format(report.envelope.monthly_living_cost_proxy) }}</td></tr>
+  <tr><th>Safety Buffer ({{ report.envelope.buffer_months }} months)</th><td>${{ "{:,.0f}".format(report.envelope.safety_buffer) }}</td></tr>
+  <tr><th>Deployable Relocation Capital</th><td>${{ "{:,.0f}".format(report.envelope.deployable_relocation_capital) }}</td></tr>
+  <tr><th>Safe Ceiling</th><td>${{ "{:,.0f}".format(report.envelope.safe_ceiling) }}</td></tr>
+  <tr><th>Stretch Ceiling</th><td>${{ "{:,.0f}".format(report.envelope.stretch_ceiling) }}</td></tr>
+</table>
+
+{% if report.envelope.deployable_relocation_capital <= 0 %}
+<div class="warn">
+  Your current finances do not support a safe relocation. This report focuses on stabilization rather than execution.
+</div>
+{% else %}
+<div class="ok">
+  This report highlights nearby locations and execution paths that reduce risk and stay within budget.
+</div>
+{% endif %}
+
+<h2>Nearby Affordable Metro Areas</h2>
+
+{% if report.affordable_recommendations|length == 0 %}
+<p>No nearby metros met affordability and feasibility thresholds.</p>
+{% else %}
+<table>
+  <tr>
+    <th>Metro</th>
+    <th>State</th>
+    <th>Monthly Cost</th>
+    <th>Affordability</th>
+    <th>Feasibility</th>
+    <th>Notes</th>
+  </tr>
+  {% for a in report.affordable_recommendations %}
+  <tr>
+    <td>{{ a.metro_name }} ({{ a.cbsa }})</td>
+    <td>{{ a.state }}</td>
+    <td>${{ "{:,.0f}".format(a.est_monthly_cost) }}</td>
+    <td>{{ "{:+.1f}%".format(a.affordability_delta_pct) }}</td>
+    <td>{{ a.feasibility_score }}/100</td>
+    <td>
+      {{ a.dominant_risk_driver }}<br>
+      <span class="small">{{ a.sensitivity_note }}</span><br>
+      {% for t in a.tags %}
+        <span class="pill">{{ t }}</span>
+      {% endfor %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+<h2>Execution Paths</h2>
+
+{% for cbsa, plist in report.paths.items() %}
+<h3>CBSA {{ cbsa }}</h3>
+
+{% for p in plist %}
+<strong>{{ p.name }}</strong><br>
+<p>{{ p.summary }}</p>
+
+<div class="small">
+  Timeline: {{ p.timeline_weeks[0] }}–{{ p.timeline_weeks[1] }} weeks
+</div>
+
+<table>
+  <tr><th colspan="2">Budget Allocation</th></tr>
+  {% for k, v in p.budget_allocation.items() %}
+  <tr><td>{{ k }}</td><td>${{ "{:,.0f}".format(v) }}</td></tr>
+  {% endfor %}
+</table>
+
+<p><strong>Milestones</strong></p>
+<ul>
+  {% for m in p.milestones %}
+  <li>{{ m }}</li>
+  {% endfor %}
+</ul>
+
+<p><strong>Abort Conditions</strong></p>
+<ul>
+  {% for a in p.abort_conditions %}
+  <li>{{ a }}</li>
+  {% endfor %}
+</ul>
+
+<p><strong>Risk Notes</strong></p>
+<ul>
+  {% for r in p.risk_notes %}
+  <li>{{ r }}</li>
+  {% endfor %}
+</ul>
+
+{% endfor %}
+{% endfor %}
+
+<p class="small">
+  Estimates are directional and intended for planning purposes only. Actual costs vary by market, unit, and timing.
+</p>
+
+</body>
+</html>

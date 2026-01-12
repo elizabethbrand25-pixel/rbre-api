@@ -1,0 +1,3752 @@
+{
+  "10180": {
+    "cbsa": "10180",
+    "metro_name": "Abilene, TX MSA",
+    "state": "TX",
+    "rent_1br": 1020,
+    "rent_2br": 1276,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "29180": {
+    "cbsa": "29180",
+    "metro_name": "Vermilion Parish, LA HUD Metro FMR Area",
+    "state": "LA",
+    "rent_1br": 761,
+    "rent_2br": 834,
+    "utilities_proxy_monthly": 140.96228,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "10380": {
+    "cbsa": "10380",
+    "metro_name": "Aguadilla-Isabela, PR MSA",
+    "state": "PR",
+    "rent_1br": 482,
+    "rent_2br": 564,
+    "utilities_proxy_monthly": null,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "10420": {
+    "cbsa": "10420",
+    "metro_name": "Akron, OH MSA",
+    "state": "OH",
+    "rent_1br": 985,
+    "rent_2br": 1268,
+    "utilities_proxy_monthly": 135.16102,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "10500": {
+    "cbsa": "10500",
+    "metro_name": "Albany, GA MSA",
+    "state": "GA",
+    "rent_1br": 1006,
+    "rent_2br": 1129,
+    "utilities_proxy_monthly": 151.24812,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "10540": {
+    "cbsa": "10540",
+    "metro_name": "Albany, OR MSA",
+    "state": "OR",
+    "rent_1br": 1236,
+    "rent_2br": 1500,
+    "utilities_proxy_monthly": 129.61885,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "10580": {
+    "cbsa": "10580",
+    "metro_name": "Albany-Schenectady-Troy, NY MSA",
+    "state": "NY",
+    "rent_1br": 1417,
+    "rent_2br": 1702,
+    "utilities_proxy_monthly": 139.53219,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "10740": {
+    "cbsa": "10740",
+    "metro_name": "Albuquerque, NM MSA",
+    "state": "NM",
+    "rent_1br": 1185,
+    "rent_2br": 1464,
+    "utilities_proxy_monthly": 92.875132,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "10780": {
+    "cbsa": "10780",
+    "metro_name": "Alexandria, LA MSA",
+    "state": "LA",
+    "rent_1br": 780,
+    "rent_2br": 994,
+    "utilities_proxy_monthly": 140.96228,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "14540": {
+    "cbsa": "14540",
+    "metro_name": "Butler County, KY HUD Metro FMR Area",
+    "state": "KY",
+    "rent_1br": 660,
+    "rent_2br": 866,
+    "utilities_proxy_monthly": 133.80527,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "10900": {
+    "cbsa": "10900",
+    "metro_name": "Warren County, NJ HUD Metro FMR Area",
+    "state": "NJ",
+    "rent_1br": 1527,
+    "rent_2br": 1895,
+    "utilities_proxy_monthly": 128.12851,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "11020": {
+    "cbsa": "11020",
+    "metro_name": "Altoona, PA MSA",
+    "state": "PA",
+    "rent_1br": 948,
+    "rent_2br": 1138,
+    "utilities_proxy_monthly": 145.17215,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "11100": {
+    "cbsa": "11100",
+    "metro_name": "Oldham County, TX HUD Metro FMR Area",
+    "state": "TX",
+    "rent_1br": 899,
+    "rent_2br": 1101,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "11180": {
+    "cbsa": "11180",
+    "metro_name": "Boone County, IA HUD Metro FMR Area",
+    "state": "IA",
+    "rent_1br": 788,
+    "rent_2br": 1026,
+    "utilities_proxy_monthly": 111.53774,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "11260": {
+    "cbsa": "11260",
+    "metro_name": "Matanuska-Susitna Borough, AK HUD Metro FMR Area",
+    "state": "AK",
+    "rent_1br": 1049,
+    "rent_2br": 1376,
+    "utilities_proxy_monthly": 143.53585,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "26900": {
+    "cbsa": "26900",
+    "metro_name": "Indianapolis-Carmel, IN HUD Metro FMR Area",
+    "state": "IN",
+    "rent_1br": 1267,
+    "rent_2br": 1473,
+    "utilities_proxy_monthly": 133.0587,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "24860": {
+    "cbsa": "24860",
+    "metro_name": "Laurens County, SC HUD Metro FMR Area",
+    "state": "SC",
+    "rent_1br": 869,
+    "rent_2br": 1133,
+    "utilities_proxy_monthly": 149.50724,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "11460": {
+    "cbsa": "11460",
+    "metro_name": "Ann Arbor, MI MSA",
+    "state": "MI",
+    "rent_1br": 1387,
+    "rent_2br": 1656,
+    "utilities_proxy_monthly": 119.30835,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "11500": {
+    "cbsa": "11500",
+    "metro_name": "Anniston-Oxford-Jacksonville, AL MSA",
+    "state": "AL",
+    "rent_1br": 757,
+    "rent_2br": 962,
+    "utilities_proxy_monthly": 173.50223,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "16740": {
+    "cbsa": "16740",
+    "metro_name": "Rowan County, NC HUD Metro FMR Area",
+    "state": "NC",
+    "rent_1br": 958,
+    "rent_2br": 1196,
+    "utilities_proxy_monthly": 143.49872,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "11540": {
+    "cbsa": "11540",
+    "metro_name": "Appleton, WI MSA",
+    "state": "WI",
+    "rent_1br": 960,
+    "rent_2br": 1236,
+    "utilities_proxy_monthly": 110.86534,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "11640": {
+    "cbsa": "11640",
+    "metro_name": "Arecibo, PR MSA",
+    "state": "PR",
+    "rent_1br": 440,
+    "rent_2br": 510,
+    "utilities_proxy_monthly": null,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "38300": {
+    "cbsa": "38300",
+    "metro_name": "Pittsburgh, PA HUD Metro FMR Area",
+    "state": "PA",
+    "rent_1br": 1077,
+    "rent_2br": 1299,
+    "utilities_proxy_monthly": 145.17215,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "11700": {
+    "cbsa": "11700",
+    "metro_name": "Asheville, NC HUD Metro FMR Area",
+    "state": "NC",
+    "rent_1br": 1429,
+    "rent_2br": 1567,
+    "utilities_proxy_monthly": 143.49872,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "12940": {
+    "cbsa": "12940",
+    "metro_name": "Iberville Parish, LA HUD Metro FMR Area",
+    "state": "LA",
+    "rent_1br": 790,
+    "rent_2br": 866,
+    "utilities_proxy_monthly": 140.96228,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "41700": {
+    "cbsa": "41700",
+    "metro_name": "San Antonio-New Braunfels, TX HUD Metro FMR Area",
+    "state": "TX",
+    "rent_1br": 1177,
+    "rent_2br": 1426,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "12020": {
+    "cbsa": "12020",
+    "metro_name": "Athens-Clarke County, GA MSA",
+    "state": "GA",
+    "rent_1br": 1183,
+    "rent_2br": 1331,
+    "utilities_proxy_monthly": 151.24812,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "12060": {
+    "cbsa": "12060",
+    "metro_name": "Morgan County, GA HUD Metro FMR Area",
+    "state": "GA",
+    "rent_1br": 1315,
+    "rent_2br": 1442,
+    "utilities_proxy_monthly": 151.24812,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "12100": {
+    "cbsa": "12100",
+    "metro_name": "Atlantic City-Hammonton, NJ MSA",
+    "state": "NJ",
+    "rent_1br": 1537,
+    "rent_2br": 1867,
+    "utilities_proxy_monthly": 128.12851,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "12220": {
+    "cbsa": "12220",
+    "metro_name": "Auburn-Opelika, AL MSA",
+    "state": "AL",
+    "rent_1br": 1077,
+    "rent_2br": 1181,
+    "utilities_proxy_monthly": 173.50223,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "12260": {
+    "cbsa": "12260",
+    "metro_name": "Lincoln County, GA HUD Metro FMR Area",
+    "state": "GA",
+    "rent_1br": 758,
+    "rent_2br": 995,
+    "utilities_proxy_monthly": 151.24812,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "26420": {
+    "cbsa": "26420",
+    "metro_name": "Houston-The Woodlands-Sugar Land, TX HUD Metro FMR Area",
+    "state": "TX",
+    "rent_1br": 1323,
+    "rent_2br": 1573,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "12420": {
+    "cbsa": "12420",
+    "metro_name": "Austin-Round Rock, TX MSA",
+    "state": "TX",
+    "rent_1br": 1562,
+    "rent_2br": 1852,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "27260": {
+    "cbsa": "27260",
+    "metro_name": "Jacksonville, FL HUD Metro FMR Area",
+    "state": "FL",
+    "rent_1br": 1382,
+    "rent_2br": 1658,
+    "utilities_proxy_monthly": 156.08921,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "12540": {
+    "cbsa": "12540",
+    "metro_name": "Bakersfield, CA MSA",
+    "state": "CA",
+    "rent_1br": 1140,
+    "rent_2br": 1483,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "12580": {
+    "cbsa": "12580",
+    "metro_name": "Baltimore-Columbia-Towson, MD MSA",
+    "state": "MD",
+    "rent_1br": 1511,
+    "rent_2br": 1857,
+    "utilities_proxy_monthly": 165.87107,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "12620": {
+    "cbsa": "12620",
+    "metro_name": "Penobscot County, ME (part) HUD Metro FMR Area",
+    "state": "ME",
+    "rent_1br": 1061,
+    "rent_2br": 1392,
+    "utilities_proxy_monthly": 133.59512,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "12700": {
+    "cbsa": "12700",
+    "metro_name": "Barnstable Town, MA MSA",
+    "state": "MA",
+    "rent_1br": 1846,
+    "rent_2br": 2422,
+    "utilities_proxy_monthly": 167.19976,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.6
+  },
+  "41980": {
+    "cbsa": "41980",
+    "metro_name": "San Juan-Guaynabo, PR HUD Metro FMR Area",
+    "state": "PR",
+    "rent_1br": 572,
+    "rent_2br": 663,
+    "utilities_proxy_monthly": null,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "28140": {
+    "cbsa": "28140",
+    "metro_name": "Kansas City, MO-KS HUD Metro FMR Area",
+    "state": "MO",
+    "rent_1br": 1197,
+    "rent_2br": 1358,
+    "utilities_proxy_monthly": 129.18444,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "12980": {
+    "cbsa": "12980",
+    "metro_name": "Battle Creek, MI MSA",
+    "state": "MI",
+    "rent_1br": 976,
+    "rent_2br": 1176,
+    "utilities_proxy_monthly": 119.30835,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "13020": {
+    "cbsa": "13020",
+    "metro_name": "Bay City, MI MSA",
+    "state": "MI",
+    "rent_1br": 814,
+    "rent_2br": 1030,
+    "utilities_proxy_monthly": 119.30835,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "25940": {
+    "cbsa": "25940",
+    "metro_name": "Jasper County, SC HUD Metro FMR Area",
+    "state": "SC",
+    "rent_1br": 1407,
+    "rent_2br": 1542,
+    "utilities_proxy_monthly": 149.50724,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "13140": {
+    "cbsa": "13140",
+    "metro_name": "Beaumont-Port Arthur, TX MSA",
+    "state": "TX",
+    "rent_1br": 898,
+    "rent_2br": 1103,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "13380": {
+    "cbsa": "13380",
+    "metro_name": "Bellingham, WA MSA",
+    "state": "WA",
+    "rent_1br": 1493,
+    "rent_2br": 1794,
+    "utilities_proxy_monthly": 113.68201,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "13460": {
+    "cbsa": "13460",
+    "metro_name": "Bend-Redmond, OR MSA",
+    "state": "OR",
+    "rent_1br": 1371,
+    "rent_2br": 1784,
+    "utilities_proxy_monthly": 129.61885,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "16300": {
+    "cbsa": "16300",
+    "metro_name": "Jones County, IA HUD Metro FMR Area",
+    "state": "IA",
+    "rent_1br": 711,
+    "rent_2br": 919,
+    "utilities_proxy_monthly": 111.53774,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "35620": {
+    "cbsa": "35620",
+    "metro_name": "Newark, NJ HUD Metro FMR Area",
+    "state": "NJ",
+    "rent_1br": 1822,
+    "rent_2br": 2205,
+    "utilities_proxy_monthly": 128.12851,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.6
+  },
+  "38340": {
+    "cbsa": "38340",
+    "metro_name": "Pittsfield, MA HUD Metro FMR Area",
+    "state": "MA",
+    "rent_1br": 1269,
+    "rent_2br": 1626,
+    "utilities_proxy_monthly": 167.19976,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "13740": {
+    "cbsa": "13740",
+    "metro_name": "Stillwater County, MT HUD Metro FMR Area",
+    "state": "MT",
+    "rent_1br": 958,
+    "rent_2br": 1257,
+    "utilities_proxy_monthly": 107.90693,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "13780": {
+    "cbsa": "13780",
+    "metro_name": "Binghamton, NY MSA",
+    "state": "NY",
+    "rent_1br": 868,
+    "rent_2br": 1103,
+    "utilities_proxy_monthly": 139.53219,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "13820": {
+    "cbsa": "13820",
+    "metro_name": "Chilton County, AL HUD Metro FMR Area",
+    "state": "AL",
+    "rent_1br": 739,
+    "rent_2br": 970,
+    "utilities_proxy_monthly": 173.50223,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "13900": {
+    "cbsa": "13900",
+    "metro_name": "Bismarck, ND MSA",
+    "state": "ND",
+    "rent_1br": 1030,
+    "rent_2br": 1175,
+    "utilities_proxy_monthly": 118.37831,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "13980": {
+    "cbsa": "13980",
+    "metro_name": "Pulaski County, VA HUD Metro FMR Area",
+    "state": "VA",
+    "rent_1br": 840,
+    "rent_2br": 921,
+    "utilities_proxy_monthly": 148.76788,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "14010": {
+    "cbsa": "14010",
+    "metro_name": "Bloomington, IL MSA",
+    "state": "IL",
+    "rent_1br": 999,
+    "rent_2br": 1302,
+    "utilities_proxy_monthly": 109.99164,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "14020": {
+    "cbsa": "14020",
+    "metro_name": "Owen County, IN HUD Metro FMR Area",
+    "state": "IN",
+    "rent_1br": 798,
+    "rent_2br": 956,
+    "utilities_proxy_monthly": 133.0587,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "14260": {
+    "cbsa": "14260",
+    "metro_name": "Gem County, ID HUD Metro FMR Area",
+    "state": "ID",
+    "rent_1br": 908,
+    "rent_2br": 1190,
+    "utilities_proxy_monthly": 108.72736,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "41180": {
+    "cbsa": "41180",
+    "metro_name": "St. Louis, MO-IL HUD Metro FMR Area",
+    "state": "MO",
+    "rent_1br": 995,
+    "rent_2br": 1218,
+    "utilities_proxy_monthly": 129.18444,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "16620": {
+    "cbsa": "16620",
+    "metro_name": "Charleston, WV HUD Metro FMR Area",
+    "state": "WV",
+    "rent_1br": 829,
+    "rent_2br": 1036,
+    "utilities_proxy_monthly": 154.75533,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "14460": {
+    "cbsa": "14460",
+    "metro_name": "Western Rockingham County, NH HUD Metro FMR Area",
+    "state": "NH",
+    "rent_1br": 1692,
+    "rent_2br": 2220,
+    "utilities_proxy_monthly": 144.86979,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.6
+  },
+  "14500": {
+    "cbsa": "14500",
+    "metro_name": "Boulder, CO MSA",
+    "state": "CO",
+    "rent_1br": 1795,
+    "rent_2br": 2124,
+    "utilities_proxy_monthly": 100.57245,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.6
+  },
+  "47940": {
+    "cbsa": "47940",
+    "metro_name": "Waterloo-Cedar Falls, IA HUD Metro FMR Area",
+    "state": "IA",
+    "rent_1br": 801,
+    "rent_2br": 1051,
+    "utilities_proxy_monthly": 111.53774,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "14740": {
+    "cbsa": "14740",
+    "metro_name": "Bremerton-Silverdale, WA MSA",
+    "state": "WA",
+    "rent_1br": 1548,
+    "rent_2br": 2031,
+    "utilities_proxy_monthly": 113.68201,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.6
+  },
+  "17140": {
+    "cbsa": "17140",
+    "metro_name": "Grant County, KY HUD Metro FMR Area",
+    "state": "KY",
+    "rent_1br": 899,
+    "rent_2br": 1155,
+    "utilities_proxy_monthly": 133.80527,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "15180": {
+    "cbsa": "15180",
+    "metro_name": "Brownsville-Harlingen, TX MSA",
+    "state": "TX",
+    "rent_1br": 866,
+    "rent_2br": 1047,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "15260": {
+    "cbsa": "15260",
+    "metro_name": "Brunswick, GA MSA",
+    "state": "GA",
+    "rent_1br": 1105,
+    "rent_2br": 1293,
+    "utilities_proxy_monthly": 151.24812,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "15380": {
+    "cbsa": "15380",
+    "metro_name": "Buffalo-Cheektowaga-Niagara Falls, NY MSA",
+    "state": "NY",
+    "rent_1br": 1139,
+    "rent_2br": 1343,
+    "utilities_proxy_monthly": 139.53219,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "15500": {
+    "cbsa": "15500",
+    "metro_name": "Burlington, NC MSA",
+    "state": "NC",
+    "rent_1br": 1230,
+    "rent_2br": 1348,
+    "utilities_proxy_monthly": 143.49872,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "15540": {
+    "cbsa": "15540",
+    "metro_name": "Burlington-South Burlington, VT MSA",
+    "state": "VT",
+    "rent_1br": 1651,
+    "rent_2br": 2140,
+    "utilities_proxy_monthly": 125.65546,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.6
+  },
+  "26820": {
+    "cbsa": "26820",
+    "metro_name": "Idaho Falls, ID HUD Metro FMR Area",
+    "state": "ID",
+    "rent_1br": 1095,
+    "rent_2br": 1305,
+    "utilities_proxy_monthly": 108.72736,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "27620": {
+    "cbsa": "27620",
+    "metro_name": "Moniteau County, MO HUD Metro FMR Area",
+    "state": "MO",
+    "rent_1br": 703,
+    "rent_2br": 922,
+    "utilities_proxy_monthly": 129.18444,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "47260": {
+    "cbsa": "47260",
+    "metro_name": "Virginia Beach-Norfolk-Newport News, VA-NC HUD Metro FMR Area",
+    "state": "VA",
+    "rent_1br": 1512,
+    "rent_2br": 1713,
+    "utilities_proxy_monthly": 148.76788,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "28940": {
+    "cbsa": "28940",
+    "metro_name": "Roane County, TN HUD Metro FMR Area",
+    "state": "TN",
+    "rent_1br": 918,
+    "rent_2br": 1092,
+    "utilities_proxy_monthly": 143.31761,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "15940": {
+    "cbsa": "15940",
+    "metro_name": "Canton-Massillon, OH MSA",
+    "state": "OH",
+    "rent_1br": 846,
+    "rent_2br": 1086,
+    "utilities_proxy_monthly": 135.16102,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "15980": {
+    "cbsa": "15980",
+    "metro_name": "Cape Coral-Fort Myers, FL MSA",
+    "state": "FL",
+    "rent_1br": 1638,
+    "rent_2br": 1961,
+    "utilities_proxy_monthly": 156.08921,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "16020": {
+    "cbsa": "16020",
+    "metro_name": "Cape Girardeau, MO-IL MSA",
+    "state": "MO",
+    "rent_1br": 807,
+    "rent_2br": 992,
+    "utilities_proxy_monthly": 129.18444,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "29200": {
+    "cbsa": "29200",
+    "metro_name": "Warren County, IN HUD Metro FMR Area",
+    "state": "IN",
+    "rent_1br": 845,
+    "rent_2br": 956,
+    "utilities_proxy_monthly": 133.0587,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "16180": {
+    "cbsa": "16180",
+    "metro_name": "Carson City, NV MSA",
+    "state": "NV",
+    "rent_1br": 1212,
+    "rent_2br": 1546,
+    "utilities_proxy_monthly": 139.38587,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "26580": {
+    "cbsa": "26580",
+    "metro_name": "Putnam County, WV HUD Metro FMR Area",
+    "state": "WV",
+    "rent_1br": 803,
+    "rent_2br": 1054,
+    "utilities_proxy_monthly": 154.75533,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "16220": {
+    "cbsa": "16220",
+    "metro_name": "Casper, WY MSA",
+    "state": "WY",
+    "rent_1br": 852,
+    "rent_2br": 1082,
+    "utilities_proxy_monthly": 107.6459,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "43780": {
+    "cbsa": "43780",
+    "metro_name": "South Bend-Mishawaka, IN HUD Metro FMR Area",
+    "state": "IN",
+    "rent_1br": 1105,
+    "rent_2br": 1292,
+    "utilities_proxy_monthly": 133.0587,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "16540": {
+    "cbsa": "16540",
+    "metro_name": "Chambersburg-Waynesboro, PA MSA",
+    "state": "PA",
+    "rent_1br": 1119,
+    "rent_2br": 1379,
+    "utilities_proxy_monthly": 145.17215,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "16580": {
+    "cbsa": "16580",
+    "metro_name": "Champaign-Urbana, IL MSA",
+    "state": "IL",
+    "rent_1br": 946,
+    "rent_2br": 1122,
+    "utilities_proxy_monthly": 109.99164,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "16700": {
+    "cbsa": "16700",
+    "metro_name": "Charleston-North Charleston, SC MSA",
+    "state": "SC",
+    "rent_1br": 1630,
+    "rent_2br": 1787,
+    "utilities_proxy_monthly": 149.50724,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "16820": {
+    "cbsa": "16820",
+    "metro_name": "Charlottesville, VA MSA",
+    "state": "VA",
+    "rent_1br": 1602,
+    "rent_2br": 1824,
+    "utilities_proxy_monthly": 148.76788,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "16860": {
+    "cbsa": "16860",
+    "metro_name": "Chattanooga, TN-GA MSA",
+    "state": "TN",
+    "rent_1br": 1263,
+    "rent_2br": 1390,
+    "utilities_proxy_monthly": 143.31761,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "16940": {
+    "cbsa": "16940",
+    "metro_name": "Cheyenne, WY MSA",
+    "state": "WY",
+    "rent_1br": 917,
+    "rent_2br": 1174,
+    "utilities_proxy_monthly": 107.6459,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "16980": {
+    "cbsa": "16980",
+    "metro_name": "Kendall County, IL HUD Metro FMR Area",
+    "state": "IL",
+    "rent_1br": 1562,
+    "rent_2br": 2050,
+    "utilities_proxy_monthly": 109.99164,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.6
+  },
+  "17020": {
+    "cbsa": "17020",
+    "metro_name": "Chico, CA MSA",
+    "state": "CA",
+    "rent_1br": 1270,
+    "rent_2br": 1625,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "17300": {
+    "cbsa": "17300",
+    "metro_name": "Stewart County, TN HUD Metro FMR Area",
+    "state": "TN",
+    "rent_1br": 815,
+    "rent_2br": 1004,
+    "utilities_proxy_monthly": 143.31761,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "17420": {
+    "cbsa": "17420",
+    "metro_name": "Cleveland, TN MSA",
+    "state": "TN",
+    "rent_1br": 940,
+    "rent_2br": 1233,
+    "utilities_proxy_monthly": 143.31761,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "17660": {
+    "cbsa": "17660",
+    "metro_name": "Coeur d'Alene, ID MSA",
+    "state": "ID",
+    "rent_1br": 1302,
+    "rent_2br": 1547,
+    "utilities_proxy_monthly": 108.72736,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "17780": {
+    "cbsa": "17780",
+    "metro_name": "College Station-Bryan, TX MSA",
+    "state": "TX",
+    "rent_1br": 1082,
+    "rent_2br": 1186,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "17820": {
+    "cbsa": "17820",
+    "metro_name": "Teller County, CO HUD Metro FMR Area",
+    "state": "CO",
+    "rent_1br": 1362,
+    "rent_2br": 1493,
+    "utilities_proxy_monthly": 100.57245,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "31540": {
+    "cbsa": "31540",
+    "metro_name": "Madison, WI HUD Metro FMR Area",
+    "state": "WI",
+    "rent_1br": 1482,
+    "rent_2br": 1694,
+    "utilities_proxy_monthly": 110.86534,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "17860": {
+    "cbsa": "17860",
+    "metro_name": "Howard County, MO HUD Metro FMR Area",
+    "state": "MO",
+    "rent_1br": 796,
+    "rent_2br": 1044,
+    "utilities_proxy_monthly": 129.18444,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "17900": {
+    "cbsa": "17900",
+    "metro_name": "Kershaw County, SC HUD Metro FMR Area",
+    "state": "SC",
+    "rent_1br": 849,
+    "rent_2br": 1009,
+    "utilities_proxy_monthly": 149.50724,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "17980": {
+    "cbsa": "17980",
+    "metro_name": "Talbot County, GA HUD Metro FMR Area",
+    "state": "GA",
+    "rent_1br": 843,
+    "rent_2br": 973,
+    "utilities_proxy_monthly": 151.24812,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "18020": {
+    "cbsa": "18020",
+    "metro_name": "Columbus, IN MSA",
+    "state": "IN",
+    "rent_1br": 1257,
+    "rent_2br": 1415,
+    "utilities_proxy_monthly": 133.0587,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "18140": {
+    "cbsa": "18140",
+    "metro_name": "Union County, OH HUD Metro FMR Area",
+    "state": "OH",
+    "rent_1br": 1125,
+    "rent_2br": 1433,
+    "utilities_proxy_monthly": 135.16102,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "18580": {
+    "cbsa": "18580",
+    "metro_name": "Corpus Christi, TX MSA",
+    "state": "TX",
+    "rent_1br": 1117,
+    "rent_2br": 1366,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "18700": {
+    "cbsa": "18700",
+    "metro_name": "Corvallis, OR MSA",
+    "state": "OR",
+    "rent_1br": 1290,
+    "rent_2br": 1622,
+    "utilities_proxy_monthly": 129.61885,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "30020": {
+    "cbsa": "30020",
+    "metro_name": "Lawton, OK HUD Metro FMR Area",
+    "state": "OK",
+    "rent_1br": 784,
+    "rent_2br": 1001,
+    "utilities_proxy_monthly": 132.04558,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "18880": {
+    "cbsa": "18880",
+    "metro_name": "Walton County, FL HUD Metro FMR Area",
+    "state": "FL",
+    "rent_1br": 1244,
+    "rent_2br": 1364,
+    "utilities_proxy_monthly": 156.08921,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "27180": {
+    "cbsa": "27180",
+    "metro_name": "Jackson, TN HUD Metro FMR Area",
+    "state": "TN",
+    "rent_1br": 960,
+    "rent_2br": 1260,
+    "utilities_proxy_monthly": 143.31761,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "47900": {
+    "cbsa": "47900",
+    "metro_name": "Washington-Arlington-Alexandria, DC-VA-MD HUD Metro FMR Area",
+    "state": "DC",
+    "rent_1br": 2015,
+    "rent_2br": 2246,
+    "utilities_proxy_monthly": null,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.6
+  },
+  "38860": {
+    "cbsa": "38860",
+    "metro_name": "York-Kittery-South Berwick, ME HUD Metro FMR Area",
+    "state": "ME",
+    "rent_1br": 1678,
+    "rent_2br": 2202,
+    "utilities_proxy_monthly": 133.59512,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.6
+  },
+  "44180": {
+    "cbsa": "44180",
+    "metro_name": "Springfield, MO HUD Metro FMR Area",
+    "state": "MO",
+    "rent_1br": 883,
+    "rent_2br": 1095,
+    "utilities_proxy_monthly": 129.18444,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "19100": {
+    "cbsa": "19100",
+    "metro_name": "Wise County, TX HUD Metro FMR Area",
+    "state": "TX",
+    "rent_1br": 918,
+    "rent_2br": 1205,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "19140": {
+    "cbsa": "19140",
+    "metro_name": "Murray County, GA HUD Metro FMR Area",
+    "state": "GA",
+    "rent_1br": 827,
+    "rent_2br": 1009,
+    "utilities_proxy_monthly": 151.24812,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "19300": {
+    "cbsa": "19300",
+    "metro_name": "Daphne-Fairhope-Foley, AL MSA",
+    "state": "AL",
+    "rent_1br": 1200,
+    "rent_2br": 1345,
+    "utilities_proxy_monthly": 173.50223,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "22500": {
+    "cbsa": "22500",
+    "metro_name": "Florence, SC HUD Metro FMR Area",
+    "state": "SC",
+    "rent_1br": 953,
+    "rent_2br": 1117,
+    "utilities_proxy_monthly": 149.50724,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "19340": {
+    "cbsa": "19340",
+    "metro_name": "Davenport-Moline-Rock Island, IA-IL MSA",
+    "state": "IA",
+    "rent_1br": 928,
+    "rent_2br": 1143,
+    "utilities_proxy_monthly": 111.53774,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "49180": {
+    "cbsa": "49180",
+    "metro_name": "Winston-Salem, NC HUD Metro FMR Area",
+    "state": "NC",
+    "rent_1br": 1082,
+    "rent_2br": 1232,
+    "utilities_proxy_monthly": 143.49872,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "19430": {
+    "cbsa": "19430",
+    "metro_name": "Dayton-Kettering, OH MSA",
+    "state": "OH",
+    "rent_1br": 1009,
+    "rent_2br": 1273,
+    "utilities_proxy_monthly": 135.16102,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "19460": {
+    "cbsa": "19460",
+    "metro_name": "Decatur, AL MSA",
+    "state": "AL",
+    "rent_1br": 776,
+    "rent_2br": 961,
+    "utilities_proxy_monthly": 173.50223,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "19500": {
+    "cbsa": "19500",
+    "metro_name": "Decatur, IL MSA",
+    "state": "IL",
+    "rent_1br": 845,
+    "rent_2br": 1063,
+    "utilities_proxy_monthly": 109.99164,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "19660": {
+    "cbsa": "19660",
+    "metro_name": "Palm Coast, FL HUD Metro FMR Area",
+    "state": "FL",
+    "rent_1br": 1433,
+    "rent_2br": 1806,
+    "utilities_proxy_monthly": 156.08921,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "19740": {
+    "cbsa": "19740",
+    "metro_name": "Denver-Aurora-Lakewood, CO MSA",
+    "state": "CO",
+    "rent_1br": 1754,
+    "rent_2br": 2089,
+    "utilities_proxy_monthly": 100.57245,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.6
+  },
+  "19780": {
+    "cbsa": "19780",
+    "metro_name": "Jasper County, IA HUD Metro FMR Area",
+    "state": "IA",
+    "rent_1br": 789,
+    "rent_2br": 1008,
+    "utilities_proxy_monthly": 111.53774,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "19820": {
+    "cbsa": "19820",
+    "metro_name": "Livingston County, MI HUD Metro FMR Area",
+    "state": "MI",
+    "rent_1br": 1264,
+    "rent_2br": 1457,
+    "utilities_proxy_monthly": 119.30835,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "20020": {
+    "cbsa": "20020",
+    "metro_name": "Henry County, AL HUD Metro FMR Area",
+    "state": "AL",
+    "rent_1br": 669,
+    "rent_2br": 878,
+    "utilities_proxy_monthly": 173.50223,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "20100": {
+    "cbsa": "20100",
+    "metro_name": "Dover, DE MSA",
+    "state": "DE",
+    "rent_1br": 1165,
+    "rent_2br": 1470,
+    "utilities_proxy_monthly": 150.86936,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "20220": {
+    "cbsa": "20220",
+    "metro_name": "Dubuque, IA MSA",
+    "state": "IA",
+    "rent_1br": 841,
+    "rent_2br": 1077,
+    "utilities_proxy_monthly": 111.53774,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "20260": {
+    "cbsa": "20260",
+    "metro_name": "Duluth, MN-WI HUD Metro FMR Area",
+    "state": "MN",
+    "rent_1br": 978,
+    "rent_2br": 1232,
+    "utilities_proxy_monthly": 110.05803,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "20500": {
+    "cbsa": "20500",
+    "metro_name": "Person County, NC HUD Metro FMR Area",
+    "state": "NC",
+    "rent_1br": 744,
+    "rent_2br": 948,
+    "utilities_proxy_monthly": 143.49872,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "49340": {
+    "cbsa": "49340",
+    "metro_name": "Worcester, MA HUD Metro FMR Area",
+    "state": "MA",
+    "rent_1br": 1599,
+    "rent_2br": 2056,
+    "utilities_proxy_monthly": 167.19976,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.6
+  },
+  "39300": {
+    "cbsa": "39300",
+    "metro_name": "Westerly-Hopkinton-New Shoreham, RI HUD Metro FMR Area",
+    "state": "RI",
+    "rent_1br": 1362,
+    "rent_2br": 1721,
+    "utilities_proxy_monthly": 162.40359,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "20740": {
+    "cbsa": "20740",
+    "metro_name": "Eau Claire, WI MSA",
+    "state": "WI",
+    "rent_1br": 962,
+    "rent_2br": 1181,
+    "utilities_proxy_monthly": 110.86534,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "20940": {
+    "cbsa": "20940",
+    "metro_name": "El Centro, CA MSA",
+    "state": "CA",
+    "rent_1br": 1038,
+    "rent_2br": 1362,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "21340": {
+    "cbsa": "21340",
+    "metro_name": "Hudspeth County, TX HUD Metro FMR Area",
+    "state": "TX",
+    "rent_1br": 828,
+    "rent_2br": 973,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "21060": {
+    "cbsa": "21060",
+    "metro_name": "Elizabethtown, KY HUD Metro FMR Area",
+    "state": "KY",
+    "rent_1br": 846,
+    "rent_2br": 1056,
+    "utilities_proxy_monthly": 133.80527,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "21140": {
+    "cbsa": "21140",
+    "metro_name": "Elkhart-Goshen, IN MSA",
+    "state": "IN",
+    "rent_1br": 992,
+    "rent_2br": 1183,
+    "utilities_proxy_monthly": 133.0587,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "21300": {
+    "cbsa": "21300",
+    "metro_name": "Elmira, NY MSA",
+    "state": "NY",
+    "rent_1br": 978,
+    "rent_2br": 1283,
+    "utilities_proxy_monthly": 139.53219,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "21420": {
+    "cbsa": "21420",
+    "metro_name": "Enid, OK MSA",
+    "state": "OK",
+    "rent_1br": 799,
+    "rent_2br": 1027,
+    "utilities_proxy_monthly": 132.04558,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "21500": {
+    "cbsa": "21500",
+    "metro_name": "Erie, PA MSA",
+    "state": "PA",
+    "rent_1br": 945,
+    "rent_2br": 1212,
+    "utilities_proxy_monthly": 145.17215,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "21660": {
+    "cbsa": "21660",
+    "metro_name": "Eugene-Springfield, OR MSA",
+    "state": "OR",
+    "rent_1br": 1286,
+    "rent_2br": 1688,
+    "utilities_proxy_monthly": 129.61885,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "21780": {
+    "cbsa": "21780",
+    "metro_name": "Evansville, IN-KY MSA",
+    "state": "IN",
+    "rent_1br": 860,
+    "rent_2br": 1113,
+    "utilities_proxy_monthly": 133.0587,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "21820": {
+    "cbsa": "21820",
+    "metro_name": "Fairbanks, AK MSA",
+    "state": "AK",
+    "rent_1br": 1277,
+    "rent_2br": 1676,
+    "utilities_proxy_monthly": 143.53585,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "47380": {
+    "cbsa": "47380",
+    "metro_name": "Waco, TX HUD Metro FMR Area",
+    "state": "TX",
+    "rent_1br": 996,
+    "rent_2br": 1240,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "22020": {
+    "cbsa": "22020",
+    "metro_name": "Fargo, ND-MN MSA",
+    "state": "ND",
+    "rent_1br": 917,
+    "rent_2br": 1112,
+    "utilities_proxy_monthly": 118.37831,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "22140": {
+    "cbsa": "22140",
+    "metro_name": "Farmington, NM MSA",
+    "state": "NM",
+    "rent_1br": 885,
+    "rent_2br": 1085,
+    "utilities_proxy_monthly": 92.875132,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "13220": {
+    "cbsa": "13220",
+    "metro_name": "Raleigh County, WV HUD Metro FMR Area",
+    "state": "WV",
+    "rent_1br": 719,
+    "rent_2br": 944,
+    "utilities_proxy_monthly": 154.75533,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "22180": {
+    "cbsa": "22180",
+    "metro_name": "Hoke County, NC HUD Metro FMR Area",
+    "state": "NC",
+    "rent_1br": 761,
+    "rent_2br": 998,
+    "utilities_proxy_monthly": 143.49872,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "22220": {
+    "cbsa": "22220",
+    "metro_name": "Fayetteville-Springdale-Rogers, AR MSA",
+    "state": "AR",
+    "rent_1br": 1115,
+    "rent_2br": 1347,
+    "utilities_proxy_monthly": 129.1344,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "40340": {
+    "cbsa": "40340",
+    "metro_name": "Wabasha County, MN HUD Metro FMR Area",
+    "state": "MN",
+    "rent_1br": 913,
+    "rent_2br": 1001,
+    "utilities_proxy_monthly": 110.05803,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "22380": {
+    "cbsa": "22380",
+    "metro_name": "Flagstaff, AZ MSA",
+    "state": "AZ",
+    "rent_1br": 1727,
+    "rent_2br": 1921,
+    "utilities_proxy_monthly": 160.23518,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "22420": {
+    "cbsa": "22420",
+    "metro_name": "Flint, MI MSA",
+    "state": "MI",
+    "rent_1br": 856,
+    "rent_2br": 1033,
+    "utilities_proxy_monthly": 119.30835,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "22520": {
+    "cbsa": "22520",
+    "metro_name": "Florence-Muscle Shoals, AL MSA",
+    "state": "AL",
+    "rent_1br": 775,
+    "rent_2br": 1000,
+    "utilities_proxy_monthly": 173.50223,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "22540": {
+    "cbsa": "22540",
+    "metro_name": "Fond du Lac, WI MSA",
+    "state": "WI",
+    "rent_1br": 946,
+    "rent_2br": 1176,
+    "utilities_proxy_monthly": 110.86534,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "22660": {
+    "cbsa": "22660",
+    "metro_name": "Fort Collins, CO MSA",
+    "state": "CO",
+    "rent_1br": 1537,
+    "rent_2br": 1732,
+    "utilities_proxy_monthly": 100.57245,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "33100": {
+    "cbsa": "33100",
+    "metro_name": "West Palm Beach-Boca Raton, FL HUD Metro FMR Area",
+    "state": "FL",
+    "rent_1br": 1901,
+    "rent_2br": 2254,
+    "utilities_proxy_monthly": 156.08921,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.6
+  },
+  "22900": {
+    "cbsa": "22900",
+    "metro_name": "Fort Smith, AR-OK HUD Metro FMR Area",
+    "state": "AR",
+    "rent_1br": 714,
+    "rent_2br": 937,
+    "utilities_proxy_monthly": 129.1344,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "23060": {
+    "cbsa": "23060",
+    "metro_name": "Fort Wayne, IN MSA",
+    "state": "IN",
+    "rent_1br": 916,
+    "rent_2br": 1113,
+    "utilities_proxy_monthly": 133.0587,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "40220": {
+    "cbsa": "40220",
+    "metro_name": "Roanoke, VA HUD Metro FMR Area",
+    "state": "VA",
+    "rent_1br": 1053,
+    "rent_2br": 1254,
+    "utilities_proxy_monthly": 148.76788,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "23420": {
+    "cbsa": "23420",
+    "metro_name": "Fresno, CA MSA",
+    "state": "CA",
+    "rent_1br": 1355,
+    "rent_2br": 1664,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "23460": {
+    "cbsa": "23460",
+    "metro_name": "Gadsden, AL MSA",
+    "state": "AL",
+    "rent_1br": 792,
+    "rent_2br": 927,
+    "utilities_proxy_monthly": 173.50223,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "23540": {
+    "cbsa": "23540",
+    "metro_name": "Levy County, FL HUD Metro FMR Area",
+    "state": "FL",
+    "rent_1br": 831,
+    "rent_2br": 974,
+    "utilities_proxy_monthly": 156.08921,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "23580": {
+    "cbsa": "23580",
+    "metro_name": "Gainesville, GA MSA",
+    "state": "GA",
+    "rent_1br": 1381,
+    "rent_2br": 1514,
+    "utilities_proxy_monthly": 151.24812,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "31740": {
+    "cbsa": "31740",
+    "metro_name": "Manhattan, KS HUD Metro FMR Area",
+    "state": "KS",
+    "rent_1br": 875,
+    "rent_2br": 1068,
+    "utilities_proxy_monthly": 123.9017,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "23900": {
+    "cbsa": "23900",
+    "metro_name": "Gettysburg, PA MSA",
+    "state": "PA",
+    "rent_1br": 1099,
+    "rent_2br": 1374,
+    "utilities_proxy_monthly": 145.17215,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "24020": {
+    "cbsa": "24020",
+    "metro_name": "Glens Falls, NY MSA",
+    "state": "NY",
+    "rent_1br": 1066,
+    "rent_2br": 1348,
+    "utilities_proxy_monthly": 139.53219,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "24140": {
+    "cbsa": "24140",
+    "metro_name": "Goldsboro, NC MSA",
+    "state": "NC",
+    "rent_1br": 948,
+    "rent_2br": 1244,
+    "utilities_proxy_monthly": 143.49872,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "36420": {
+    "cbsa": "36420",
+    "metro_name": "Oklahoma City, OK HUD Metro FMR Area",
+    "state": "OK",
+    "rent_1br": 1017,
+    "rent_2br": 1244,
+    "utilities_proxy_monthly": 132.04558,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "24220": {
+    "cbsa": "24220",
+    "metro_name": "Grand Forks, ND-MN MSA",
+    "state": "ND",
+    "rent_1br": 868,
+    "rent_2br": 1089,
+    "utilities_proxy_monthly": 118.37831,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "24300": {
+    "cbsa": "24300",
+    "metro_name": "Grand Junction, CO MSA",
+    "state": "CO",
+    "rent_1br": 986,
+    "rent_2br": 1249,
+    "utilities_proxy_monthly": 100.57245,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "24340": {
+    "cbsa": "24340",
+    "metro_name": "Montcalm County, MI HUD Metro FMR Area",
+    "state": "MI",
+    "rent_1br": 1016,
+    "rent_2br": 1203,
+    "utilities_proxy_monthly": 119.30835,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "30780": {
+    "cbsa": "30780",
+    "metro_name": "Little Rock-North Little Rock-Conway, AR HUD Metro FMR Area",
+    "state": "AR",
+    "rent_1br": 989,
+    "rent_2br": 1147,
+    "utilities_proxy_monthly": 129.1344,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "24420": {
+    "cbsa": "24420",
+    "metro_name": "Grants Pass, OR MSA",
+    "state": "OR",
+    "rent_1br": 1039,
+    "rent_2br": 1363,
+    "utilities_proxy_monthly": 129.61885,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "24500": {
+    "cbsa": "24500",
+    "metro_name": "Great Falls, MT MSA",
+    "state": "MT",
+    "rent_1br": 979,
+    "rent_2br": 1284,
+    "utilities_proxy_monthly": 107.90693,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "24540": {
+    "cbsa": "24540",
+    "metro_name": "Greeley, CO MSA",
+    "state": "CO",
+    "rent_1br": 1238,
+    "rent_2br": 1563,
+    "utilities_proxy_monthly": 100.57245,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "24580": {
+    "cbsa": "24580",
+    "metro_name": "Oconto County, WI HUD Metro FMR Area",
+    "state": "WI",
+    "rent_1br": 793,
+    "rent_2br": 973,
+    "utilities_proxy_monthly": 110.86534,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "46220": {
+    "cbsa": "46220",
+    "metro_name": "Tuscaloosa, AL HUD Metro FMR Area",
+    "state": "AL",
+    "rent_1br": 972,
+    "rent_2br": 1169,
+    "utilities_proxy_monthly": 173.50223,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "24660": {
+    "cbsa": "24660",
+    "metro_name": "Rockingham County, NC HUD Metro FMR Area",
+    "state": "NC",
+    "rent_1br": 793,
+    "rent_2br": 1040,
+    "utilities_proxy_monthly": 143.49872,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "24780": {
+    "cbsa": "24780",
+    "metro_name": "Greenville, NC MSA",
+    "state": "NC",
+    "rent_1br": 896,
+    "rent_2br": 1095,
+    "utilities_proxy_monthly": 143.49872,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "25020": {
+    "cbsa": "25020",
+    "metro_name": "Guayama, PR MSA",
+    "state": "PR",
+    "rent_1br": 418,
+    "rent_2br": 475,
+    "utilities_proxy_monthly": null,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "25060": {
+    "cbsa": "25060",
+    "metro_name": "Stone County, MS HUD Metro FMR Area",
+    "state": "MS",
+    "rent_1br": 739,
+    "rent_2br": 969,
+    "utilities_proxy_monthly": 154.82553,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "25180": {
+    "cbsa": "25180",
+    "metro_name": "Morgan County, WV HUD Metro FMR Area",
+    "state": "WV",
+    "rent_1br": 732,
+    "rent_2br": 961,
+    "utilities_proxy_monthly": 154.75533,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "24260": {
+    "cbsa": "24260",
+    "metro_name": "Merrick County, NE HUD Metro FMR Area",
+    "state": "NE",
+    "rent_1br": 732,
+    "rent_2br": 961,
+    "utilities_proxy_monthly": 110.27729,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "25220": {
+    "cbsa": "25220",
+    "metro_name": "Hammond, LA MSA",
+    "state": "LA",
+    "rent_1br": 848,
+    "rent_2br": 1099,
+    "utilities_proxy_monthly": 140.96228,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "25260": {
+    "cbsa": "25260",
+    "metro_name": "Hanford-Corcoran, CA MSA",
+    "state": "CA",
+    "rent_1br": 1157,
+    "rent_2br": 1469,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "25420": {
+    "cbsa": "25420",
+    "metro_name": "Harrisburg-Carlisle, PA MSA",
+    "state": "PA",
+    "rent_1br": 1212,
+    "rent_2br": 1493,
+    "utilities_proxy_monthly": 145.17215,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "30980": {
+    "cbsa": "30980",
+    "metro_name": "Rusk County, TX HUD Metro FMR Area",
+    "state": "TX",
+    "rent_1br": 895,
+    "rent_2br": 1175,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "25500": {
+    "cbsa": "25500",
+    "metro_name": "Harrisonburg, VA MSA",
+    "state": "VA",
+    "rent_1br": 1057,
+    "rent_2br": 1322,
+    "utilities_proxy_monthly": 148.76788,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "25540": {
+    "cbsa": "25540",
+    "metro_name": "Hartford-West Hartford-East Hartford, CT HUD Metro FMR Area",
+    "state": "CT",
+    "rent_1br": 1477,
+    "rent_2br": 1865,
+    "utilities_proxy_monthly": 199.65757,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "25620": {
+    "cbsa": "25620",
+    "metro_name": "Hattiesburg, MS HUD Metro FMR Area",
+    "state": "MS",
+    "rent_1br": 888,
+    "rent_2br": 1047,
+    "utilities_proxy_monthly": 154.82553,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "25860": {
+    "cbsa": "25860",
+    "metro_name": "Hickory-Lenoir-Morganton, NC MSA",
+    "state": "NC",
+    "rent_1br": 908,
+    "rent_2br": 1095,
+    "utilities_proxy_monthly": 143.49872,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "31700": {
+    "cbsa": "31700",
+    "metro_name": "Nashua, NH HUD Metro FMR Area",
+    "state": "NH",
+    "rent_1br": 1673,
+    "rent_2br": 2127,
+    "utilities_proxy_monthly": 144.86979,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.6
+  },
+  "25980": {
+    "cbsa": "25980",
+    "metro_name": "Long County, GA HUD Metro FMR Area",
+    "state": "GA",
+    "rent_1br": 1034,
+    "rent_2br": 1133,
+    "utilities_proxy_monthly": 151.24812,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "27140": {
+    "cbsa": "27140",
+    "metro_name": "Yazoo County, MS HUD Metro FMR Area",
+    "state": "MS",
+    "rent_1br": 750,
+    "rent_2br": 984,
+    "utilities_proxy_monthly": 154.82553,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "26140": {
+    "cbsa": "26140",
+    "metro_name": "Homosassa Springs, FL MSA",
+    "state": "FL",
+    "rent_1br": 988,
+    "rent_2br": 1225,
+    "utilities_proxy_monthly": 156.08921,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "26300": {
+    "cbsa": "26300",
+    "metro_name": "Hot Springs, AR MSA",
+    "state": "AR",
+    "rent_1br": 834,
+    "rent_2br": 1090,
+    "utilities_proxy_monthly": 129.1344,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "26380": {
+    "cbsa": "26380",
+    "metro_name": "Houma-Thibodaux, LA MSA",
+    "state": "LA",
+    "rent_1br": 904,
+    "rent_2br": 1102,
+    "utilities_proxy_monthly": 140.96228,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "26620": {
+    "cbsa": "26620",
+    "metro_name": "Huntsville, AL MSA",
+    "state": "AL",
+    "rent_1br": 1136,
+    "rent_2br": 1310,
+    "utilities_proxy_monthly": 173.50223,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "26980": {
+    "cbsa": "26980",
+    "metro_name": "Washington County, IA HUD Metro FMR Area",
+    "state": "IA",
+    "rent_1br": 733,
+    "rent_2br": 962,
+    "utilities_proxy_monthly": 111.53774,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "27060": {
+    "cbsa": "27060",
+    "metro_name": "Ithaca, NY MSA",
+    "state": "NY",
+    "rent_1br": 1466,
+    "rent_2br": 1753,
+    "utilities_proxy_monthly": 139.53219,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "27100": {
+    "cbsa": "27100",
+    "metro_name": "Jackson, MI MSA",
+    "state": "MI",
+    "rent_1br": 946,
+    "rent_2br": 1165,
+    "utilities_proxy_monthly": 119.30835,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "27340": {
+    "cbsa": "27340",
+    "metro_name": "Jacksonville, NC MSA",
+    "state": "NC",
+    "rent_1br": 935,
+    "rent_2br": 1173,
+    "utilities_proxy_monthly": 143.49872,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "27500": {
+    "cbsa": "27500",
+    "metro_name": "Janesville-Beloit, WI MSA",
+    "state": "WI",
+    "rent_1br": 955,
+    "rent_2br": 1246,
+    "utilities_proxy_monthly": 110.86534,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "46300": {
+    "cbsa": "46300",
+    "metro_name": "Twin Falls County, ID HUD Metro FMR Area",
+    "state": "ID",
+    "rent_1br": 979,
+    "rent_2br": 1284,
+    "utilities_proxy_monthly": 108.72736,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "27740": {
+    "cbsa": "27740",
+    "metro_name": "Johnson City, TN MSA",
+    "state": "TN",
+    "rent_1br": 893,
+    "rent_2br": 1132,
+    "utilities_proxy_monthly": 143.31761,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "27780": {
+    "cbsa": "27780",
+    "metro_name": "Johnstown, PA MSA",
+    "state": "PA",
+    "rent_1br": 846,
+    "rent_2br": 1035,
+    "utilities_proxy_monthly": 145.17215,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "27860": {
+    "cbsa": "27860",
+    "metro_name": "Poinsett County, AR HUD Metro FMR Area",
+    "state": "AR",
+    "rent_1br": 685,
+    "rent_2br": 880,
+    "utilities_proxy_monthly": 129.1344,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "27900": {
+    "cbsa": "27900",
+    "metro_name": "Joplin, MO MSA",
+    "state": "MO",
+    "rent_1br": 765,
+    "rent_2br": 947,
+    "utilities_proxy_monthly": 129.18444,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "27980": {
+    "cbsa": "27980",
+    "metro_name": "Kahului-Wailuku-Lahaina, HI MSA",
+    "state": "HI",
+    "rent_1br": 2000,
+    "rent_2br": 2624,
+    "utilities_proxy_monthly": 212.12149,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.7
+  },
+  "28020": {
+    "cbsa": "28020",
+    "metro_name": "Kalamazoo-Portage, MI MSA",
+    "state": "MI",
+    "rent_1br": 998,
+    "rent_2br": 1162,
+    "utilities_proxy_monthly": 119.30835,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "28100": {
+    "cbsa": "28100",
+    "metro_name": "Kankakee, IL MSA",
+    "state": "IL",
+    "rent_1br": 1011,
+    "rent_2br": 1326,
+    "utilities_proxy_monthly": 109.99164,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "28420": {
+    "cbsa": "28420",
+    "metro_name": "Kennewick-Richland, WA MSA",
+    "state": "WA",
+    "rent_1br": 1268,
+    "rent_2br": 1538,
+    "utilities_proxy_monthly": 113.68201,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "28660": {
+    "cbsa": "28660",
+    "metro_name": "Lampasas County, TX HUD Metro FMR Area",
+    "state": "TX",
+    "rent_1br": 813,
+    "rent_2br": 1067,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "40060": {
+    "cbsa": "40060",
+    "metro_name": "Richmond, VA MSA",
+    "state": "VA",
+    "rent_1br": 1507,
+    "rent_2br": 1655,
+    "utilities_proxy_monthly": 148.76788,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "28700": {
+    "cbsa": "28700",
+    "metro_name": "Kingsport-Bristol-Bristol, TN-VA MSA",
+    "state": "TN",
+    "rent_1br": 818,
+    "rent_2br": 1044,
+    "utilities_proxy_monthly": 143.31761,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "28740": {
+    "cbsa": "28740",
+    "metro_name": "Kingston, NY MSA",
+    "state": "NY",
+    "rent_1br": 1386,
+    "rent_2br": 1818,
+    "utilities_proxy_monthly": 139.53219,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "29020": {
+    "cbsa": "29020",
+    "metro_name": "Kokomo, IN MSA",
+    "state": "IN",
+    "rent_1br": 890,
+    "rent_2br": 1123,
+    "utilities_proxy_monthly": 133.0587,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "29100": {
+    "cbsa": "29100",
+    "metro_name": "La Crosse-Onalaska, WI-MN MSA",
+    "state": "WI",
+    "rent_1br": 889,
+    "rent_2br": 1166,
+    "utilities_proxy_monthly": 110.86534,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "29340": {
+    "cbsa": "29340",
+    "metro_name": "Lake Charles, LA MSA",
+    "state": "LA",
+    "rent_1br": 928,
+    "rent_2br": 1217,
+    "utilities_proxy_monthly": 140.96228,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "29420": {
+    "cbsa": "29420",
+    "metro_name": "Lake Havasu City-Kingman, AZ MSA",
+    "state": "AZ",
+    "rent_1br": 1060,
+    "rent_2br": 1365,
+    "utilities_proxy_monthly": 160.23518,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "29460": {
+    "cbsa": "29460",
+    "metro_name": "Lakeland-Winter Haven, FL MSA",
+    "state": "FL",
+    "rent_1br": 1230,
+    "rent_2br": 1497,
+    "utilities_proxy_monthly": 156.08921,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "29540": {
+    "cbsa": "29540",
+    "metro_name": "Lancaster, PA MSA",
+    "state": "PA",
+    "rent_1br": 1220,
+    "rent_2br": 1526,
+    "utilities_proxy_monthly": 145.17215,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "29620": {
+    "cbsa": "29620",
+    "metro_name": "Lansing-East Lansing, MI HUD Metro FMR Area",
+    "state": "MI",
+    "rent_1br": 1012,
+    "rent_2br": 1268,
+    "utilities_proxy_monthly": 119.30835,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "29700": {
+    "cbsa": "29700",
+    "metro_name": "Laredo, TX MSA",
+    "state": "TX",
+    "rent_1br": 962,
+    "rent_2br": 1161,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "29740": {
+    "cbsa": "29740",
+    "metro_name": "Las Cruces, NM MSA",
+    "state": "NM",
+    "rent_1br": 951,
+    "rent_2br": 1042,
+    "utilities_proxy_monthly": 92.875132,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "29820": {
+    "cbsa": "29820",
+    "metro_name": "Las Vegas-Henderson-Paradise, NV MSA",
+    "state": "NV",
+    "rent_1br": 1478,
+    "rent_2br": 1735,
+    "utilities_proxy_monthly": 139.38587,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "29940": {
+    "cbsa": "29940",
+    "metro_name": "Lawrence, KS MSA",
+    "state": "KS",
+    "rent_1br": 1006,
+    "rent_2br": 1182,
+    "utilities_proxy_monthly": 123.9017,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "33460": {
+    "cbsa": "33460",
+    "metro_name": "Minneapolis-St. Paul-Bloomington, MN-WI HUD Metro FMR Area",
+    "state": "MN",
+    "rent_1br": 1405,
+    "rent_2br": 1709,
+    "utilities_proxy_monthly": 110.05803,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "30140": {
+    "cbsa": "30140",
+    "metro_name": "Lebanon, PA MSA",
+    "state": "PA",
+    "rent_1br": 1112,
+    "rent_2br": 1411,
+    "utilities_proxy_monthly": 145.17215,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "30300": {
+    "cbsa": "30300",
+    "metro_name": "Lewiston, ID-WA MSA",
+    "state": "ID",
+    "rent_1br": 931,
+    "rent_2br": 1220,
+    "utilities_proxy_monthly": 108.72736,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "30340": {
+    "cbsa": "30340",
+    "metro_name": "Lewiston-Auburn, ME MSA",
+    "state": "ME",
+    "rent_1br": 1218,
+    "rent_2br": 1586,
+    "utilities_proxy_monthly": 133.59512,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "30460": {
+    "cbsa": "30460",
+    "metro_name": "Lexington-Fayette, KY MSA",
+    "state": "KY",
+    "rent_1br": 1079,
+    "rent_2br": 1272,
+    "utilities_proxy_monthly": 133.80527,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "30620": {
+    "cbsa": "30620",
+    "metro_name": "Lima, OH MSA",
+    "state": "OH",
+    "rent_1br": 844,
+    "rent_2br": 1108,
+    "utilities_proxy_monthly": 135.16102,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "30700": {
+    "cbsa": "30700",
+    "metro_name": "Seward County, NE HUD Metro FMR Area",
+    "state": "NE",
+    "rent_1br": 756,
+    "rent_2br": 967,
+    "utilities_proxy_monthly": 110.27729,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "45500": {
+    "cbsa": "45500",
+    "metro_name": "Texarkana, TX-Texarkana, AR HUD Metro FMR Area",
+    "state": "TX",
+    "rent_1br": 868,
+    "rent_2br": 1101,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "30860": {
+    "cbsa": "30860",
+    "metro_name": "Logan, UT-ID MSA",
+    "state": "UT",
+    "rent_1br": 946,
+    "rent_2br": 1241,
+    "utilities_proxy_monthly": 94.567848,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "31020": {
+    "cbsa": "31020",
+    "metro_name": "Longview, WA MSA",
+    "state": "WA",
+    "rent_1br": 1199,
+    "rent_2br": 1451,
+    "utilities_proxy_monthly": 113.68201,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "31080": {
+    "cbsa": "31080",
+    "metro_name": "Santa Ana-Anaheim-Irvine, CA HUD Metro FMR Area",
+    "state": "CA",
+    "rent_1br": 2746,
+    "rent_2br": 3236,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.8
+  },
+  "31140": {
+    "cbsa": "31140",
+    "metro_name": "Washington County, IN HUD Metro FMR Area",
+    "state": "IN",
+    "rent_1br": 753,
+    "rent_2br": 988,
+    "utilities_proxy_monthly": 133.0587,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "31180": {
+    "cbsa": "31180",
+    "metro_name": "Lynn County, TX HUD Metro FMR Area",
+    "state": "TX",
+    "rent_1br": 767,
+    "rent_2br": 1007,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "31340": {
+    "cbsa": "31340",
+    "metro_name": "Lynchburg, VA MSA",
+    "state": "VA",
+    "rent_1br": 1033,
+    "rent_2br": 1187,
+    "utilities_proxy_monthly": 148.76788,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "34980": {
+    "cbsa": "34980",
+    "metro_name": "Smith County, TN HUD Metro FMR Area",
+    "state": "TN",
+    "rent_1br": 801,
+    "rent_2br": 1051,
+    "utilities_proxy_monthly": 143.31761,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "31420": {
+    "cbsa": "31420",
+    "metro_name": "Monroe County, GA HUD Metro FMR Area",
+    "state": "GA",
+    "rent_1br": 1048,
+    "rent_2br": 1174,
+    "utilities_proxy_monthly": 151.24812,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "31860": {
+    "cbsa": "31860",
+    "metro_name": "Mankato-North Mankato, MN MSA",
+    "state": "MN",
+    "rent_1br": 977,
+    "rent_2br": 1171,
+    "utilities_proxy_monthly": 110.05803,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "31900": {
+    "cbsa": "31900",
+    "metro_name": "Mansfield, OH MSA",
+    "state": "OH",
+    "rent_1br": 773,
+    "rent_2br": 973,
+    "utilities_proxy_monthly": 135.16102,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "32820": {
+    "cbsa": "32820",
+    "metro_name": "Tunica County, MS HUD Metro FMR Area",
+    "state": "MS",
+    "rent_1br": 1073,
+    "rent_2br": 1186,
+    "utilities_proxy_monthly": 154.82553,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "33260": {
+    "cbsa": "33260",
+    "metro_name": "Midland, TX HUD Metro FMR Area",
+    "state": "TX",
+    "rent_1br": 1449,
+    "rent_2br": 1780,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "32420": {
+    "cbsa": "32420",
+    "metro_name": "Mayag\u00fcez, PR MSA",
+    "state": "PR",
+    "rent_1br": 489,
+    "rent_2br": 536,
+    "utilities_proxy_monthly": null,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "32580": {
+    "cbsa": "32580",
+    "metro_name": "McAllen-Edinburg-Mission, TX MSA",
+    "state": "TX",
+    "rent_1br": 847,
+    "rent_2br": 1060,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "39660": {
+    "cbsa": "39660",
+    "metro_name": "Rapid City, SD HUD Metro FMR Area",
+    "state": "SD",
+    "rent_1br": 1018,
+    "rent_2br": 1336,
+    "utilities_proxy_monthly": 127.80959,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "32780": {
+    "cbsa": "32780",
+    "metro_name": "Medford, OR MSA",
+    "state": "OR",
+    "rent_1br": 1229,
+    "rent_2br": 1530,
+    "utilities_proxy_monthly": 129.61885,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "32900": {
+    "cbsa": "32900",
+    "metro_name": "Merced, CA MSA",
+    "state": "CA",
+    "rent_1br": 1213,
+    "rent_2br": 1503,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "33140": {
+    "cbsa": "33140",
+    "metro_name": "Michigan City-La Porte, IN MSA",
+    "state": "IN",
+    "rent_1br": 953,
+    "rent_2br": 1152,
+    "utilities_proxy_monthly": 133.0587,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "33220": {
+    "cbsa": "33220",
+    "metro_name": "Midland, MI MSA",
+    "state": "MI",
+    "rent_1br": 925,
+    "rent_2br": 1193,
+    "utilities_proxy_monthly": 119.30835,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "33340": {
+    "cbsa": "33340",
+    "metro_name": "Milwaukee-Waukesha-West Allis, WI MSA",
+    "state": "WI",
+    "rent_1br": 1119,
+    "rent_2br": 1338,
+    "utilities_proxy_monthly": 110.86534,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "33540": {
+    "cbsa": "33540",
+    "metro_name": "Missoula, MT MSA",
+    "state": "MT",
+    "rent_1br": 1400,
+    "rent_2br": 1655,
+    "utilities_proxy_monthly": 107.90693,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "33660": {
+    "cbsa": "33660",
+    "metro_name": "Mobile, AL HUD Metro FMR Area",
+    "state": "AL",
+    "rent_1br": 919,
+    "rent_2br": 1083,
+    "utilities_proxy_monthly": 173.50223,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "33700": {
+    "cbsa": "33700",
+    "metro_name": "Modesto, CA MSA",
+    "state": "CA",
+    "rent_1br": 1356,
+    "rent_2br": 1758,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "33740": {
+    "cbsa": "33740",
+    "metro_name": "Morehouse Parish, LA HUD Metro FMR Area",
+    "state": "LA",
+    "rent_1br": 636,
+    "rent_2br": 834,
+    "utilities_proxy_monthly": 140.96228,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "33780": {
+    "cbsa": "33780",
+    "metro_name": "Monroe, MI MSA",
+    "state": "MI",
+    "rent_1br": 1011,
+    "rent_2br": 1326,
+    "utilities_proxy_monthly": 119.30835,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "33860": {
+    "cbsa": "33860",
+    "metro_name": "Montgomery, AL MSA",
+    "state": "AL",
+    "rent_1br": 870,
+    "rent_2br": 1016,
+    "utilities_proxy_monthly": 173.50223,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "34060": {
+    "cbsa": "34060",
+    "metro_name": "Morgantown, WV MSA",
+    "state": "WV",
+    "rent_1br": 877,
+    "rent_2br": 1099,
+    "utilities_proxy_monthly": 154.75533,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "34100": {
+    "cbsa": "34100",
+    "metro_name": "Morristown, TN HUD Metro FMR Area",
+    "state": "TN",
+    "rent_1br": 887,
+    "rent_2br": 1135,
+    "utilities_proxy_monthly": 143.31761,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "34580": {
+    "cbsa": "34580",
+    "metro_name": "Mount Vernon-Anacortes, WA MSA",
+    "state": "WA",
+    "rent_1br": 1311,
+    "rent_2br": 1720,
+    "utilities_proxy_monthly": 113.68201,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "34620": {
+    "cbsa": "34620",
+    "metro_name": "Muncie, IN MSA",
+    "state": "IN",
+    "rent_1br": 845,
+    "rent_2br": 1043,
+    "utilities_proxy_monthly": 133.0587,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "34740": {
+    "cbsa": "34740",
+    "metro_name": "Muskegon, MI MSA",
+    "state": "MI",
+    "rent_1br": 942,
+    "rent_2br": 1236,
+    "utilities_proxy_monthly": 119.30835,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "34820": {
+    "cbsa": "34820",
+    "metro_name": "Myrtle Beach-North Myrtle Beach-Conway, SC HUD Metro FMR Area",
+    "state": "SC",
+    "rent_1br": 1229,
+    "rent_2br": 1465,
+    "utilities_proxy_monthly": 149.50724,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "34900": {
+    "cbsa": "34900",
+    "metro_name": "Napa, CA MSA",
+    "state": "CA",
+    "rent_1br": 2113,
+    "rent_2br": 2773,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.7
+  },
+  "34940": {
+    "cbsa": "34940",
+    "metro_name": "Naples-Immokalee-Marco Island, FL MSA",
+    "state": "FL",
+    "rent_1br": 1797,
+    "rent_2br": 1986,
+    "utilities_proxy_monthly": 156.08921,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "35380": {
+    "cbsa": "35380",
+    "metro_name": "St. James Parish, LA HUD Metro FMR Area",
+    "state": "LA",
+    "rent_1br": 702,
+    "rent_2br": 921,
+    "utilities_proxy_monthly": 140.96228,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "35660": {
+    "cbsa": "35660",
+    "metro_name": "Niles-Benton Harbor, MI MSA",
+    "state": "MI",
+    "rent_1br": 902,
+    "rent_2br": 1184,
+    "utilities_proxy_monthly": 119.30835,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "35840": {
+    "cbsa": "35840",
+    "metro_name": "North Port-Sarasota-Bradenton, FL MSA",
+    "state": "FL",
+    "rent_1br": 1686,
+    "rent_2br": 1958,
+    "utilities_proxy_monthly": 156.08921,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "35980": {
+    "cbsa": "35980",
+    "metro_name": "Norwich-New London, CT HUD Metro FMR Area",
+    "state": "CT",
+    "rent_1br": 1496,
+    "rent_2br": 1866,
+    "utilities_proxy_monthly": 199.65757,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "41860": {
+    "cbsa": "41860",
+    "metro_name": "San Francisco, CA HUD Metro FMR Area",
+    "state": "CA",
+    "rent_1br": 2977,
+    "rent_2br": 3604,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.8
+  },
+  "36100": {
+    "cbsa": "36100",
+    "metro_name": "Ocala, FL MSA",
+    "state": "FL",
+    "rent_1br": 1172,
+    "rent_2br": 1373,
+    "utilities_proxy_monthly": 156.08921,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "36220": {
+    "cbsa": "36220",
+    "metro_name": "Odessa, TX MSA",
+    "state": "TX",
+    "rent_1br": 1269,
+    "rent_2br": 1595,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "36260": {
+    "cbsa": "36260",
+    "metro_name": "Ogden-Clearfield, UT HUD Metro FMR Area",
+    "state": "UT",
+    "rent_1br": 1281,
+    "rent_2br": 1614,
+    "utilities_proxy_monthly": 94.567848,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "46140": {
+    "cbsa": "46140",
+    "metro_name": "Tulsa, OK HUD Metro FMR Area",
+    "state": "OK",
+    "rent_1br": 987,
+    "rent_2br": 1217,
+    "utilities_proxy_monthly": 132.04558,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "36500": {
+    "cbsa": "36500",
+    "metro_name": "Olympia-Tumwater, WA MSA",
+    "state": "WA",
+    "rent_1br": 1682,
+    "rent_2br": 1960,
+    "utilities_proxy_monthly": 113.68201,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "36540": {
+    "cbsa": "36540",
+    "metro_name": "Saunders County, NE HUD Metro FMR Area",
+    "state": "NE",
+    "rent_1br": 956,
+    "rent_2br": 1089,
+    "utilities_proxy_monthly": 110.27729,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "36740": {
+    "cbsa": "36740",
+    "metro_name": "Orlando-Kissimmee-Sanford, FL MSA",
+    "state": "FL",
+    "rent_1br": 1731,
+    "rent_2br": 1972,
+    "utilities_proxy_monthly": 156.08921,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "36780": {
+    "cbsa": "36780",
+    "metro_name": "Oshkosh-Neenah, WI MSA",
+    "state": "WI",
+    "rent_1br": 889,
+    "rent_2br": 1149,
+    "utilities_proxy_monthly": 110.86534,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "36980": {
+    "cbsa": "36980",
+    "metro_name": "Owensboro, KY MSA",
+    "state": "KY",
+    "rent_1br": 846,
+    "rent_2br": 1110,
+    "utilities_proxy_monthly": 133.80527,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "37100": {
+    "cbsa": "37100",
+    "metro_name": "Oxnard-Thousand Oaks-Ventura, CA MSA",
+    "state": "CA",
+    "rent_1br": 2250,
+    "rent_2br": 2693,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.7
+  },
+  "37340": {
+    "cbsa": "37340",
+    "metro_name": "Palm Bay-Melbourne-Titusville, FL MSA",
+    "state": "FL",
+    "rent_1br": 1478,
+    "rent_2br": 1709,
+    "utilities_proxy_monthly": 156.08921,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "37460": {
+    "cbsa": "37460",
+    "metro_name": "Panama City, FL MSA",
+    "state": "FL",
+    "rent_1br": 1480,
+    "rent_2br": 1682,
+    "utilities_proxy_monthly": 156.08921,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "37620": {
+    "cbsa": "37620",
+    "metro_name": "Parkersburg-Vienna, WV MSA",
+    "state": "WV",
+    "rent_1br": 745,
+    "rent_2br": 928,
+    "utilities_proxy_monthly": 154.75533,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "47580": {
+    "cbsa": "47580",
+    "metro_name": "Warner Robins, GA HUD Metro FMR Area",
+    "state": "GA",
+    "rent_1br": 1221,
+    "rent_2br": 1362,
+    "utilities_proxy_monthly": 151.24812,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "48900": {
+    "cbsa": "48900",
+    "metro_name": "Wilmington, NC HUD Metro FMR Area",
+    "state": "NC",
+    "rent_1br": 1513,
+    "rent_2br": 1659,
+    "utilities_proxy_monthly": 143.49872,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "37860": {
+    "cbsa": "37860",
+    "metro_name": "Pensacola-Ferry Pass-Brent, FL MSA",
+    "state": "FL",
+    "rent_1br": 1257,
+    "rent_2br": 1471,
+    "utilities_proxy_monthly": 156.08921,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "37900": {
+    "cbsa": "37900",
+    "metro_name": "Peoria, IL HUD Metro FMR Area",
+    "state": "IL",
+    "rent_1br": 818,
+    "rent_2br": 1039,
+    "utilities_proxy_monthly": 109.99164,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "37980": {
+    "cbsa": "37980",
+    "metro_name": "Philadelphia-Camden-Wilmington, PA-NJ-DE-MD MSA",
+    "state": "PA",
+    "rent_1br": 1520,
+    "rent_2br": 1810,
+    "utilities_proxy_monthly": 145.17215,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "38060": {
+    "cbsa": "38060",
+    "metro_name": "Phoenix-Mesa-Scottsdale, AZ MSA",
+    "state": "AZ",
+    "rent_1br": 1583,
+    "rent_2br": 1839,
+    "utilities_proxy_monthly": 160.23518,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "38540": {
+    "cbsa": "38540",
+    "metro_name": "Pocatello, ID HUD Metro FMR Area",
+    "state": "ID",
+    "rent_1br": 894,
+    "rent_2br": 1173,
+    "utilities_proxy_monthly": 108.72736,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "38660": {
+    "cbsa": "38660",
+    "metro_name": "Ponce, PR MSA",
+    "state": "PR",
+    "rent_1br": 491,
+    "rent_2br": 538,
+    "utilities_proxy_monthly": null,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "38940": {
+    "cbsa": "38940",
+    "metro_name": "Port St. Lucie, FL MSA",
+    "state": "FL",
+    "rent_1br": 1467,
+    "rent_2br": 1757,
+    "utilities_proxy_monthly": 156.08921,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "38900": {
+    "cbsa": "38900",
+    "metro_name": "Portland-Vancouver-Hillsboro, OR-WA MSA",
+    "state": "OR",
+    "rent_1br": 1677,
+    "rent_2br": 1922,
+    "utilities_proxy_monthly": 129.61885,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "39150": {
+    "cbsa": "39150",
+    "metro_name": "Prescott Valley-Prescott, AZ MSA",
+    "state": "AZ",
+    "rent_1br": 1309,
+    "rent_2br": 1637,
+    "utilities_proxy_monthly": 160.23518,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "39340": {
+    "cbsa": "39340",
+    "metro_name": "Provo-Orem, UT MSA",
+    "state": "UT",
+    "rent_1br": 1265,
+    "rent_2br": 1460,
+    "utilities_proxy_monthly": 94.567848,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "39380": {
+    "cbsa": "39380",
+    "metro_name": "Pueblo, CO MSA",
+    "state": "CO",
+    "rent_1br": 967,
+    "rent_2br": 1269,
+    "utilities_proxy_monthly": 100.57245,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "39460": {
+    "cbsa": "39460",
+    "metro_name": "Punta Gorda, FL MSA",
+    "state": "FL",
+    "rent_1br": 1167,
+    "rent_2br": 1470,
+    "utilities_proxy_monthly": 156.08921,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "39540": {
+    "cbsa": "39540",
+    "metro_name": "Racine, WI MSA",
+    "state": "WI",
+    "rent_1br": 988,
+    "rent_2br": 1235,
+    "utilities_proxy_monthly": 110.86534,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "39580": {
+    "cbsa": "39580",
+    "metro_name": "Raleigh, NC MSA",
+    "state": "NC",
+    "rent_1br": 1596,
+    "rent_2br": 1750,
+    "utilities_proxy_monthly": 143.49872,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "39740": {
+    "cbsa": "39740",
+    "metro_name": "Reading, PA MSA",
+    "state": "PA",
+    "rent_1br": 1237,
+    "rent_2br": 1575,
+    "utilities_proxy_monthly": 145.17215,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "39820": {
+    "cbsa": "39820",
+    "metro_name": "Redding, CA MSA",
+    "state": "CA",
+    "rent_1br": 1212,
+    "rent_2br": 1590,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "39900": {
+    "cbsa": "39900",
+    "metro_name": "Reno, NV MSA",
+    "state": "NV",
+    "rent_1br": 1489,
+    "rent_2br": 1870,
+    "utilities_proxy_monthly": 139.38587,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "40140": {
+    "cbsa": "40140",
+    "metro_name": "Riverside-San Bernardino-Ontario, CA MSA",
+    "state": "CA",
+    "rent_1br": 1777,
+    "rent_2br": 2201,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.6
+  },
+  "40380": {
+    "cbsa": "40380",
+    "metro_name": "Rochester, NY HUD Metro FMR Area",
+    "state": "NY",
+    "rent_1br": 1256,
+    "rent_2br": 1573,
+    "utilities_proxy_monthly": 139.53219,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "40420": {
+    "cbsa": "40420",
+    "metro_name": "Rockford, IL MSA",
+    "state": "IL",
+    "rent_1br": 895,
+    "rent_2br": 1175,
+    "utilities_proxy_monthly": 109.99164,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "40580": {
+    "cbsa": "40580",
+    "metro_name": "Rocky Mount, NC MSA",
+    "state": "NC",
+    "rent_1br": 918,
+    "rent_2br": 1143,
+    "utilities_proxy_monthly": 143.49872,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "40660": {
+    "cbsa": "40660",
+    "metro_name": "Rome, GA MSA",
+    "state": "GA",
+    "rent_1br": 923,
+    "rent_2br": 1192,
+    "utilities_proxy_monthly": 151.24812,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "40900": {
+    "cbsa": "40900",
+    "metro_name": "Yolo, CA HUD Metro FMR Area",
+    "state": "CA",
+    "rent_1br": 1615,
+    "rent_2br": 2104,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.6
+  },
+  "40980": {
+    "cbsa": "40980",
+    "metro_name": "Saginaw, MI MSA",
+    "state": "MI",
+    "rent_1br": 851,
+    "rent_2br": 1117,
+    "utilities_proxy_monthly": 119.30835,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "41420": {
+    "cbsa": "41420",
+    "metro_name": "Salem, OR MSA",
+    "state": "OR",
+    "rent_1br": 1201,
+    "rent_2br": 1560,
+    "utilities_proxy_monthly": 129.61885,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "41500": {
+    "cbsa": "41500",
+    "metro_name": "Salinas, CA MSA",
+    "state": "CA",
+    "rent_1br": 2232,
+    "rent_2br": 2684,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.7
+  },
+  "41540": {
+    "cbsa": "41540",
+    "metro_name": "Somerset County, MD HUD Metro FMR Area",
+    "state": "MD",
+    "rent_1br": 907,
+    "rent_2br": 1167,
+    "utilities_proxy_monthly": 165.87107,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "41620": {
+    "cbsa": "41620",
+    "metro_name": "Tooele County, UT HUD Metro FMR Area",
+    "state": "UT",
+    "rent_1br": 946,
+    "rent_2br": 1241,
+    "utilities_proxy_monthly": 94.567848,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "41660": {
+    "cbsa": "41660",
+    "metro_name": "San Angelo, TX HUD Metro FMR Area",
+    "state": "TX",
+    "rent_1br": 1049,
+    "rent_2br": 1339,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "41940": {
+    "cbsa": "41940",
+    "metro_name": "San Jose-Sunnyvale-Santa Clara, CA HUD Metro FMR Area",
+    "state": "CA",
+    "rent_1br": 2982,
+    "rent_2br": 3483,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.8
+  },
+  "41740": {
+    "cbsa": "41740",
+    "metro_name": "San Diego-Carlsbad, CA MSA",
+    "state": "CA",
+    "rent_1br": 2459,
+    "rent_2br": 3001,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.8
+  },
+  "42020": {
+    "cbsa": "42020",
+    "metro_name": "San Luis Obispo-Paso Robles-Arroyo Grande, CA MSA",
+    "state": "CA",
+    "rent_1br": 1914,
+    "rent_2br": 2512,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.7
+  },
+  "42100": {
+    "cbsa": "42100",
+    "metro_name": "Santa Cruz-Watsonville, CA MSA",
+    "state": "CA",
+    "rent_1br": 3298,
+    "rent_2br": 4214,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.8
+  },
+  "42140": {
+    "cbsa": "42140",
+    "metro_name": "Santa Fe, NM MSA",
+    "state": "NM",
+    "rent_1br": 1390,
+    "rent_2br": 1685,
+    "utilities_proxy_monthly": 92.875132,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "42200": {
+    "cbsa": "42200",
+    "metro_name": "Santa Maria-Santa Barbara, CA MSA",
+    "state": "CA",
+    "rent_1br": 2746,
+    "rent_2br": 3124,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.8
+  },
+  "42220": {
+    "cbsa": "42220",
+    "metro_name": "Santa Rosa, CA MSA",
+    "state": "CA",
+    "rent_1br": 2155,
+    "rent_2br": 2827,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.7
+  },
+  "42340": {
+    "cbsa": "42340",
+    "metro_name": "Savannah, GA MSA",
+    "state": "GA",
+    "rent_1br": 1533,
+    "rent_2br": 1680,
+    "utilities_proxy_monthly": 151.24812,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "42540": {
+    "cbsa": "42540",
+    "metro_name": "Scranton--Wilkes-Barre, PA MSA",
+    "state": "PA",
+    "rent_1br": 1028,
+    "rent_2br": 1252,
+    "utilities_proxy_monthly": 145.17215,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "42660": {
+    "cbsa": "42660",
+    "metro_name": "Tacoma, WA HUD Metro FMR Area",
+    "state": "WA",
+    "rent_1br": 1605,
+    "rent_2br": 1971,
+    "utilities_proxy_monthly": 113.68201,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "42680": {
+    "cbsa": "42680",
+    "metro_name": "Sebastian-Vero Beach, FL MSA",
+    "state": "FL",
+    "rent_1br": 1222,
+    "rent_2br": 1604,
+    "utilities_proxy_monthly": 156.08921,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "42700": {
+    "cbsa": "42700",
+    "metro_name": "Sebring, FL MSA",
+    "state": "FL",
+    "rent_1br": 1006,
+    "rent_2br": 1271,
+    "utilities_proxy_monthly": 156.08921,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "43100": {
+    "cbsa": "43100",
+    "metro_name": "Sheboygan, WI MSA",
+    "state": "WI",
+    "rent_1br": 888,
+    "rent_2br": 1116,
+    "utilities_proxy_monthly": 110.86534,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "43300": {
+    "cbsa": "43300",
+    "metro_name": "Sherman-Denison, TX MSA",
+    "state": "TX",
+    "rent_1br": 1089,
+    "rent_2br": 1351,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "43340": {
+    "cbsa": "43340",
+    "metro_name": "Shreveport-Bossier City, LA MSA",
+    "state": "LA",
+    "rent_1br": 982,
+    "rent_2br": 1111,
+    "utilities_proxy_monthly": 140.96228,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "43420": {
+    "cbsa": "43420",
+    "metro_name": "Sierra Vista-Douglas, AZ MSA",
+    "state": "AZ",
+    "rent_1br": 1111,
+    "rent_2br": 1257,
+    "utilities_proxy_monthly": 160.23518,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "43580": {
+    "cbsa": "43580",
+    "metro_name": "Sioux City, IA-NE-SD MSA",
+    "state": "IA",
+    "rent_1br": 925,
+    "rent_2br": 1154,
+    "utilities_proxy_monthly": 111.53774,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "43620": {
+    "cbsa": "43620",
+    "metro_name": "Sioux Falls, SD MSA",
+    "state": "SD",
+    "rent_1br": 986,
+    "rent_2br": 1156,
+    "utilities_proxy_monthly": 127.80959,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "43900": {
+    "cbsa": "43900",
+    "metro_name": "Spartanburg, SC MSA",
+    "state": "SC",
+    "rent_1br": 1083,
+    "rent_2br": 1187,
+    "utilities_proxy_monthly": 149.50724,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "44060": {
+    "cbsa": "44060",
+    "metro_name": "Stevens County, WA HUD Metro FMR Area",
+    "state": "WA",
+    "rent_1br": 885,
+    "rent_2br": 1131,
+    "utilities_proxy_monthly": 113.68201,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "44100": {
+    "cbsa": "44100",
+    "metro_name": "Springfield, IL MSA",
+    "state": "IL",
+    "rent_1br": 970,
+    "rent_2br": 1203,
+    "utilities_proxy_monthly": 109.99164,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "44140": {
+    "cbsa": "44140",
+    "metro_name": "Springfield, MA HUD Metro FMR Area",
+    "state": "MA",
+    "rent_1br": 1382,
+    "rent_2br": 1734,
+    "utilities_proxy_monthly": 167.19976,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "44220": {
+    "cbsa": "44220",
+    "metro_name": "Springfield, OH MSA",
+    "state": "OH",
+    "rent_1br": 843,
+    "rent_2br": 1106,
+    "utilities_proxy_monthly": 135.16102,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "41060": {
+    "cbsa": "41060",
+    "metro_name": "St. Cloud, MN MSA",
+    "state": "MN",
+    "rent_1br": 919,
+    "rent_2br": 1206,
+    "utilities_proxy_monthly": 110.05803,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "41100": {
+    "cbsa": "41100",
+    "metro_name": "St. George, UT MSA",
+    "state": "UT",
+    "rent_1br": 1218,
+    "rent_2br": 1575,
+    "utilities_proxy_monthly": 94.567848,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "41140": {
+    "cbsa": "41140",
+    "metro_name": "St. Joseph, MO-KS MSA",
+    "state": "MO",
+    "rent_1br": 832,
+    "rent_2br": 1077,
+    "utilities_proxy_monthly": 129.18444,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "44300": {
+    "cbsa": "44300",
+    "metro_name": "State College, PA MSA",
+    "state": "PA",
+    "rent_1br": 1194,
+    "rent_2br": 1406,
+    "utilities_proxy_monthly": 145.17215,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "44420": {
+    "cbsa": "44420",
+    "metro_name": "Staunton-Waynesboro, VA MSA",
+    "state": "VA",
+    "rent_1br": 1095,
+    "rent_2br": 1261,
+    "utilities_proxy_monthly": 148.76788,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "44700": {
+    "cbsa": "44700",
+    "metro_name": "Stockton-Lodi, CA MSA",
+    "state": "CA",
+    "rent_1br": 1395,
+    "rent_2br": 1742,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "45460": {
+    "cbsa": "45460",
+    "metro_name": "Terre Haute, IN HUD Metro FMR Area",
+    "state": "IN",
+    "rent_1br": 864,
+    "rent_2br": 1094,
+    "utilities_proxy_monthly": 133.0587,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "48620": {
+    "cbsa": "48620",
+    "metro_name": "Wichita, KS HUD Metro FMR Area",
+    "state": "KS",
+    "rent_1br": 849,
+    "rent_2br": 1099,
+    "utilities_proxy_monthly": 123.9017,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "44940": {
+    "cbsa": "44940",
+    "metro_name": "Sumter, SC HUD Metro FMR Area",
+    "state": "SC",
+    "rent_1br": 972,
+    "rent_2br": 1276,
+    "utilities_proxy_monthly": 149.50724,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "45060": {
+    "cbsa": "45060",
+    "metro_name": "Syracuse, NY MSA",
+    "state": "NY",
+    "rent_1br": 1123,
+    "rent_2br": 1392,
+    "utilities_proxy_monthly": 139.53219,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "45220": {
+    "cbsa": "45220",
+    "metro_name": "Wakulla County, FL HUD Metro FMR Area",
+    "state": "FL",
+    "rent_1br": 1073,
+    "rent_2br": 1199,
+    "utilities_proxy_monthly": 156.08921,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "45300": {
+    "cbsa": "45300",
+    "metro_name": "Tampa-St. Petersburg-Clearwater, FL MSA",
+    "state": "FL",
+    "rent_1br": 1696,
+    "rent_2br": 1977,
+    "utilities_proxy_monthly": 156.08921,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "45780": {
+    "cbsa": "45780",
+    "metro_name": "Toledo, OH HUD Metro FMR Area",
+    "state": "OH",
+    "rent_1br": 820,
+    "rent_2br": 1076,
+    "utilities_proxy_monthly": 135.16102,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "45820": {
+    "cbsa": "45820",
+    "metro_name": "Topeka, KS MSA",
+    "state": "KS",
+    "rent_1br": 820,
+    "rent_2br": 1057,
+    "utilities_proxy_monthly": 123.9017,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "45940": {
+    "cbsa": "45940",
+    "metro_name": "Trenton, NJ MSA",
+    "state": "NJ",
+    "rent_1br": 1545,
+    "rent_2br": 1950,
+    "utilities_proxy_monthly": 128.12851,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "46060": {
+    "cbsa": "46060",
+    "metro_name": "Tucson, AZ MSA",
+    "state": "AZ",
+    "rent_1br": 1081,
+    "rent_2br": 1402,
+    "utilities_proxy_monthly": 160.23518,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "46340": {
+    "cbsa": "46340",
+    "metro_name": "Tyler, TX MSA",
+    "state": "TX",
+    "rent_1br": 1089,
+    "rent_2br": 1338,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "46520": {
+    "cbsa": "46520",
+    "metro_name": "Urban Honolulu, HI MSA",
+    "state": "HI",
+    "rent_1br": 2016,
+    "rent_2br": 2642,
+    "utilities_proxy_monthly": 212.12149,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.7
+  },
+  "46540": {
+    "cbsa": "46540",
+    "metro_name": "Utica-Rome, NY MSA",
+    "state": "NY",
+    "rent_1br": 926,
+    "rent_2br": 1172,
+    "utilities_proxy_monthly": 139.53219,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "46660": {
+    "cbsa": "46660",
+    "metro_name": "Valdosta, GA MSA",
+    "state": "GA",
+    "rent_1br": 921,
+    "rent_2br": 1192,
+    "utilities_proxy_monthly": 151.24812,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "46700": {
+    "cbsa": "46700",
+    "metro_name": "Vallejo-Fairfield, CA MSA",
+    "state": "CA",
+    "rent_1br": 1705,
+    "rent_2br": 2178,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.6
+  },
+  "47020": {
+    "cbsa": "47020",
+    "metro_name": "Victoria, TX MSA",
+    "state": "TX",
+    "rent_1br": 1153,
+    "rent_2br": 1442,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "47220": {
+    "cbsa": "47220",
+    "metro_name": "Vineland-Bridgeton, NJ MSA",
+    "state": "NJ",
+    "rent_1br": 1375,
+    "rent_2br": 1673,
+    "utilities_proxy_monthly": 128.12851,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.5
+  },
+  "47300": {
+    "cbsa": "47300",
+    "metro_name": "Visalia-Porterville, CA MSA",
+    "state": "CA",
+    "rent_1br": 1123,
+    "rent_2br": 1474,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "47460": {
+    "cbsa": "47460",
+    "metro_name": "Walla Walla, WA MSA",
+    "state": "WA",
+    "rent_1br": 1181,
+    "rent_2br": 1550,
+    "utilities_proxy_monthly": 113.68201,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "48060": {
+    "cbsa": "48060",
+    "metro_name": "Watertown-Fort Drum, NY MSA",
+    "state": "NY",
+    "rent_1br": 1071,
+    "rent_2br": 1405,
+    "utilities_proxy_monthly": 139.53219,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "48140": {
+    "cbsa": "48140",
+    "metro_name": "Wausau, WI HUD Metro FMR Area",
+    "state": "WI",
+    "rent_1br": 889,
+    "rent_2br": 1147,
+    "utilities_proxy_monthly": 110.86534,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "48260": {
+    "cbsa": "48260",
+    "metro_name": "Weirton-Steubenville, WV-OH MSA",
+    "state": "WV",
+    "rent_1br": 757,
+    "rent_2br": 973,
+    "utilities_proxy_monthly": 154.75533,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "48300": {
+    "cbsa": "48300",
+    "metro_name": "Wenatchee, WA MSA",
+    "state": "WA",
+    "rent_1br": 1143,
+    "rent_2br": 1500,
+    "utilities_proxy_monthly": 113.68201,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "48540": {
+    "cbsa": "48540",
+    "metro_name": "Wheeling, WV-OH MSA",
+    "state": "WV",
+    "rent_1br": 816,
+    "rent_2br": 991,
+    "utilities_proxy_monthly": 154.75533,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "48660": {
+    "cbsa": "48660",
+    "metro_name": "Wichita Falls, TX MSA",
+    "state": "TX",
+    "rent_1br": 925,
+    "rent_2br": 1136,
+    "utilities_proxy_monthly": 163.72258,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "48700": {
+    "cbsa": "48700",
+    "metro_name": "Williamsport, PA MSA",
+    "state": "PA",
+    "rent_1br": 995,
+    "rent_2br": 1195,
+    "utilities_proxy_monthly": 145.17215,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "49020": {
+    "cbsa": "49020",
+    "metro_name": "Winchester, VA-WV MSA",
+    "state": "VA",
+    "rent_1br": 1255,
+    "rent_2br": 1573,
+    "utilities_proxy_monthly": 148.76788,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "49420": {
+    "cbsa": "49420",
+    "metro_name": "Yakima, WA MSA",
+    "state": "WA",
+    "rent_1br": 1047,
+    "rent_2br": 1374,
+    "utilities_proxy_monthly": 113.68201,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "49620": {
+    "cbsa": "49620",
+    "metro_name": "York-Hanover, PA MSA",
+    "state": "PA",
+    "rent_1br": 1060,
+    "rent_2br": 1335,
+    "utilities_proxy_monthly": 145.17215,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "49660": {
+    "cbsa": "49660",
+    "metro_name": "Youngstown-Warren-Boardman, OH HUD Metro FMR Area",
+    "state": "OH",
+    "rent_1br": 771,
+    "rent_2br": 973,
+    "utilities_proxy_monthly": 135.16102,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.35
+  },
+  "49700": {
+    "cbsa": "49700",
+    "metro_name": "Yuba City, CA MSA",
+    "state": "CA",
+    "rent_1br": 1272,
+    "rent_2br": 1550,
+    "utilities_proxy_monthly": 160.85994,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  },
+  "49740": {
+    "cbsa": "49740",
+    "metro_name": "Yuma, AZ MSA",
+    "state": "AZ",
+    "rent_1br": 1053,
+    "rent_2br": 1382,
+    "utilities_proxy_monthly": 160.23518,
+    "transport_proxy_monthly": 230.0,
+    "entry_friction": 0.42
+  }
+}

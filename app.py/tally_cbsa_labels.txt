@@ -1,0 +1,375 @@
+Abilene, TX MSA
+Aguadilla-Isabela, PR MSA
+Akron, OH MSA
+Albany, GA MSA
+Albany, OR MSA
+Albany-Schenectady-Troy, NY MSA
+Albuquerque, NM MSA
+Alexandria, LA MSA
+Altoona, PA MSA
+Ann Arbor, MI MSA
+Anniston-Oxford-Jacksonville, AL MSA
+Appleton, WI MSA
+Arecibo, PR MSA
+Asheville, NC HUD Metro FMR Area
+Athens-Clarke County, GA MSA
+Atlantic City-Hammonton, NJ MSA
+Auburn-Opelika, AL MSA
+Austin-Round Rock, TX MSA
+Bakersfield, CA MSA
+Baltimore-Columbia-Towson, MD MSA
+Barnstable Town, MA MSA
+Battle Creek, MI MSA
+Bay City, MI MSA
+Beaumont-Port Arthur, TX MSA
+Bellingham, WA MSA
+Bend-Redmond, OR MSA
+Binghamton, NY MSA
+Bismarck, ND MSA
+Bloomington, IL MSA
+Boone County, IA HUD Metro FMR Area
+Boulder, CO MSA
+Bremerton-Silverdale, WA MSA
+Brownsville-Harlingen, TX MSA
+Brunswick, GA MSA
+Buffalo-Cheektowaga-Niagara Falls, NY MSA
+Burlington, NC MSA
+Burlington-South Burlington, VT MSA
+Butler County, KY HUD Metro FMR Area
+Canton-Massillon, OH MSA
+Cape Coral-Fort Myers, FL MSA
+Cape Girardeau, MO-IL MSA
+Carson City, NV MSA
+Casper, WY MSA
+Chambersburg-Waynesboro, PA MSA
+Champaign-Urbana, IL MSA
+Charleston, WV HUD Metro FMR Area
+Charleston-North Charleston, SC MSA
+Charlottesville, VA MSA
+Chattanooga, TN-GA MSA
+Cheyenne, WY MSA
+Chico, CA MSA
+Chilton County, AL HUD Metro FMR Area
+Cleveland, TN MSA
+Coeur d'Alene, ID MSA
+College Station-Bryan, TX MSA
+Columbus, IN MSA
+Corpus Christi, TX MSA
+Corvallis, OR MSA
+Daphne-Fairhope-Foley, AL MSA
+Davenport-Moline-Rock Island, IA-IL MSA
+Dayton-Kettering, OH MSA
+Decatur, AL MSA
+Decatur, IL MSA
+Denver-Aurora-Lakewood, CO MSA
+Dover, DE MSA
+Dubuque, IA MSA
+Duluth, MN-WI HUD Metro FMR Area
+Eau Claire, WI MSA
+El Centro, CA MSA
+Elizabethtown, KY HUD Metro FMR Area
+Elkhart-Goshen, IN MSA
+Elmira, NY MSA
+Enid, OK MSA
+Erie, PA MSA
+Eugene-Springfield, OR MSA
+Evansville, IN-KY MSA
+Fairbanks, AK MSA
+Fargo, ND-MN MSA
+Farmington, NM MSA
+Fayetteville-Springdale-Rogers, AR MSA
+Flagstaff, AZ MSA
+Flint, MI MSA
+Florence, SC HUD Metro FMR Area
+Florence-Muscle Shoals, AL MSA
+Fond du Lac, WI MSA
+Fort Collins, CO MSA
+Fort Smith, AR-OK HUD Metro FMR Area
+Fort Wayne, IN MSA
+Fresno, CA MSA
+Gadsden, AL MSA
+Gainesville, GA MSA
+Gem County, ID HUD Metro FMR Area
+Gettysburg, PA MSA
+Glens Falls, NY MSA
+Goldsboro, NC MSA
+Grand Forks, ND-MN MSA
+Grand Junction, CO MSA
+Grant County, KY HUD Metro FMR Area
+Grants Pass, OR MSA
+Great Falls, MT MSA
+Greeley, CO MSA
+Greenville, NC MSA
+Guayama, PR MSA
+Hammond, LA MSA
+Hanford-Corcoran, CA MSA
+Harrisburg-Carlisle, PA MSA
+Harrisonburg, VA MSA
+Hartford-West Hartford-East Hartford, CT HUD Metro FMR Area
+Hattiesburg, MS HUD Metro FMR Area
+Henry County, AL HUD Metro FMR Area
+Hickory-Lenoir-Morganton, NC MSA
+Hoke County, NC HUD Metro FMR Area
+Homosassa Springs, FL MSA
+Hot Springs, AR MSA
+Houma-Thibodaux, LA MSA
+Houston-The Woodlands-Sugar Land, TX HUD Metro FMR Area
+Howard County, MO HUD Metro FMR Area
+Hudspeth County, TX HUD Metro FMR Area
+Huntsville, AL MSA
+Iberville Parish, LA HUD Metro FMR Area
+Idaho Falls, ID HUD Metro FMR Area
+Indianapolis-Carmel, IN HUD Metro FMR Area
+Ithaca, NY MSA
+Jackson, MI MSA
+Jackson, TN HUD Metro FMR Area
+Jacksonville, FL HUD Metro FMR Area
+Jacksonville, NC MSA
+Janesville-Beloit, WI MSA
+Jasper County, IA HUD Metro FMR Area
+Jasper County, SC HUD Metro FMR Area
+Johnson City, TN MSA
+Johnstown, PA MSA
+Jones County, IA HUD Metro FMR Area
+Joplin, MO MSA
+Kahului-Wailuku-Lahaina, HI MSA
+Kalamazoo-Portage, MI MSA
+Kankakee, IL MSA
+Kansas City, MO-KS HUD Metro FMR Area
+Kendall County, IL HUD Metro FMR Area
+Kennewick-Richland, WA MSA
+Kershaw County, SC HUD Metro FMR Area
+Kingsport-Bristol-Bristol, TN-VA MSA
+Kingston, NY MSA
+Kokomo, IN MSA
+La Crosse-Onalaska, WI-MN MSA
+Lake Charles, LA MSA
+Lake Havasu City-Kingman, AZ MSA
+Lakeland-Winter Haven, FL MSA
+Lampasas County, TX HUD Metro FMR Area
+Lancaster, PA MSA
+Lansing-East Lansing, MI HUD Metro FMR Area
+Laredo, TX MSA
+Las Cruces, NM MSA
+Las Vegas-Henderson-Paradise, NV MSA
+Laurens County, SC HUD Metro FMR Area
+Lawrence, KS MSA
+Lawton, OK HUD Metro FMR Area
+Lebanon, PA MSA
+Levy County, FL HUD Metro FMR Area
+Lewiston, ID-WA MSA
+Lewiston-Auburn, ME MSA
+Lexington-Fayette, KY MSA
+Lima, OH MSA
+Lincoln County, GA HUD Metro FMR Area
+Little Rock-North Little Rock-Conway, AR HUD Metro FMR Area
+Livingston County, MI HUD Metro FMR Area
+Logan, UT-ID MSA
+Long County, GA HUD Metro FMR Area
+Longview, WA MSA
+Lynchburg, VA MSA
+Lynn County, TX HUD Metro FMR Area
+Madison, WI HUD Metro FMR Area
+Manhattan, KS HUD Metro FMR Area
+Mankato-North Mankato, MN MSA
+Mansfield, OH MSA
+Matanuska-Susitna Borough, AK HUD Metro FMR Area
+Mayagüez, PR MSA
+McAllen-Edinburg-Mission, TX MSA
+Medford, OR MSA
+Merced, CA MSA
+Merrick County, NE HUD Metro FMR Area
+Michigan City-La Porte, IN MSA
+Midland, MI MSA
+Midland, TX HUD Metro FMR Area
+Milwaukee-Waukesha-West Allis, WI MSA
+Minneapolis-St. Paul-Bloomington, MN-WI HUD Metro FMR Area
+Missoula, MT MSA
+Mobile, AL HUD Metro FMR Area
+Modesto, CA MSA
+Moniteau County, MO HUD Metro FMR Area
+Monroe County, GA HUD Metro FMR Area
+Monroe, MI MSA
+Montcalm County, MI HUD Metro FMR Area
+Montgomery, AL MSA
+Morehouse Parish, LA HUD Metro FMR Area
+Morgan County, GA HUD Metro FMR Area
+Morgan County, WV HUD Metro FMR Area
+Morgantown, WV MSA
+Morristown, TN HUD Metro FMR Area
+Mount Vernon-Anacortes, WA MSA
+Muncie, IN MSA
+Murray County, GA HUD Metro FMR Area
+Muskegon, MI MSA
+Myrtle Beach-North Myrtle Beach-Conway, SC HUD Metro FMR Area
+Napa, CA MSA
+Naples-Immokalee-Marco Island, FL MSA
+Nashua, NH HUD Metro FMR Area
+Newark, NJ HUD Metro FMR Area
+Niles-Benton Harbor, MI MSA
+North Port-Sarasota-Bradenton, FL MSA
+Norwich-New London, CT HUD Metro FMR Area
+Ocala, FL MSA
+Oconto County, WI HUD Metro FMR Area
+Odessa, TX MSA
+Ogden-Clearfield, UT HUD Metro FMR Area
+Oklahoma City, OK HUD Metro FMR Area
+Oldham County, TX HUD Metro FMR Area
+Olympia-Tumwater, WA MSA
+Orlando-Kissimmee-Sanford, FL MSA
+Oshkosh-Neenah, WI MSA
+Owen County, IN HUD Metro FMR Area
+Owensboro, KY MSA
+Oxnard-Thousand Oaks-Ventura, CA MSA
+Palm Bay-Melbourne-Titusville, FL MSA
+Palm Coast, FL HUD Metro FMR Area
+Panama City, FL MSA
+Parkersburg-Vienna, WV MSA
+Penobscot County, ME (part) HUD Metro FMR Area
+Pensacola-Ferry Pass-Brent, FL MSA
+Peoria, IL HUD Metro FMR Area
+Person County, NC HUD Metro FMR Area
+Philadelphia-Camden-Wilmington, PA-NJ-DE-MD MSA
+Phoenix-Mesa-Scottsdale, AZ MSA
+Pittsburgh, PA HUD Metro FMR Area
+Pittsfield, MA HUD Metro FMR Area
+Pocatello, ID HUD Metro FMR Area
+Poinsett County, AR HUD Metro FMR Area
+Ponce, PR MSA
+Port St. Lucie, FL MSA
+Portland-Vancouver-Hillsboro, OR-WA MSA
+Prescott Valley-Prescott, AZ MSA
+Provo-Orem, UT MSA
+Pueblo, CO MSA
+Pulaski County, VA HUD Metro FMR Area
+Punta Gorda, FL MSA
+Putnam County, WV HUD Metro FMR Area
+Racine, WI MSA
+Raleigh County, WV HUD Metro FMR Area
+Raleigh, NC MSA
+Rapid City, SD HUD Metro FMR Area
+Reading, PA MSA
+Redding, CA MSA
+Reno, NV MSA
+Richmond, VA MSA
+Riverside-San Bernardino-Ontario, CA MSA
+Roane County, TN HUD Metro FMR Area
+Roanoke, VA HUD Metro FMR Area
+Rochester, NY HUD Metro FMR Area
+Rockford, IL MSA
+Rockingham County, NC HUD Metro FMR Area
+Rocky Mount, NC MSA
+Rome, GA MSA
+Rowan County, NC HUD Metro FMR Area
+Rusk County, TX HUD Metro FMR Area
+Saginaw, MI MSA
+Salem, OR MSA
+Salinas, CA MSA
+San Angelo, TX HUD Metro FMR Area
+San Antonio-New Braunfels, TX HUD Metro FMR Area
+San Diego-Carlsbad, CA MSA
+San Francisco, CA HUD Metro FMR Area
+San Jose-Sunnyvale-Santa Clara, CA HUD Metro FMR Area
+San Juan-Guaynabo, PR HUD Metro FMR Area
+San Luis Obispo-Paso Robles-Arroyo Grande, CA MSA
+Santa Ana-Anaheim-Irvine, CA HUD Metro FMR Area
+Santa Cruz-Watsonville, CA MSA
+Santa Fe, NM MSA
+Santa Maria-Santa Barbara, CA MSA
+Santa Rosa, CA MSA
+Saunders County, NE HUD Metro FMR Area
+Savannah, GA MSA
+Scranton--Wilkes-Barre, PA MSA
+Sebastian-Vero Beach, FL MSA
+Sebring, FL MSA
+Seward County, NE HUD Metro FMR Area
+Sheboygan, WI MSA
+Sherman-Denison, TX MSA
+Shreveport-Bossier City, LA MSA
+Sierra Vista-Douglas, AZ MSA
+Sioux City, IA-NE-SD MSA
+Sioux Falls, SD MSA
+Smith County, TN HUD Metro FMR Area
+Somerset County, MD HUD Metro FMR Area
+South Bend-Mishawaka, IN HUD Metro FMR Area
+Spartanburg, SC MSA
+Springfield, IL MSA
+Springfield, MA HUD Metro FMR Area
+Springfield, MO HUD Metro FMR Area
+Springfield, OH MSA
+St. Cloud, MN MSA
+St. George, UT MSA
+St. James Parish, LA HUD Metro FMR Area
+St. Joseph, MO-KS MSA
+St. Louis, MO-IL HUD Metro FMR Area
+State College, PA MSA
+Staunton-Waynesboro, VA MSA
+Stevens County, WA HUD Metro FMR Area
+Stewart County, TN HUD Metro FMR Area
+Stillwater County, MT HUD Metro FMR Area
+Stockton-Lodi, CA MSA
+Stone County, MS HUD Metro FMR Area
+Sumter, SC HUD Metro FMR Area
+Syracuse, NY MSA
+Tacoma, WA HUD Metro FMR Area
+Talbot County, GA HUD Metro FMR Area
+Tampa-St. Petersburg-Clearwater, FL MSA
+Teller County, CO HUD Metro FMR Area
+Terre Haute, IN HUD Metro FMR Area
+Texarkana, TX-Texarkana, AR HUD Metro FMR Area
+Toledo, OH HUD Metro FMR Area
+Tooele County, UT HUD Metro FMR Area
+Topeka, KS MSA
+Trenton, NJ MSA
+Tucson, AZ MSA
+Tulsa, OK HUD Metro FMR Area
+Tunica County, MS HUD Metro FMR Area
+Tuscaloosa, AL HUD Metro FMR Area
+Twin Falls County, ID HUD Metro FMR Area
+Tyler, TX MSA
+Union County, OH HUD Metro FMR Area
+Urban Honolulu, HI MSA
+Utica-Rome, NY MSA
+Valdosta, GA MSA
+Vallejo-Fairfield, CA MSA
+Vermilion Parish, LA HUD Metro FMR Area
+Victoria, TX MSA
+Vineland-Bridgeton, NJ MSA
+Virginia Beach-Norfolk-Newport News, VA-NC HUD Metro FMR Area
+Visalia-Porterville, CA MSA
+Wabasha County, MN HUD Metro FMR Area
+Waco, TX HUD Metro FMR Area
+Wakulla County, FL HUD Metro FMR Area
+Walla Walla, WA MSA
+Walton County, FL HUD Metro FMR Area
+Warner Robins, GA HUD Metro FMR Area
+Warren County, IN HUD Metro FMR Area
+Warren County, NJ HUD Metro FMR Area
+Washington County, IA HUD Metro FMR Area
+Washington County, IN HUD Metro FMR Area
+Washington-Arlington-Alexandria, DC-VA-MD HUD Metro FMR Area
+Waterloo-Cedar Falls, IA HUD Metro FMR Area
+Watertown-Fort Drum, NY MSA
+Wausau, WI HUD Metro FMR Area
+Weirton-Steubenville, WV-OH MSA
+Wenatchee, WA MSA
+West Palm Beach-Boca Raton, FL HUD Metro FMR Area
+Westerly-Hopkinton-New Shoreham, RI HUD Metro FMR Area
+Western Rockingham County, NH HUD Metro FMR Area
+Wheeling, WV-OH MSA
+Wichita Falls, TX MSA
+Wichita, KS HUD Metro FMR Area
+Williamsport, PA MSA
+Wilmington, NC HUD Metro FMR Area
+Winchester, VA-WV MSA
+Winston-Salem, NC HUD Metro FMR Area
+Wise County, TX HUD Metro FMR Area
+Worcester, MA HUD Metro FMR Area
+Yakima, WA MSA
+Yazoo County, MS HUD Metro FMR Area
+Yolo, CA HUD Metro FMR Area
+York-Hanover, PA MSA
+York-Kittery-South Berwick, ME HUD Metro FMR Area
+Youngstown-Warren-Boardman, OH HUD Metro FMR Area
+Yuba City, CA MSA
+Yuma, AZ MSA

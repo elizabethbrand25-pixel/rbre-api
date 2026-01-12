@@ -1,0 +1,254 @@
+# app.py
+"""
+FastAPI wrapper for the RBRE CBSA engine.
+
+Assumptions:
+- You have rbre_cbsa_engine.py (the engine module from earlier) in the same folder
+  exposing RBREMetroEngine
+- You have cost_data_metro.json keyed by CBSA code, each record includes at least:
+  cbsa, metro_name, state, rent_1br, rent_2br
+  (plus optional utilities_proxy_monthly, transport_proxy_monthly, entry_friction)
+
+Run locally:
+  pip install fastapi uvicorn pydantic
+  uvicorn app:app --reload
+
+Example request:
+  POST /v1/report
+  {
+    "product_tier":"full",
+    "household_type":"couple",
+    "downsizing":true,
+    "net_monthly_income":6500,
+    "fixed_monthly_obligations":3200,
+    "liquid_savings":22000,
+    "timeline":"moderate",
+    "risk_tolerance":"medium",
+    "current_cbsa":"38900",
+    "target_cbsas":["14260","44060"]
+  }
+"""
+
+from __future__ import annotations
+
+import json
+import os
+from pathlib import Path
+from typing import List, Literal, Optional, Any, Dict
+
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, Field, conlist, confloat, validator
+
+# Import your engine
+# from rbre_cbsa_engine import RBREMetroEngine
+# If your file name differs, update the import accordingly.
+from rbre_cbsa_engine import RBREMetroEngine
+
+
+# -----------------------------
+# Configuration
+# -----------------------------
+
+DATA_PATH = os.environ.get("COST_DATA_PATH", "cost_data_metro.json")
+MAX_BODY_BYTES = int(os.environ.get("MAX_BODY_BYTES", "200000"))  # basic abuse protection
+ALLOWED_ORIGINS = os.environ.get("CORS_ORIGINS", "*").split(",")
+
+
+# -----------------------------
+# Pydantic models (request validation)
+# -----------------------------
+
+ProductTier = Literal["snapshot", "full"]
+HouseholdType = Literal["individual", "couple"]
+TimelineFlex = Literal["tight", "moderate", "flexible"]
+RiskTol = Literal["low", "medium", "high"]
+
+
+class ReportRequest(BaseModel):
+    product_tier: ProductTier
+    household_type: HouseholdType
+    downsizing: bool
+
+    net_monthly_income: confloat(ge=0) = Field(..., description="Net monthly income after taxes (USD).")
+    fixed_monthly_obligations: confloat(ge=0) = Field(..., description="Fixed obligations per month (USD).")
+    liquid_savings: confloat(ge=0) = Field(..., description="Liquid savings available (USD).")
+
+    timeline: TimelineFlex
+    risk_tolerance: RiskTol
+
+    current_cbsa: str = Field(..., description="5-digit CBSA code as string.")
+    target_cbsas: Optional[conlist(str, max_items=3)] = Field(default=None, description="Up to 3 CBSA codes.")
+
+    @validator("current_cbsa")
+    def _normalize_current_cbsa(cls, v: str) -> str:
+        v = str(v).strip()
+        if not v.isdigit():
+            raise ValueError("current_cbsa must be numeric digits (e.g., '42660').")
+        return v.zfill(5)
+
+    @validator("target_cbsas", each_item=True)
+    def _normalize_target_cbsa(cls, v: str) -> str:
+        v = str(v).strip()
+        if not v.isdigit():
+            raise ValueError("Each target CBSA must be numeric digits.")
+        return v.zfill(5)
+
+
+class ReportResponse(BaseModel):
+    # We keep the response flexible because the engine returns nested JSON.
+    # If you want strict typing later, you can model this fully.
+    report_id: str
+    generated_at_utc: str
+    input_echo: Dict[str, Any]
+    baseline: Dict[str, Any]
+    envelope: Dict[str, Any]
+    target_assessments: List[Dict[str, Any]]
+    affordable_recommendations: List[Dict[str, Any]]
+    paths: Dict[str, List[Dict[str, Any]]]
+
+
+# -----------------------------
+# App init
+# -----------------------------
+
+app = FastAPI(title="RBRE API", version="1.0.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"] if ALLOWED_ORIGINS == ["*"] else ALLOWED_ORIGINS,
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["*"],
+)
+
+
+# -----------------------------
+# Load dataset + engine once at startup
+# -----------------------------
+
+def load_cost_data(path: str) -> Dict[str, Dict[str, Any]]:
+    p = Path(path)
+    if not p.exists():
+        raise RuntimeError(f"Cost dataset not found at {p.resolve()}")
+    with p.open("r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    # Minimal sanity checks
+    if not isinstance(data, dict) or len(data) == 0:
+        raise RuntimeError("Cost dataset must be a non-empty JSON object keyed by CBSA code.")
+
+    # Ensure keys are 5-digit strings
+    normalized: Dict[str, Dict[str, Any]] = {}
+    for k, v in data.items():
+        cbsa = str(k).strip()
+        if not cbsa.isdigit():
+            continue
+        cbsa = cbsa.zfill(5)
+        if not isinstance(v, dict):
+            continue
+        # Ensure required fields exist for runtime
+        for req_field in ("state", "rent_1br", "rent_2br"):
+            if req_field not in v:
+                # skip incomplete rows rather than hard-failing
+                break
+        else:
+            v = dict(v)
+            v["cbsa"] = cbsa
+            normalized[cbsa] = v
+
+    if not normalized:
+        raise RuntimeError("No valid CBSA records found after normalization.")
+    return normalized
+
+
+COST_DATA = load_cost_data(DATA_PATH)
+ENGINE = RBREMetroEngine(cost_data_by_cbsa=COST_DATA)
+
+
+# -----------------------------
+# Basic body size guard (optional)
+# -----------------------------
+
+@app.middleware("http")
+async def limit_body_size(request: Request, call_next):
+    cl = request.headers.get("content-length")
+    if cl and cl.isdigit() and int(cl) > MAX_BODY_BYTES:
+        return JSONResponse(status_code=413, content={"error": "Request too large"})
+    return await call_next(request)
+
+
+# -----------------------------
+# Error handling (clean JSON)
+# -----------------------------
+
+@app.exception_handler(KeyError)
+async def key_error_handler(_: Request, exc: KeyError):
+    return JSONResponse(status_code=400, content={"error": str(exc)})
+
+
+@app.exception_handler(ValueError)
+async def value_error_handler(_: Request, exc: ValueError):
+    return JSONResponse(status_code=400, content={"error": str(exc)})
+
+
+# -----------------------------
+# Endpoints
+# -----------------------------
+
+@app.get("/health")
+def health():
+    return {
+        "status": "ok",
+        "dataset_records": len(COST_DATA),
+        "version": app.version,
+    }
+
+
+@app.post("/v1/report", response_model=ReportResponse)
+def generate_report(req: ReportRequest):
+    """
+    Generates the RBRE report JSON (ready to feed into a PDF template).
+    """
+    payload = req.dict()
+
+    # Optional: If target CBSA list contains current CBSA, drop it.
+    cur = payload["current_cbsa"]
+    targets = payload.get("target_cbsas") or []
+    payload["target_cbsas"] = [t for t in targets if t != cur][:3]
+
+    # Hard validation against dataset for current CBSA
+    if cur not in COST_DATA:
+        raise HTTPException(status_code=400, detail=f"current_cbsa not found in dataset: {cur}")
+
+    # For targets, drop unknowns instead of failing (keeps user experience smooth)
+    payload["target_cbsas"] = [t for t in payload["target_cbsas"] if t in COST_DATA]
+
+    try:
+        out = ENGINE.run(payload)
+    except Exception as e:
+        # Avoid leaking internals in production; log e server-side instead.
+        raise HTTPException(status_code=500, detail="Engine error") from e
+
+    return out
+
+
+@app.get("/v1/metros")
+def list_metros(q: Optional[str] = None, limit: int = 50):
+    """
+    Convenience endpoint for building your dropdown/autocomplete.
+    - q: optional substring filter on metro_name
+    """
+    limit = max(1, min(int(limit), 500))
+    q_norm = (q or "").strip().lower()
+
+    items = []
+    for cbsa, prof in COST_DATA.items():
+        name = str(prof.get("metro_name") or "")
+        if q_norm and q_norm not in name.lower():
+            continue
+        items.append({"value": cbsa, "label": name, "state": prof.get("state")})
+
+    items.sort(key=lambda x: x["label"])
+    return {"count": len(items), "items": items[:limit]}

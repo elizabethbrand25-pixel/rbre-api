@@ -1,0 +1,1502 @@
+[
+  {
+    "value": "10180",
+    "label": "Abilene, TX MSA"
+  },
+  {
+    "value": "10380",
+    "label": "Aguadilla-Isabela, PR MSA"
+  },
+  {
+    "value": "10420",
+    "label": "Akron, OH MSA"
+  },
+  {
+    "value": "10500",
+    "label": "Albany, GA MSA"
+  },
+  {
+    "value": "10540",
+    "label": "Albany, OR MSA"
+  },
+  {
+    "value": "10580",
+    "label": "Albany-Schenectady-Troy, NY MSA"
+  },
+  {
+    "value": "10740",
+    "label": "Albuquerque, NM MSA"
+  },
+  {
+    "value": "10780",
+    "label": "Alexandria, LA MSA"
+  },
+  {
+    "value": "11020",
+    "label": "Altoona, PA MSA"
+  },
+  {
+    "value": "11460",
+    "label": "Ann Arbor, MI MSA"
+  },
+  {
+    "value": "11500",
+    "label": "Anniston-Oxford-Jacksonville, AL MSA"
+  },
+  {
+    "value": "11540",
+    "label": "Appleton, WI MSA"
+  },
+  {
+    "value": "11640",
+    "label": "Arecibo, PR MSA"
+  },
+  {
+    "value": "11700",
+    "label": "Asheville, NC HUD Metro FMR Area"
+  },
+  {
+    "value": "12020",
+    "label": "Athens-Clarke County, GA MSA"
+  },
+  {
+    "value": "12100",
+    "label": "Atlantic City-Hammonton, NJ MSA"
+  },
+  {
+    "value": "12220",
+    "label": "Auburn-Opelika, AL MSA"
+  },
+  {
+    "value": "12420",
+    "label": "Austin-Round Rock, TX MSA"
+  },
+  {
+    "value": "12540",
+    "label": "Bakersfield, CA MSA"
+  },
+  {
+    "value": "12580",
+    "label": "Baltimore-Columbia-Towson, MD MSA"
+  },
+  {
+    "value": "12700",
+    "label": "Barnstable Town, MA MSA"
+  },
+  {
+    "value": "12980",
+    "label": "Battle Creek, MI MSA"
+  },
+  {
+    "value": "13020",
+    "label": "Bay City, MI MSA"
+  },
+  {
+    "value": "13140",
+    "label": "Beaumont-Port Arthur, TX MSA"
+  },
+  {
+    "value": "13380",
+    "label": "Bellingham, WA MSA"
+  },
+  {
+    "value": "13460",
+    "label": "Bend-Redmond, OR MSA"
+  },
+  {
+    "value": "13780",
+    "label": "Binghamton, NY MSA"
+  },
+  {
+    "value": "13900",
+    "label": "Bismarck, ND MSA"
+  },
+  {
+    "value": "14010",
+    "label": "Bloomington, IL MSA"
+  },
+  {
+    "value": "11180",
+    "label": "Boone County, IA HUD Metro FMR Area"
+  },
+  {
+    "value": "14500",
+    "label": "Boulder, CO MSA"
+  },
+  {
+    "value": "14740",
+    "label": "Bremerton-Silverdale, WA MSA"
+  },
+  {
+    "value": "15180",
+    "label": "Brownsville-Harlingen, TX MSA"
+  },
+  {
+    "value": "15260",
+    "label": "Brunswick, GA MSA"
+  },
+  {
+    "value": "15380",
+    "label": "Buffalo-Cheektowaga-Niagara Falls, NY MSA"
+  },
+  {
+    "value": "15500",
+    "label": "Burlington, NC MSA"
+  },
+  {
+    "value": "15540",
+    "label": "Burlington-South Burlington, VT MSA"
+  },
+  {
+    "value": "14540",
+    "label": "Butler County, KY HUD Metro FMR Area"
+  },
+  {
+    "value": "15940",
+    "label": "Canton-Massillon, OH MSA"
+  },
+  {
+    "value": "15980",
+    "label": "Cape Coral-Fort Myers, FL MSA"
+  },
+  {
+    "value": "16020",
+    "label": "Cape Girardeau, MO-IL MSA"
+  },
+  {
+    "value": "16180",
+    "label": "Carson City, NV MSA"
+  },
+  {
+    "value": "16220",
+    "label": "Casper, WY MSA"
+  },
+  {
+    "value": "16540",
+    "label": "Chambersburg-Waynesboro, PA MSA"
+  },
+  {
+    "value": "16580",
+    "label": "Champaign-Urbana, IL MSA"
+  },
+  {
+    "value": "16620",
+    "label": "Charleston, WV HUD Metro FMR Area"
+  },
+  {
+    "value": "16700",
+    "label": "Charleston-North Charleston, SC MSA"
+  },
+  {
+    "value": "16820",
+    "label": "Charlottesville, VA MSA"
+  },
+  {
+    "value": "16860",
+    "label": "Chattanooga, TN-GA MSA"
+  },
+  {
+    "value": "16940",
+    "label": "Cheyenne, WY MSA"
+  },
+  {
+    "value": "17020",
+    "label": "Chico, CA MSA"
+  },
+  {
+    "value": "13820",
+    "label": "Chilton County, AL HUD Metro FMR Area"
+  },
+  {
+    "value": "17420",
+    "label": "Cleveland, TN MSA"
+  },
+  {
+    "value": "17660",
+    "label": "Coeur d'Alene, ID MSA"
+  },
+  {
+    "value": "17780",
+    "label": "College Station-Bryan, TX MSA"
+  },
+  {
+    "value": "18020",
+    "label": "Columbus, IN MSA"
+  },
+  {
+    "value": "18580",
+    "label": "Corpus Christi, TX MSA"
+  },
+  {
+    "value": "18700",
+    "label": "Corvallis, OR MSA"
+  },
+  {
+    "value": "19300",
+    "label": "Daphne-Fairhope-Foley, AL MSA"
+  },
+  {
+    "value": "19340",
+    "label": "Davenport-Moline-Rock Island, IA-IL MSA"
+  },
+  {
+    "value": "19430",
+    "label": "Dayton-Kettering, OH MSA"
+  },
+  {
+    "value": "19460",
+    "label": "Decatur, AL MSA"
+  },
+  {
+    "value": "19500",
+    "label": "Decatur, IL MSA"
+  },
+  {
+    "value": "19740",
+    "label": "Denver-Aurora-Lakewood, CO MSA"
+  },
+  {
+    "value": "20100",
+    "label": "Dover, DE MSA"
+  },
+  {
+    "value": "20220",
+    "label": "Dubuque, IA MSA"
+  },
+  {
+    "value": "20260",
+    "label": "Duluth, MN-WI HUD Metro FMR Area"
+  },
+  {
+    "value": "20740",
+    "label": "Eau Claire, WI MSA"
+  },
+  {
+    "value": "20940",
+    "label": "El Centro, CA MSA"
+  },
+  {
+    "value": "21060",
+    "label": "Elizabethtown, KY HUD Metro FMR Area"
+  },
+  {
+    "value": "21140",
+    "label": "Elkhart-Goshen, IN MSA"
+  },
+  {
+    "value": "21300",
+    "label": "Elmira, NY MSA"
+  },
+  {
+    "value": "21420",
+    "label": "Enid, OK MSA"
+  },
+  {
+    "value": "21500",
+    "label": "Erie, PA MSA"
+  },
+  {
+    "value": "21660",
+    "label": "Eugene-Springfield, OR MSA"
+  },
+  {
+    "value": "21780",
+    "label": "Evansville, IN-KY MSA"
+  },
+  {
+    "value": "21820",
+    "label": "Fairbanks, AK MSA"
+  },
+  {
+    "value": "22020",
+    "label": "Fargo, ND-MN MSA"
+  },
+  {
+    "value": "22140",
+    "label": "Farmington, NM MSA"
+  },
+  {
+    "value": "22220",
+    "label": "Fayetteville-Springdale-Rogers, AR MSA"
+  },
+  {
+    "value": "22380",
+    "label": "Flagstaff, AZ MSA"
+  },
+  {
+    "value": "22420",
+    "label": "Flint, MI MSA"
+  },
+  {
+    "value": "22500",
+    "label": "Florence, SC HUD Metro FMR Area"
+  },
+  {
+    "value": "22520",
+    "label": "Florence-Muscle Shoals, AL MSA"
+  },
+  {
+    "value": "22540",
+    "label": "Fond du Lac, WI MSA"
+  },
+  {
+    "value": "22660",
+    "label": "Fort Collins, CO MSA"
+  },
+  {
+    "value": "22900",
+    "label": "Fort Smith, AR-OK HUD Metro FMR Area"
+  },
+  {
+    "value": "23060",
+    "label": "Fort Wayne, IN MSA"
+  },
+  {
+    "value": "23420",
+    "label": "Fresno, CA MSA"
+  },
+  {
+    "value": "23460",
+    "label": "Gadsden, AL MSA"
+  },
+  {
+    "value": "23580",
+    "label": "Gainesville, GA MSA"
+  },
+  {
+    "value": "14260",
+    "label": "Gem County, ID HUD Metro FMR Area"
+  },
+  {
+    "value": "23900",
+    "label": "Gettysburg, PA MSA"
+  },
+  {
+    "value": "24020",
+    "label": "Glens Falls, NY MSA"
+  },
+  {
+    "value": "24140",
+    "label": "Goldsboro, NC MSA"
+  },
+  {
+    "value": "24220",
+    "label": "Grand Forks, ND-MN MSA"
+  },
+  {
+    "value": "24300",
+    "label": "Grand Junction, CO MSA"
+  },
+  {
+    "value": "17140",
+    "label": "Grant County, KY HUD Metro FMR Area"
+  },
+  {
+    "value": "24420",
+    "label": "Grants Pass, OR MSA"
+  },
+  {
+    "value": "24500",
+    "label": "Great Falls, MT MSA"
+  },
+  {
+    "value": "24540",
+    "label": "Greeley, CO MSA"
+  },
+  {
+    "value": "24780",
+    "label": "Greenville, NC MSA"
+  },
+  {
+    "value": "25020",
+    "label": "Guayama, PR MSA"
+  },
+  {
+    "value": "25220",
+    "label": "Hammond, LA MSA"
+  },
+  {
+    "value": "25260",
+    "label": "Hanford-Corcoran, CA MSA"
+  },
+  {
+    "value": "25420",
+    "label": "Harrisburg-Carlisle, PA MSA"
+  },
+  {
+    "value": "25500",
+    "label": "Harrisonburg, VA MSA"
+  },
+  {
+    "value": "25540",
+    "label": "Hartford-West Hartford-East Hartford, CT HUD Metro FMR Area"
+  },
+  {
+    "value": "25620",
+    "label": "Hattiesburg, MS HUD Metro FMR Area"
+  },
+  {
+    "value": "20020",
+    "label": "Henry County, AL HUD Metro FMR Area"
+  },
+  {
+    "value": "25860",
+    "label": "Hickory-Lenoir-Morganton, NC MSA"
+  },
+  {
+    "value": "22180",
+    "label": "Hoke County, NC HUD Metro FMR Area"
+  },
+  {
+    "value": "26140",
+    "label": "Homosassa Springs, FL MSA"
+  },
+  {
+    "value": "26300",
+    "label": "Hot Springs, AR MSA"
+  },
+  {
+    "value": "26380",
+    "label": "Houma-Thibodaux, LA MSA"
+  },
+  {
+    "value": "26420",
+    "label": "Houston-The Woodlands-Sugar Land, TX HUD Metro FMR Area"
+  },
+  {
+    "value": "17860",
+    "label": "Howard County, MO HUD Metro FMR Area"
+  },
+  {
+    "value": "21340",
+    "label": "Hudspeth County, TX HUD Metro FMR Area"
+  },
+  {
+    "value": "26620",
+    "label": "Huntsville, AL MSA"
+  },
+  {
+    "value": "12940",
+    "label": "Iberville Parish, LA HUD Metro FMR Area"
+  },
+  {
+    "value": "26820",
+    "label": "Idaho Falls, ID HUD Metro FMR Area"
+  },
+  {
+    "value": "26900",
+    "label": "Indianapolis-Carmel, IN HUD Metro FMR Area"
+  },
+  {
+    "value": "27060",
+    "label": "Ithaca, NY MSA"
+  },
+  {
+    "value": "27100",
+    "label": "Jackson, MI MSA"
+  },
+  {
+    "value": "27180",
+    "label": "Jackson, TN HUD Metro FMR Area"
+  },
+  {
+    "value": "27260",
+    "label": "Jacksonville, FL HUD Metro FMR Area"
+  },
+  {
+    "value": "27340",
+    "label": "Jacksonville, NC MSA"
+  },
+  {
+    "value": "27500",
+    "label": "Janesville-Beloit, WI MSA"
+  },
+  {
+    "value": "19780",
+    "label": "Jasper County, IA HUD Metro FMR Area"
+  },
+  {
+    "value": "25940",
+    "label": "Jasper County, SC HUD Metro FMR Area"
+  },
+  {
+    "value": "27740",
+    "label": "Johnson City, TN MSA"
+  },
+  {
+    "value": "27780",
+    "label": "Johnstown, PA MSA"
+  },
+  {
+    "value": "16300",
+    "label": "Jones County, IA HUD Metro FMR Area"
+  },
+  {
+    "value": "27900",
+    "label": "Joplin, MO MSA"
+  },
+  {
+    "value": "27980",
+    "label": "Kahului-Wailuku-Lahaina, HI MSA"
+  },
+  {
+    "value": "28020",
+    "label": "Kalamazoo-Portage, MI MSA"
+  },
+  {
+    "value": "28100",
+    "label": "Kankakee, IL MSA"
+  },
+  {
+    "value": "28140",
+    "label": "Kansas City, MO-KS HUD Metro FMR Area"
+  },
+  {
+    "value": "16980",
+    "label": "Kendall County, IL HUD Metro FMR Area"
+  },
+  {
+    "value": "28420",
+    "label": "Kennewick-Richland, WA MSA"
+  },
+  {
+    "value": "17900",
+    "label": "Kershaw County, SC HUD Metro FMR Area"
+  },
+  {
+    "value": "28700",
+    "label": "Kingsport-Bristol-Bristol, TN-VA MSA"
+  },
+  {
+    "value": "28740",
+    "label": "Kingston, NY MSA"
+  },
+  {
+    "value": "29020",
+    "label": "Kokomo, IN MSA"
+  },
+  {
+    "value": "29100",
+    "label": "La Crosse-Onalaska, WI-MN MSA"
+  },
+  {
+    "value": "29340",
+    "label": "Lake Charles, LA MSA"
+  },
+  {
+    "value": "29420",
+    "label": "Lake Havasu City-Kingman, AZ MSA"
+  },
+  {
+    "value": "29460",
+    "label": "Lakeland-Winter Haven, FL MSA"
+  },
+  {
+    "value": "28660",
+    "label": "Lampasas County, TX HUD Metro FMR Area"
+  },
+  {
+    "value": "29540",
+    "label": "Lancaster, PA MSA"
+  },
+  {
+    "value": "29620",
+    "label": "Lansing-East Lansing, MI HUD Metro FMR Area"
+  },
+  {
+    "value": "29700",
+    "label": "Laredo, TX MSA"
+  },
+  {
+    "value": "29740",
+    "label": "Las Cruces, NM MSA"
+  },
+  {
+    "value": "29820",
+    "label": "Las Vegas-Henderson-Paradise, NV MSA"
+  },
+  {
+    "value": "24860",
+    "label": "Laurens County, SC HUD Metro FMR Area"
+  },
+  {
+    "value": "29940",
+    "label": "Lawrence, KS MSA"
+  },
+  {
+    "value": "30020",
+    "label": "Lawton, OK HUD Metro FMR Area"
+  },
+  {
+    "value": "30140",
+    "label": "Lebanon, PA MSA"
+  },
+  {
+    "value": "23540",
+    "label": "Levy County, FL HUD Metro FMR Area"
+  },
+  {
+    "value": "30300",
+    "label": "Lewiston, ID-WA MSA"
+  },
+  {
+    "value": "30340",
+    "label": "Lewiston-Auburn, ME MSA"
+  },
+  {
+    "value": "30460",
+    "label": "Lexington-Fayette, KY MSA"
+  },
+  {
+    "value": "30620",
+    "label": "Lima, OH MSA"
+  },
+  {
+    "value": "12260",
+    "label": "Lincoln County, GA HUD Metro FMR Area"
+  },
+  {
+    "value": "30780",
+    "label": "Little Rock-North Little Rock-Conway, AR HUD Metro FMR Area"
+  },
+  {
+    "value": "19820",
+    "label": "Livingston County, MI HUD Metro FMR Area"
+  },
+  {
+    "value": "30860",
+    "label": "Logan, UT-ID MSA"
+  },
+  {
+    "value": "25980",
+    "label": "Long County, GA HUD Metro FMR Area"
+  },
+  {
+    "value": "31020",
+    "label": "Longview, WA MSA"
+  },
+  {
+    "value": "31340",
+    "label": "Lynchburg, VA MSA"
+  },
+  {
+    "value": "31180",
+    "label": "Lynn County, TX HUD Metro FMR Area"
+  },
+  {
+    "value": "31540",
+    "label": "Madison, WI HUD Metro FMR Area"
+  },
+  {
+    "value": "31740",
+    "label": "Manhattan, KS HUD Metro FMR Area"
+  },
+  {
+    "value": "31860",
+    "label": "Mankato-North Mankato, MN MSA"
+  },
+  {
+    "value": "31900",
+    "label": "Mansfield, OH MSA"
+  },
+  {
+    "value": "11260",
+    "label": "Matanuska-Susitna Borough, AK HUD Metro FMR Area"
+  },
+  {
+    "value": "32420",
+    "label": "Mayag\u00fcez, PR MSA"
+  },
+  {
+    "value": "32580",
+    "label": "McAllen-Edinburg-Mission, TX MSA"
+  },
+  {
+    "value": "32780",
+    "label": "Medford, OR MSA"
+  },
+  {
+    "value": "32900",
+    "label": "Merced, CA MSA"
+  },
+  {
+    "value": "24260",
+    "label": "Merrick County, NE HUD Metro FMR Area"
+  },
+  {
+    "value": "33140",
+    "label": "Michigan City-La Porte, IN MSA"
+  },
+  {
+    "value": "33220",
+    "label": "Midland, MI MSA"
+  },
+  {
+    "value": "33260",
+    "label": "Midland, TX HUD Metro FMR Area"
+  },
+  {
+    "value": "33340",
+    "label": "Milwaukee-Waukesha-West Allis, WI MSA"
+  },
+  {
+    "value": "33460",
+    "label": "Minneapolis-St. Paul-Bloomington, MN-WI HUD Metro FMR Area"
+  },
+  {
+    "value": "33540",
+    "label": "Missoula, MT MSA"
+  },
+  {
+    "value": "33660",
+    "label": "Mobile, AL HUD Metro FMR Area"
+  },
+  {
+    "value": "33700",
+    "label": "Modesto, CA MSA"
+  },
+  {
+    "value": "27620",
+    "label": "Moniteau County, MO HUD Metro FMR Area"
+  },
+  {
+    "value": "31420",
+    "label": "Monroe County, GA HUD Metro FMR Area"
+  },
+  {
+    "value": "33780",
+    "label": "Monroe, MI MSA"
+  },
+  {
+    "value": "24340",
+    "label": "Montcalm County, MI HUD Metro FMR Area"
+  },
+  {
+    "value": "33860",
+    "label": "Montgomery, AL MSA"
+  },
+  {
+    "value": "33740",
+    "label": "Morehouse Parish, LA HUD Metro FMR Area"
+  },
+  {
+    "value": "12060",
+    "label": "Morgan County, GA HUD Metro FMR Area"
+  },
+  {
+    "value": "25180",
+    "label": "Morgan County, WV HUD Metro FMR Area"
+  },
+  {
+    "value": "34060",
+    "label": "Morgantown, WV MSA"
+  },
+  {
+    "value": "34100",
+    "label": "Morristown, TN HUD Metro FMR Area"
+  },
+  {
+    "value": "34580",
+    "label": "Mount Vernon-Anacortes, WA MSA"
+  },
+  {
+    "value": "34620",
+    "label": "Muncie, IN MSA"
+  },
+  {
+    "value": "19140",
+    "label": "Murray County, GA HUD Metro FMR Area"
+  },
+  {
+    "value": "34740",
+    "label": "Muskegon, MI MSA"
+  },
+  {
+    "value": "34820",
+    "label": "Myrtle Beach-North Myrtle Beach-Conway, SC HUD Metro FMR Area"
+  },
+  {
+    "value": "34900",
+    "label": "Napa, CA MSA"
+  },
+  {
+    "value": "34940",
+    "label": "Naples-Immokalee-Marco Island, FL MSA"
+  },
+  {
+    "value": "31700",
+    "label": "Nashua, NH HUD Metro FMR Area"
+  },
+  {
+    "value": "35620",
+    "label": "Newark, NJ HUD Metro FMR Area"
+  },
+  {
+    "value": "35660",
+    "label": "Niles-Benton Harbor, MI MSA"
+  },
+  {
+    "value": "35840",
+    "label": "North Port-Sarasota-Bradenton, FL MSA"
+  },
+  {
+    "value": "35980",
+    "label": "Norwich-New London, CT HUD Metro FMR Area"
+  },
+  {
+    "value": "36100",
+    "label": "Ocala, FL MSA"
+  },
+  {
+    "value": "24580",
+    "label": "Oconto County, WI HUD Metro FMR Area"
+  },
+  {
+    "value": "36220",
+    "label": "Odessa, TX MSA"
+  },
+  {
+    "value": "36260",
+    "label": "Ogden-Clearfield, UT HUD Metro FMR Area"
+  },
+  {
+    "value": "36420",
+    "label": "Oklahoma City, OK HUD Metro FMR Area"
+  },
+  {
+    "value": "11100",
+    "label": "Oldham County, TX HUD Metro FMR Area"
+  },
+  {
+    "value": "36500",
+    "label": "Olympia-Tumwater, WA MSA"
+  },
+  {
+    "value": "36740",
+    "label": "Orlando-Kissimmee-Sanford, FL MSA"
+  },
+  {
+    "value": "36780",
+    "label": "Oshkosh-Neenah, WI MSA"
+  },
+  {
+    "value": "14020",
+    "label": "Owen County, IN HUD Metro FMR Area"
+  },
+  {
+    "value": "36980",
+    "label": "Owensboro, KY MSA"
+  },
+  {
+    "value": "37100",
+    "label": "Oxnard-Thousand Oaks-Ventura, CA MSA"
+  },
+  {
+    "value": "37340",
+    "label": "Palm Bay-Melbourne-Titusville, FL MSA"
+  },
+  {
+    "value": "19660",
+    "label": "Palm Coast, FL HUD Metro FMR Area"
+  },
+  {
+    "value": "37460",
+    "label": "Panama City, FL MSA"
+  },
+  {
+    "value": "37620",
+    "label": "Parkersburg-Vienna, WV MSA"
+  },
+  {
+    "value": "12620",
+    "label": "Penobscot County, ME (part) HUD Metro FMR Area"
+  },
+  {
+    "value": "37860",
+    "label": "Pensacola-Ferry Pass-Brent, FL MSA"
+  },
+  {
+    "value": "37900",
+    "label": "Peoria, IL HUD Metro FMR Area"
+  },
+  {
+    "value": "20500",
+    "label": "Person County, NC HUD Metro FMR Area"
+  },
+  {
+    "value": "37980",
+    "label": "Philadelphia-Camden-Wilmington, PA-NJ-DE-MD MSA"
+  },
+  {
+    "value": "38060",
+    "label": "Phoenix-Mesa-Scottsdale, AZ MSA"
+  },
+  {
+    "value": "38300",
+    "label": "Pittsburgh, PA HUD Metro FMR Area"
+  },
+  {
+    "value": "38340",
+    "label": "Pittsfield, MA HUD Metro FMR Area"
+  },
+  {
+    "value": "38540",
+    "label": "Pocatello, ID HUD Metro FMR Area"
+  },
+  {
+    "value": "27860",
+    "label": "Poinsett County, AR HUD Metro FMR Area"
+  },
+  {
+    "value": "38660",
+    "label": "Ponce, PR MSA"
+  },
+  {
+    "value": "38940",
+    "label": "Port St. Lucie, FL MSA"
+  },
+  {
+    "value": "38900",
+    "label": "Portland-Vancouver-Hillsboro, OR-WA MSA"
+  },
+  {
+    "value": "39150",
+    "label": "Prescott Valley-Prescott, AZ MSA"
+  },
+  {
+    "value": "39340",
+    "label": "Provo-Orem, UT MSA"
+  },
+  {
+    "value": "39380",
+    "label": "Pueblo, CO MSA"
+  },
+  {
+    "value": "13980",
+    "label": "Pulaski County, VA HUD Metro FMR Area"
+  },
+  {
+    "value": "39460",
+    "label": "Punta Gorda, FL MSA"
+  },
+  {
+    "value": "26580",
+    "label": "Putnam County, WV HUD Metro FMR Area"
+  },
+  {
+    "value": "39540",
+    "label": "Racine, WI MSA"
+  },
+  {
+    "value": "13220",
+    "label": "Raleigh County, WV HUD Metro FMR Area"
+  },
+  {
+    "value": "39580",
+    "label": "Raleigh, NC MSA"
+  },
+  {
+    "value": "39660",
+    "label": "Rapid City, SD HUD Metro FMR Area"
+  },
+  {
+    "value": "39740",
+    "label": "Reading, PA MSA"
+  },
+  {
+    "value": "39820",
+    "label": "Redding, CA MSA"
+  },
+  {
+    "value": "39900",
+    "label": "Reno, NV MSA"
+  },
+  {
+    "value": "40060",
+    "label": "Richmond, VA MSA"
+  },
+  {
+    "value": "40140",
+    "label": "Riverside-San Bernardino-Ontario, CA MSA"
+  },
+  {
+    "value": "28940",
+    "label": "Roane County, TN HUD Metro FMR Area"
+  },
+  {
+    "value": "40220",
+    "label": "Roanoke, VA HUD Metro FMR Area"
+  },
+  {
+    "value": "40380",
+    "label": "Rochester, NY HUD Metro FMR Area"
+  },
+  {
+    "value": "40420",
+    "label": "Rockford, IL MSA"
+  },
+  {
+    "value": "24660",
+    "label": "Rockingham County, NC HUD Metro FMR Area"
+  },
+  {
+    "value": "40580",
+    "label": "Rocky Mount, NC MSA"
+  },
+  {
+    "value": "40660",
+    "label": "Rome, GA MSA"
+  },
+  {
+    "value": "16740",
+    "label": "Rowan County, NC HUD Metro FMR Area"
+  },
+  {
+    "value": "30980",
+    "label": "Rusk County, TX HUD Metro FMR Area"
+  },
+  {
+    "value": "40980",
+    "label": "Saginaw, MI MSA"
+  },
+  {
+    "value": "41420",
+    "label": "Salem, OR MSA"
+  },
+  {
+    "value": "41500",
+    "label": "Salinas, CA MSA"
+  },
+  {
+    "value": "41660",
+    "label": "San Angelo, TX HUD Metro FMR Area"
+  },
+  {
+    "value": "41700",
+    "label": "San Antonio-New Braunfels, TX HUD Metro FMR Area"
+  },
+  {
+    "value": "41740",
+    "label": "San Diego-Carlsbad, CA MSA"
+  },
+  {
+    "value": "41860",
+    "label": "San Francisco, CA HUD Metro FMR Area"
+  },
+  {
+    "value": "41940",
+    "label": "San Jose-Sunnyvale-Santa Clara, CA HUD Metro FMR Area"
+  },
+  {
+    "value": "41980",
+    "label": "San Juan-Guaynabo, PR HUD Metro FMR Area"
+  },
+  {
+    "value": "42020",
+    "label": "San Luis Obispo-Paso Robles-Arroyo Grande, CA MSA"
+  },
+  {
+    "value": "31080",
+    "label": "Santa Ana-Anaheim-Irvine, CA HUD Metro FMR Area"
+  },
+  {
+    "value": "42100",
+    "label": "Santa Cruz-Watsonville, CA MSA"
+  },
+  {
+    "value": "42140",
+    "label": "Santa Fe, NM MSA"
+  },
+  {
+    "value": "42200",
+    "label": "Santa Maria-Santa Barbara, CA MSA"
+  },
+  {
+    "value": "42220",
+    "label": "Santa Rosa, CA MSA"
+  },
+  {
+    "value": "36540",
+    "label": "Saunders County, NE HUD Metro FMR Area"
+  },
+  {
+    "value": "42340",
+    "label": "Savannah, GA MSA"
+  },
+  {
+    "value": "42540",
+    "label": "Scranton--Wilkes-Barre, PA MSA"
+  },
+  {
+    "value": "42680",
+    "label": "Sebastian-Vero Beach, FL MSA"
+  },
+  {
+    "value": "42700",
+    "label": "Sebring, FL MSA"
+  },
+  {
+    "value": "30700",
+    "label": "Seward County, NE HUD Metro FMR Area"
+  },
+  {
+    "value": "43100",
+    "label": "Sheboygan, WI MSA"
+  },
+  {
+    "value": "43300",
+    "label": "Sherman-Denison, TX MSA"
+  },
+  {
+    "value": "43340",
+    "label": "Shreveport-Bossier City, LA MSA"
+  },
+  {
+    "value": "43420",
+    "label": "Sierra Vista-Douglas, AZ MSA"
+  },
+  {
+    "value": "43580",
+    "label": "Sioux City, IA-NE-SD MSA"
+  },
+  {
+    "value": "43620",
+    "label": "Sioux Falls, SD MSA"
+  },
+  {
+    "value": "34980",
+    "label": "Smith County, TN HUD Metro FMR Area"
+  },
+  {
+    "value": "41540",
+    "label": "Somerset County, MD HUD Metro FMR Area"
+  },
+  {
+    "value": "43780",
+    "label": "South Bend-Mishawaka, IN HUD Metro FMR Area"
+  },
+  {
+    "value": "43900",
+    "label": "Spartanburg, SC MSA"
+  },
+  {
+    "value": "44100",
+    "label": "Springfield, IL MSA"
+  },
+  {
+    "value": "44140",
+    "label": "Springfield, MA HUD Metro FMR Area"
+  },
+  {
+    "value": "44180",
+    "label": "Springfield, MO HUD Metro FMR Area"
+  },
+  {
+    "value": "44220",
+    "label": "Springfield, OH MSA"
+  },
+  {
+    "value": "41060",
+    "label": "St. Cloud, MN MSA"
+  },
+  {
+    "value": "41100",
+    "label": "St. George, UT MSA"
+  },
+  {
+    "value": "35380",
+    "label": "St. James Parish, LA HUD Metro FMR Area"
+  },
+  {
+    "value": "41140",
+    "label": "St. Joseph, MO-KS MSA"
+  },
+  {
+    "value": "41180",
+    "label": "St. Louis, MO-IL HUD Metro FMR Area"
+  },
+  {
+    "value": "44300",
+    "label": "State College, PA MSA"
+  },
+  {
+    "value": "44420",
+    "label": "Staunton-Waynesboro, VA MSA"
+  },
+  {
+    "value": "44060",
+    "label": "Stevens County, WA HUD Metro FMR Area"
+  },
+  {
+    "value": "17300",
+    "label": "Stewart County, TN HUD Metro FMR Area"
+  },
+  {
+    "value": "13740",
+    "label": "Stillwater County, MT HUD Metro FMR Area"
+  },
+  {
+    "value": "44700",
+    "label": "Stockton-Lodi, CA MSA"
+  },
+  {
+    "value": "25060",
+    "label": "Stone County, MS HUD Metro FMR Area"
+  },
+  {
+    "value": "44940",
+    "label": "Sumter, SC HUD Metro FMR Area"
+  },
+  {
+    "value": "45060",
+    "label": "Syracuse, NY MSA"
+  },
+  {
+    "value": "42660",
+    "label": "Tacoma, WA HUD Metro FMR Area"
+  },
+  {
+    "value": "17980",
+    "label": "Talbot County, GA HUD Metro FMR Area"
+  },
+  {
+    "value": "45300",
+    "label": "Tampa-St. Petersburg-Clearwater, FL MSA"
+  },
+  {
+    "value": "17820",
+    "label": "Teller County, CO HUD Metro FMR Area"
+  },
+  {
+    "value": "45460",
+    "label": "Terre Haute, IN HUD Metro FMR Area"
+  },
+  {
+    "value": "45500",
+    "label": "Texarkana, TX-Texarkana, AR HUD Metro FMR Area"
+  },
+  {
+    "value": "45780",
+    "label": "Toledo, OH HUD Metro FMR Area"
+  },
+  {
+    "value": "41620",
+    "label": "Tooele County, UT HUD Metro FMR Area"
+  },
+  {
+    "value": "45820",
+    "label": "Topeka, KS MSA"
+  },
+  {
+    "value": "45940",
+    "label": "Trenton, NJ MSA"
+  },
+  {
+    "value": "46060",
+    "label": "Tucson, AZ MSA"
+  },
+  {
+    "value": "46140",
+    "label": "Tulsa, OK HUD Metro FMR Area"
+  },
+  {
+    "value": "32820",
+    "label": "Tunica County, MS HUD Metro FMR Area"
+  },
+  {
+    "value": "46220",
+    "label": "Tuscaloosa, AL HUD Metro FMR Area"
+  },
+  {
+    "value": "46300",
+    "label": "Twin Falls County, ID HUD Metro FMR Area"
+  },
+  {
+    "value": "46340",
+    "label": "Tyler, TX MSA"
+  },
+  {
+    "value": "18140",
+    "label": "Union County, OH HUD Metro FMR Area"
+  },
+  {
+    "value": "46520",
+    "label": "Urban Honolulu, HI MSA"
+  },
+  {
+    "value": "46540",
+    "label": "Utica-Rome, NY MSA"
+  },
+  {
+    "value": "46660",
+    "label": "Valdosta, GA MSA"
+  },
+  {
+    "value": "46700",
+    "label": "Vallejo-Fairfield, CA MSA"
+  },
+  {
+    "value": "29180",
+    "label": "Vermilion Parish, LA HUD Metro FMR Area"
+  },
+  {
+    "value": "47020",
+    "label": "Victoria, TX MSA"
+  },
+  {
+    "value": "47220",
+    "label": "Vineland-Bridgeton, NJ MSA"
+  },
+  {
+    "value": "47260",
+    "label": "Virginia Beach-Norfolk-Newport News, VA-NC HUD Metro FMR Area"
+  },
+  {
+    "value": "47300",
+    "label": "Visalia-Porterville, CA MSA"
+  },
+  {
+    "value": "40340",
+    "label": "Wabasha County, MN HUD Metro FMR Area"
+  },
+  {
+    "value": "47380",
+    "label": "Waco, TX HUD Metro FMR Area"
+  },
+  {
+    "value": "45220",
+    "label": "Wakulla County, FL HUD Metro FMR Area"
+  },
+  {
+    "value": "47460",
+    "label": "Walla Walla, WA MSA"
+  },
+  {
+    "value": "18880",
+    "label": "Walton County, FL HUD Metro FMR Area"
+  },
+  {
+    "value": "47580",
+    "label": "Warner Robins, GA HUD Metro FMR Area"
+  },
+  {
+    "value": "29200",
+    "label": "Warren County, IN HUD Metro FMR Area"
+  },
+  {
+    "value": "10900",
+    "label": "Warren County, NJ HUD Metro FMR Area"
+  },
+  {
+    "value": "26980",
+    "label": "Washington County, IA HUD Metro FMR Area"
+  },
+  {
+    "value": "31140",
+    "label": "Washington County, IN HUD Metro FMR Area"
+  },
+  {
+    "value": "47900",
+    "label": "Washington-Arlington-Alexandria, DC-VA-MD HUD Metro FMR Area"
+  },
+  {
+    "value": "47940",
+    "label": "Waterloo-Cedar Falls, IA HUD Metro FMR Area"
+  },
+  {
+    "value": "48060",
+    "label": "Watertown-Fort Drum, NY MSA"
+  },
+  {
+    "value": "48140",
+    "label": "Wausau, WI HUD Metro FMR Area"
+  },
+  {
+    "value": "48260",
+    "label": "Weirton-Steubenville, WV-OH MSA"
+  },
+  {
+    "value": "48300",
+    "label": "Wenatchee, WA MSA"
+  },
+  {
+    "value": "33100",
+    "label": "West Palm Beach-Boca Raton, FL HUD Metro FMR Area"
+  },
+  {
+    "value": "39300",
+    "label": "Westerly-Hopkinton-New Shoreham, RI HUD Metro FMR Area"
+  },
+  {
+    "value": "14460",
+    "label": "Western Rockingham County, NH HUD Metro FMR Area"
+  },
+  {
+    "value": "48540",
+    "label": "Wheeling, WV-OH MSA"
+  },
+  {
+    "value": "48660",
+    "label": "Wichita Falls, TX MSA"
+  },
+  {
+    "value": "48620",
+    "label": "Wichita, KS HUD Metro FMR Area"
+  },
+  {
+    "value": "48700",
+    "label": "Williamsport, PA MSA"
+  },
+  {
+    "value": "48900",
+    "label": "Wilmington, NC HUD Metro FMR Area"
+  },
+  {
+    "value": "49020",
+    "label": "Winchester, VA-WV MSA"
+  },
+  {
+    "value": "49180",
+    "label": "Winston-Salem, NC HUD Metro FMR Area"
+  },
+  {
+    "value": "19100",
+    "label": "Wise County, TX HUD Metro FMR Area"
+  },
+  {
+    "value": "49340",
+    "label": "Worcester, MA HUD Metro FMR Area"
+  },
+  {
+    "value": "49420",
+    "label": "Yakima, WA MSA"
+  },
+  {
+    "value": "27140",
+    "label": "Yazoo County, MS HUD Metro FMR Area"
+  },
+  {
+    "value": "40900",
+    "label": "Yolo, CA HUD Metro FMR Area"
+  },
+  {
+    "value": "49620",
+    "label": "York-Hanover, PA MSA"
+  },
+  {
+    "value": "38860",
+    "label": "York-Kittery-South Berwick, ME HUD Metro FMR Area"
+  },
+  {
+    "value": "49660",
+    "label": "Youngstown-Warren-Boardman, OH HUD Metro FMR Area"
+  },
+  {
+    "value": "49700",
+    "label": "Yuba City, CA MSA"
+  },
+  {
+    "value": "49740",
+    "label": "Yuma, AZ MSA"
+  }
+]
