@@ -1,35 +1,3 @@
-"""
-RBRE API – Tally-safe FastAPI app (FULL FILE, hardened)
-
-Includes:
-✅ Boot confirmation logs (module import + startup)
-✅ Request logging middleware (HIT/DONE) with flush=True (Render Live Logs)
-✅ Global exception handler that prints traceback + returns JSON 500
-✅ Tally extraction from payload["data"]["fields"]
-✅ UUID -> Label resolution via field options metadata
-✅ Robust parsing / normalization
-✅ Metro label -> CBSA mapping from cost_data_metro.json
-✅ Optional: auto-ensure DB schema
-✅ (C + B) Postgres persistence + R2/S3 PDF upload + results endpoints
-✅ Extra defensive logging around each 500-prone step:
-   - schema ensure
-   - PDF generation
-   - S3 upload
-   - DB insert
-   - results lookup
-   - presign
-
-Environment variables expected (Render -> rbre-api -> Environment):
-- DATABASE_URL (Internal Database URL)
-- S3_ENDPOINT_URL (R2 endpoint)  e.g. https://<accountid>.r2.cloudflarestorage.com
-- S3_REGION (auto)
-- S3_ACCESS_KEY_ID
-- S3_SECRET_ACCESS_KEY
-- S3_BUCKET
-- S3_PREFIX (optional, default reports/)
-- PUBLIC_BASE_URL (optional, default https://rbre-api.onrender.com)
-"""
-
 from __future__ import annotations
 
 import json
@@ -43,6 +11,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import boto3
 import psycopg2
+import resend
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from reportlab.lib.pagesizes import letter
@@ -54,7 +23,7 @@ from reportlab.pdfgen import canvas
 # -------------------------------------------------
 print("RBRE API BOOT CONFIRM: module imported (app.py)", flush=True)
 
-app = FastAPI(title="RBRE API", version="2.2")
+app = FastAPI(title="RBRE API", version="2.3")
 
 
 # -------------------------------------------------
@@ -62,8 +31,6 @@ app = FastAPI(title="RBRE API", version="2.2")
 # -------------------------------------------------
 @app.exception_handler(Exception)
 async def unhandled_exception_handler(request: Request, exc: Exception):
-    # NOTE: HTTPException is also an Exception, but FastAPI has its own handler.
-    # This will still catch anything not handled elsewhere.
     print("UNHANDLED ERROR:", repr(exc), flush=True)
     print(traceback.format_exc(), flush=True)
     return JSONResponse(
@@ -102,8 +69,12 @@ S3_PREFIX = (os.getenv("S3_PREFIX") or "reports/").strip()
 
 PUBLIC_BASE_URL = (os.getenv("PUBLIC_BASE_URL") or "https://rbre-api.onrender.com").strip()
 
+# Email (Resend)
+RESEND_API_KEY = (os.getenv("RESEND_API_KEY") or "").strip()
+EMAIL_FROM = (os.getenv("EMAIL_FROM") or "").strip()
 
-def _require_env():
+
+def _require_env_core():
     missing: List[str] = []
     if not DATABASE_URL:
         missing.append("DATABASE_URL")
@@ -114,11 +85,13 @@ def _require_env():
     if not S3_BUCKET:
         missing.append("S3_BUCKET")
     if not S3_ENDPOINT_URL:
-        # For R2, this is required; for AWS it can be None.
-        # Since you're using R2, treat as required.
-        missing.append("S3_ENDPOINT_URL")
+        missing.append("S3_ENDPOINT_URL")  # required for R2
     if missing:
         raise RuntimeError(f"Missing required environment variables: {missing}")
+
+
+def _email_enabled() -> bool:
+    return bool(RESEND_API_KEY and EMAIL_FROM)
 
 
 def db_conn():
@@ -137,6 +110,48 @@ def s3_client():
         aws_access_key_id=S3_ACCESS_KEY_ID,
         aws_secret_access_key=S3_SECRET_ACCESS_KEY,
     )
+
+
+# -------------------------------------------------
+# Email helper (Resend)
+# -------------------------------------------------
+def send_results_email(to_email: str, submission_id: str, results_url: str) -> None:
+    """
+    Sends the results link to the user. Never raises (caller should treat as best-effort).
+    """
+    if not _email_enabled():
+        print("EMAIL: Skipped (RESEND_API_KEY/EMAIL_FROM not set)", flush=True)
+        return
+
+    try:
+        resend.api_key = RESEND_API_KEY
+        pdf_url = f"{PUBLIC_BASE_URL.rstrip('/')}/results/{submission_id}/report.pdf"
+
+        subject = "Your RBRE relocation report is ready"
+        html = f"""
+        <div style="font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; line-height: 1.5;">
+          <h2>Your RBRE report is ready</h2>
+          <p>Thanks for submitting your info. Here are your links:</p>
+          <ul>
+            <li><a href="{results_url}">View your results</a></li>
+            <li><a href="{pdf_url}">Download your PDF</a> (link valid ~1 hour)</li>
+          </ul>
+          <p><small>Submission ID: {submission_id}</small></p>
+        </div>
+        """
+
+        resp = resend.Emails.send(
+            {
+                "from": EMAIL_FROM,
+                "to": [to_email],
+                "subject": subject,
+                "html": html,
+            }
+        )
+        print("EMAIL: Sent via Resend", {"to": to_email, "resp": resp}, flush=True)
+    except Exception as e:
+        # Do not fail webhook
+        print("EMAIL: Failed to send", {"to": to_email, "err": repr(e)}, flush=True)
 
 
 # -------------------------------------------------
@@ -322,7 +337,6 @@ with open(DATA_FILE, "r", encoding="utf-8") as f:
 def normalize_metro_name(s: str) -> str:
     s = s.lower().strip()
     s = re.sub(r"\s*\(.*?\)\s*", " ", s)
-    # remove common suffixes
     s = s.replace(" hud metro fmr area", " ")
     s = s.replace(" msa", " ")
     s = s.replace("msa", " ")
@@ -358,7 +372,7 @@ def label_or_cbsa_to_cbsa(x: Any) -> Optional[str]:
 def build_pdf_bytes(submission_id: str, email: str, inputs: Dict[str, Any], results: Dict[str, Any]) -> bytes:
     buf = BytesIO()
     c = canvas.Canvas(buf, pagesize=letter)
-    width, height = letter
+    _, height = letter
 
     def line(text: str, y: float, bold: bool = False) -> float:
         c.setFont("Helvetica-Bold" if bold else "Helvetica", 11 if bold else 10)
@@ -403,15 +417,10 @@ def build_pdf_bytes(submission_id: str, email: str, inputs: Dict[str, Any], resu
 
 
 def upload_pdf(pdf_bytes: bytes, submission_id: str) -> Tuple[str, str]:
-    _require_env()
+    _require_env_core()
     key = f"{S3_PREFIX.rstrip('/')}/{submission_id}.pdf".lstrip("/")
     client = s3_client()
-    client.put_object(
-        Bucket=S3_BUCKET,
-        Key=key,
-        Body=pdf_bytes,
-        ContentType="application/pdf",
-    )
+    client.put_object(Bucket=S3_BUCKET, Key=key, Body=pdf_bytes, ContentType="application/pdf")
     return S3_BUCKET, key
 
 
@@ -460,7 +469,8 @@ def ensure_schema():
 def health():
     return {
         "status": "alive",
-        "version": "2.2",
+        "version": "2.3",
+        "email_enabled": _email_enabled(),
         "metros_loaded": len(COST_DATA),
         "metro_lookup_loaded": len(METRO_LOOKUP),
     }
@@ -468,14 +478,13 @@ def health():
 
 @app.post("/v1/report.json")
 async def generate_report(request: Request):
-    # Ensure env early so failures are explicit
+    # Core env + schema
     try:
-        _require_env()
+        _require_env_core()
     except Exception as e:
         print("ENV missing/invalid:", repr(e), flush=True)
         raise HTTPException(status_code=500, detail={"error": "Server misconfigured", "reason": str(e)})
 
-    # Ensure DB schema
     try:
         ensure_schema()
     except Exception as e:
@@ -490,12 +499,9 @@ async def generate_report(request: Request):
     print("TALLY ANSWER KEYS:", sorted(list(answers.keys())), flush=True)
 
     if not answers:
-        raise HTTPException(
-            status_code=400,
-            detail={"error": "Could not extract answers from Tally payload", "debug": dbg},
-        )
+        raise HTTPException(status_code=400, detail={"error": "Could not extract answers", "debug": dbg})
 
-    # Field mapping
+    # Mapping
     try:
         household_type_raw = pick(answers, ["Household Type?"], required=True)
         downsizing_raw = pick(answers, ["Are You Downsizing?"], required=True)
@@ -508,10 +514,7 @@ async def generate_report(request: Request):
         targets_raw = pick(answers, ["Metro Areas You Are Considering (Optional)"], required=False)
         email_raw = pick(answers, ["Email Address? (So we can share our insight!)"], required=True)
     except Exception as e:
-        raise HTTPException(
-            status_code=400,
-            detail={"error": "Field mapping failed", "reason": str(e), "received_answer_keys": sorted(list(answers.keys()))},
-        )
+        raise HTTPException(status_code=400, detail={"error": "Field mapping failed", "reason": str(e)})
 
     print(
         "RAW VALUES:",
@@ -592,14 +595,14 @@ async def generate_report(request: Request):
         "risk_tolerance": risk_tolerance,
     }
 
-    # Build PDF
+    # PDF
     try:
         pdf_bytes = build_pdf_bytes(submission_id=submission_id, email=email, inputs=inputs, results=results)
     except Exception as e:
         print("PDF generation failed:", repr(e), flush=True)
         raise HTTPException(status_code=500, detail={"error": "PDF generation failed", "reason": str(e)})
 
-    # Upload PDF
+    # Upload
     try:
         bucket, key = upload_pdf(pdf_bytes, submission_id=submission_id)
     except Exception as e:
@@ -630,13 +633,17 @@ async def generate_report(request: Request):
         print("DB insert failed:", repr(e), flush=True)
         raise HTTPException(status_code=500, detail={"error": "DB insert failed", "reason": str(e)})
 
-    # Final log (mask email)
+    results_url = f"{PUBLIC_BASE_URL.rstrip('/')}/results/{submission_id}"
+
+    # EMAIL (best-effort)
+    send_results_email(to_email=email, submission_id=submission_id, results_url=results_url)
+
+    # Final log
     masked_email = email
     if "@" in masked_email:
         local, domain = masked_email.split("@", 1)
         masked_email = (local[:2] + "***@" + domain) if len(local) > 2 else "***@" + domain
 
-    results_url = f"{PUBLIC_BASE_URL.rstrip('/')}/results/{submission_id}"
     print(
         "FINAL:",
         {
@@ -646,6 +653,7 @@ async def generate_report(request: Request):
             "current_cbsa": current_cbsa,
             "targets_count": len(target_cbsas),
             "unmapped_targets": unmapped_targets,
+            "email_sent": _email_enabled(),
         },
         flush=True,
     )
@@ -655,9 +663,6 @@ async def generate_report(request: Request):
 
 @app.get("/results/{submission_id}", response_class=HTMLResponse)
 def results_page(submission_id: str):
-    if not DATABASE_URL:
-        raise HTTPException(status_code=500, detail={"error": "DATABASE_URL not configured"})
-
     try:
         with db_conn() as conn:
             with conn.cursor() as cur:
@@ -711,9 +716,6 @@ def results_page(submission_id: str):
 
 @app.get("/results/{submission_id}/report.pdf")
 def report_pdf(submission_id: str):
-    if not DATABASE_URL:
-        raise HTTPException(status_code=500, detail={"error": "DATABASE_URL not configured"})
-
     try:
         with db_conn() as conn:
             with conn.cursor() as cur:
