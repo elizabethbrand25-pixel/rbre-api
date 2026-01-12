@@ -1,18 +1,21 @@
 """
-RBRE API – Tally-safe FastAPI app (FULL FILE, hardened + UUID-agnostic)
+RBRE API – Tally-safe FastAPI app (FULL FILE, hardened)
 
-This rewrite removes brittle UUID->CBSA manual mapping by:
-- Building a metro-label -> CBSA lookup from cost_data_metro.json (all CBSAs supported)
-- Normalizing metro labels so minor formatting differences still match
-- Extracting answers from Tally payload["data"]["fields"] list
-- Logging:
+✅ Key fix in this version:
+- Resolves Tally select/multi-select OPTION UUIDs -> human LABELS automatically
+  by using the field's options metadata included in payload["data"]["fields"] items.
+  (No hidden fields, no Tally UI changes, no manual UUID mapping.)
+
+Also includes:
+- Extract answers from Tally payload["data"]["fields"] list
+- Logs:
   - TALLY PAYLOAD KEYS
   - TALLY SHAPE + FIELDS_COUNT
   - TALLY ANSWER KEYS
   - RAW mapped values (before parsing)
-- Unwrapping Tally values (dict/list shapes) into primitives
+- Unwrap Tally values (dict/list shapes) into primitives
 - Robust numeric/boolean parsing with clear 400 errors
-- Helpful 400 if metro values look like UUIDs (tells you to configure Tally to send labels)
+- Metro label -> CBSA mapping from cost_data_metro.json (all CBSAs supported)
 """
 
 from __future__ import annotations
@@ -25,10 +28,11 @@ from typing import Any, Dict, List, Optional, Tuple
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import JSONResponse
 
+
 # -------------------------------------------------
 # App initialization
 # -------------------------------------------------
-app = FastAPI(title="RBRE API", version="1.1")
+app = FastAPI(title="RBRE API", version="1.2")
 
 
 # -------------------------------------------------
@@ -81,9 +85,9 @@ def _unwrap_value(v: Any) -> Any:
 
 def _as_bool(v: Any) -> bool:
     """
-    Conservative boolean parsing.
-    If Tally sends labels like "Yes"/"No" this works.
-    If Tally sends UUIDs, this will treat them as False (so fix Tally config).
+    Conservative boolean parsing:
+    - If value is bool, use it.
+    - If value is text like Yes/No, True/False, parse it.
     """
     v = _unwrap_value(v)
     if isinstance(v, bool):
@@ -110,15 +114,113 @@ def _as_float(v: Any) -> float:
 
 
 # -------------------------------------------------
-# Tally answer extraction
+# Tally extraction helpers: UUID -> LABEL using options metadata
+# -------------------------------------------------
+def _collect_options(field_item: Dict[str, Any]) -> List[Dict[str, Any]]:
+    """
+    Options may appear in different places depending on Tally:
+      - item["options"]
+      - item["field"]["options"]
+      - item["field"]["choices"] (some shapes)
+      - item["choices"]
+    We return a list of dicts, each ideally containing id/value + label/text.
+    """
+    candidates: List[Any] = []
+    for path in (
+        ("options",),
+        ("choices",),
+        ("field", "options"),
+        ("field", "choices"),
+    ):
+        cur: Any = field_item
+        ok = True
+        for k in path:
+            if isinstance(cur, dict) and k in cur:
+                cur = cur[k]
+            else:
+                ok = False
+                break
+        if ok and isinstance(cur, list):
+            candidates.append(cur)
+
+    # Prefer the first non-empty list
+    for c in candidates:
+        if isinstance(c, list) and len(c) > 0:
+            # keep only dict-like options
+            return [x for x in c if isinstance(x, dict)]
+    return []
+
+
+def _option_id(opt: Dict[str, Any]) -> Optional[str]:
+    """
+    Option IDs might be under keys like: id, value, uuid
+    """
+    for k in ("id", "value", "uuid", "key"):
+        if k in opt and opt[k] is not None:
+            return str(opt[k]).strip()
+    return None
+
+
+def _option_label(opt: Dict[str, Any]) -> Optional[str]:
+    """
+    Option labels might be under keys like: label, text, name, title
+    """
+    for k in ("label", "text", "name", "title"):
+        if k in opt and opt[k] is not None:
+            return str(opt[k]).strip()
+    return None
+
+
+def _resolve_value_via_options(field_item: Dict[str, Any], raw_value: Any) -> Any:
+    """
+    If raw_value is an option UUID (or list of UUIDs) and options metadata is present,
+    map UUID(s) -> human labels.
+
+    If options are missing, or mapping fails, return raw_value unchanged.
+    """
+    options = _collect_options(field_item)
+    if not options:
+        return raw_value
+
+    id_to_label: Dict[str, str] = {}
+    for opt in options:
+        oid = _option_id(opt)
+        olab = _option_label(opt)
+        if oid and olab:
+            id_to_label[oid] = olab
+
+    if not id_to_label:
+        return raw_value
+
+    v = _unwrap_value(raw_value)
+
+    # Multi-select
+    if isinstance(v, list):
+        out: List[Any] = []
+        for item in v:
+            s = str(item).strip() if item is not None else ""
+            out.append(id_to_label.get(s, item))
+        return out
+
+    # Single select
+    s = str(v).strip() if v is not None else ""
+    return id_to_label.get(s, raw_value)
+
+
+# -------------------------------------------------
+# Tally answer extraction (with UUID->label resolution)
 # -------------------------------------------------
 def _extract_tally_answers(payload: Dict[str, Any]) -> Tuple[Dict[str, Any], Dict[str, Any]]:
     """
     Returns (answers_dict, debug_info).
 
     Handles:
-      payload["data"]["fields"] -> list of objects (your case)
-    Flattens into: {"Question Label": value, ...}
+      payload["data"]["fields"] -> list of objects
+    Flattens into: {"Question Label": resolved_value, ...}
+
+    ✅ resolved_value:
+      - if select/multi-select provides UUIDs and options metadata exists,
+        UUIDs are converted to their human labels automatically.
     """
     debug: Dict[str, Any] = {"payload_keys": sorted(list(payload.keys()))}
 
@@ -143,10 +245,12 @@ def _extract_tally_answers(payload: Dict[str, Any]) -> Tuple[Dict[str, Any], Dic
         if not isinstance(item, dict):
             continue
 
+        # Determine field label
         label = item.get("label") or item.get("title")
         if label is None and isinstance(item.get("field"), dict):
             label = item["field"].get("label") or item["field"].get("title")
 
+        # Determine raw value
         value = None
         if "value" in item:
             value = item.get("value")
@@ -156,7 +260,9 @@ def _extract_tally_answers(payload: Dict[str, Any]) -> Tuple[Dict[str, Any], Dic
             value = item.get("response")
 
         if isinstance(label, str) and label.strip():
-            answers[label.strip()] = value
+            # ✅ NEW: resolve UUID(s) -> label(s) when options metadata exists
+            resolved = _resolve_value_via_options(item, value)
+            answers[label.strip()] = resolved
 
     return answers, debug
 
@@ -174,14 +280,6 @@ with open(DATA_FILE, "r", encoding="utf-8") as f:
 
 
 def normalize_metro_name(s: str) -> str:
-    """
-    Make metro labels resilient to minor formatting differences.
-    Examples this helps with:
-      - removing "MSA", "HUD Metro FMR Area"
-      - removing "(part)"
-      - removing punctuation
-      - normalizing whitespace
-    """
     s = s.lower().strip()
     s = re.sub(r"\s*\(.*?\)\s*", " ", s)  # remove parenthetical notes
     s = s.replace("hud metro fmr area", " ")
@@ -199,22 +297,16 @@ for cbsa, prof in COST_DATA.items():
         METRO_LOOKUP[normalize_metro_name(name)] = cbsa
 
 
-_UUID_RE = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", re.I)
-
-
 def label_or_cbsa_to_cbsa(x: Any) -> Optional[str]:
     """
     Accept CBSA code directly OR map metro label -> CBSA using COST_DATA-derived lookup.
-
-    IMPORTANT:
-    - If Tally sends option UUIDs instead of labels, this will not match.
-      In that case, configure Tally to send choice labels.
+    After UUID->label resolution, metro fields should be label strings.
     """
     x = _unwrap_value(x)
     if x is None:
         return None
 
-    # If list, use first (single-selects sometimes come in lists)
+    # If list, use first item (single-select sometimes represented as list)
     if isinstance(x, list):
         if not x:
             return None
@@ -226,9 +318,8 @@ def label_or_cbsa_to_cbsa(x: Any) -> Optional[str]:
     if s in COST_DATA:
         return s
 
-    # Label match
-    key = normalize_metro_name(s)
-    return METRO_LOOKUP.get(key)
+    # Label match (normalized)
+    return METRO_LOOKUP.get(normalize_metro_name(s))
 
 
 # -------------------------------------------------
@@ -238,9 +329,9 @@ def label_or_cbsa_to_cbsa(x: Any) -> Optional[str]:
 def health():
     return {
         "status": "alive",
+        "version": "1.2",
         "metros_loaded": len(COST_DATA),
         "metro_lookup_loaded": len(METRO_LOOKUP),
-        "version": "1.1",
     }
 
 
@@ -268,49 +359,57 @@ async def generate_report(request: Request):
             },
         )
 
-    # ---- Field mapping ----
+    # ---- Field mapping (match your exact labels + flexible fallbacks) ----
     try:
         household_type_raw = pick(
             answers,
             ["Household Type?", "Household Type", "household type", "household", "individual or couple"],
             required=True,
         )
+
         downsizing_raw = pick(
             answers,
             ["Are You Downsizing?", "Are you downsizing?", "are you downsizing", "downsizing"],
             required=True,
         )
+
         net_income_raw = pick(
             answers,
             ["Net Monthly Income", "Net monthly income", "monthly income", "income"],
             required=True,
         )
+
         fixed_costs_raw = pick(
             answers,
             ["Fixed Monthly Obligations", "Fixed monthly obligations", "monthly obligations", "fixed costs", "obligations"],
             required=True,
         )
+
         savings_raw = pick(
             answers,
             ["Liquid Savings Available", "Liquid savings available", "savings", "cash savings"],
             required=True,
         )
+
         timeline_raw = pick(
             answers,
             ["Timeline (How soon do you want to relocate?)", "Timeline", "move timeline", "how soon"],
             required=True,
         )
+
         risk_raw = pick(
             answers,
             ["Risk Tolerance", "Risk tolerance", "risk"],
             required=True,
         )
+
         current_metro_raw = pick(
             answers,
             ["Current Metro Area", "Current metro area", "current metro", "current location"],
             required=True,
         )
-        target_metros_raw = pick(
+
+        target_labels_raw = pick(
             answers,
             [
                 "Metro Areas You Are Considering (Optional)",
@@ -321,11 +420,18 @@ async def generate_report(request: Request):
             ],
             required=False,
         )
+
         email_raw = pick(
             answers,
-            ["Email Address? (So we can share our insight!)", "Email Address", "Email address", "email"],
+            [
+                "Email Address? (So we can share our insight!)",
+                "Email Address",
+                "Email address",
+                "email",
+            ],
             required=True,
         )
+
     except Exception as e:
         raise HTTPException(
             status_code=400,
@@ -336,6 +442,7 @@ async def generate_report(request: Request):
             },
         )
 
+    # Log raw mapped values (after UUID->LABEL resolution)
     print(
         "RAW VALUES:",
         {
@@ -347,7 +454,7 @@ async def generate_report(request: Request):
             "timeline": timeline_raw,
             "risk": risk_raw,
             "current_metro": current_metro_raw,
-            "targets": target_metros_raw,
+            "targets": target_labels_raw,
             "email": email_raw,
         },
         flush=True,
@@ -378,14 +485,14 @@ async def generate_report(request: Request):
                     "timeline": timeline_raw,
                     "risk": risk_raw,
                     "current_metro": current_metro_raw,
-                    "targets": target_metros_raw,
+                    "targets": target_labels_raw,
                     "email": email_raw,
                 },
             },
         )
 
     # Targets normalization into list[str]
-    targets_unwrapped = _unwrap_value(target_metros_raw)
+    targets_unwrapped = _unwrap_value(target_labels_raw)
     if targets_unwrapped is None:
         target_labels: List[str] = []
     elif isinstance(targets_unwrapped, list):
@@ -393,24 +500,15 @@ async def generate_report(request: Request):
     else:
         target_labels = [str(targets_unwrapped).strip()] if str(targets_unwrapped).strip() else []
 
-    # ---- Metro mapping ----
+    # Map metro labels -> CBSA
     current_cbsa = label_or_cbsa_to_cbsa(current_metro_raw)
     if not current_cbsa:
-        unwrapped = _unwrap_value(current_metro_raw)
-        first = unwrapped[0] if isinstance(unwrapped, list) and unwrapped else unwrapped
-        first_s = str(first).strip() if first is not None else ""
-
         raise HTTPException(
             status_code=400,
             detail={
-                "error": "Unknown current metro. Expected CBSA code or metro label matching cost_data_metro.json.",
-                "received_value": first_s,
-                "looks_like_uuid": bool(_UUID_RE.match(first_s)),
-                "fix": (
-                    "If this is a Tally option UUID, configure Tally to send the CHOICE LABEL (not the ID) "
-                    "for Current Metro Area / Target Metros."
-                ),
-                "example_expected_label": next(iter(METRO_LOOKUP.keys()), None),
+                "error": "Unknown current metro after UUID->label resolution. Label did not match cost_data_metro.json.",
+                "received_value": _unwrap_value(current_metro_raw),
+                "hint": "Check that Tally option label exactly matches (or closely matches) metro_name in cost_data_metro.json.",
             },
         )
 
