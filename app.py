@@ -51,16 +51,16 @@ async def generate_report(request: Request):
         raise HTTPException(status_code=400, detail="Invalid Tally payload")
 
     try:
-        household_type = data.get("Household type")
-        downsizing_raw = data.get("Are you downsizing?")
-        net_income = float(data.get("Net monthly income"))
-        fixed_costs = float(data.get("Fixed monthly obligations"))
-        savings = float(data.get("Liquid savings available"))
-        timeline = data.get("Timeline")
-        risk = data.get("Risk tolerance")
-        current_metro_label = data.get("Current metro area")
-        target_labels = data.get("Metro areas you are considering (optional)", [])
-        email = data.get("Email address")
+        household_type = data.get("Household Type?")
+        downsizing_raw = data.get("Are You Downsizing?")
+        net_income = float(data.get("Net Monthly Income"))
+        fixed_costs = float(data.get("Fixed Monthly Obligations"))
+        savings = float(data.get("Liquid Savings Available"))
+        timeline = data.get("Timeline (How soon do you want to relocate?)")
+        risk = data.get("Risk Tolerance")
+        current_metro_label = data.get("Current Metro Area")
+        target_labels = data.get("Metro Areas You Are Considering (Optional)", [])
+        email = data.get("Email Address? (So we can share our insight!)")
     except Exception:
         raise HTTPException(
             status_code=400,
