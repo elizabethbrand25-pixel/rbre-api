@@ -6,4 +6,4 @@ docraptor
 boto3
 psycopg2-binary
 reportlab
-
+resend
