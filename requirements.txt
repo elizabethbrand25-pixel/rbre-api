@@ -3,3 +3,7 @@ uvicorn[standard]
 pydantic
 jinja2
 docraptor
+boto3
+psycopg2-binary
+reportlab
+
