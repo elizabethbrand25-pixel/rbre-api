@@ -1,9 +1,13 @@
 """
 RBRE API – Tally-safe FastAPI app
 
-- Accepts Tally webhook payloads (data / fields / answers)
-- Logs exact keys received from Tally
-- Tolerant field mapping (no strict question text dependency)
+Fixes:
+- Tally webhook payloads may NOT be {"data": {...}}.
+- Answers often arrive in payload["fields"] as a LIST of objects.
+- This app extracts answers into a flat dict: {question_label: value}
+- Logs:
+  - payload keys
+  - parsed answer keys
 """
 
 from __future__ import annotations
@@ -11,7 +15,7 @@ from __future__ import annotations
 import json
 import os
 import re
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import JSONResponse
@@ -49,15 +53,97 @@ def _as_float(v: Any) -> float:
 
 def pick(data: Dict[str, Any], aliases: List[str], required: bool = True) -> Optional[Any]:
     norm_map = {_norm_key(k): k for k in data.keys()}
-
     for alias in aliases:
         nk = _norm_key(alias)
         if nk in norm_map:
             return data[norm_map[nk]]
-
     if required:
         raise KeyError(f"Missing field (aliases tried: {aliases})")
     return None
+
+
+def _extract_tally_answers(payload: Dict[str, Any]) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+    """
+    Returns (answers_dict, debug_info)
+
+    Supports several common webhook shapes:
+    1) payload["data"] is a dict of answers
+    2) payload["data"]["fields"] is a list of objects
+    3) payload["fields"] is a list of objects  (your case)
+    4) payload["answers"] is a dict
+
+    A "field object" might look like:
+      {"label":"Net monthly income","value":6500}
+    or sometimes:
+      {"title":"Net monthly income","answer":6500}
+    or nested:
+      {"field": {"label":"..."}, "value": ...}
+    """
+    debug = {"payload_keys": sorted(list(payload.keys()))}
+
+    # Candidate containers in priority order
+    candidates: List[Any] = []
+    if "data" in payload:
+        candidates.append(payload.get("data"))
+        if isinstance(payload.get("data"), dict) and "fields" in payload["data"]:
+            candidates.append(payload["data"].get("fields"))
+    if "fields" in payload:
+        candidates.append(payload.get("fields"))
+    if "answers" in payload:
+        candidates.append(payload.get("answers"))
+
+    # Case A: direct dict of answers
+    for c in candidates:
+        if isinstance(c, dict):
+            # If it looks like answers (not just metadata), accept it.
+            # If it contains "fields" and other metadata, we'll parse fields separately.
+            if any(k for k in c.keys() if _norm_key(k) in {"net monthly income", "email", "household type"}):
+                debug["shape"] = "dict_answers"
+                return c, debug
+
+    # Case B: list of field objects (most common for modern Tally webhooks)
+    fields_list = None
+    for c in candidates:
+        if isinstance(c, list):
+            fields_list = c
+            break
+
+    answers: Dict[str, Any] = {}
+    if isinstance(fields_list, list):
+        for item in fields_list:
+            if not isinstance(item, dict):
+                continue
+
+            # Try a few common label/value shapes
+            label = None
+            value = None
+
+            if "label" in item:
+                label = item.get("label")
+            elif "title" in item:
+                label = item.get("title")
+            elif isinstance(item.get("field"), dict) and "label" in item["field"]:
+                label = item["field"].get("label")
+            elif isinstance(item.get("field"), dict) and "title" in item["field"]:
+                label = item["field"].get("title")
+
+            if "value" in item:
+                value = item.get("value")
+            elif "answer" in item:
+                value = item.get("answer")
+            elif "response" in item:
+                value = item.get("response")
+
+            if isinstance(label, str) and label.strip():
+                answers[label.strip()] = value
+
+        debug["shape"] = "fields_list"
+        debug["fields_count"] = len(fields_list)
+        return answers, debug
+
+    # Nothing matched
+    debug["shape"] = "unknown"
+    return {}, debug
 
 
 # -------------------------------------------------
@@ -92,10 +178,7 @@ def label_or_cbsa_to_cbsa(x: Any) -> Optional[str]:
 # -------------------------------------------------
 @app.get("/")
 def health():
-    return {
-        "status": "alive",
-        "metros_loaded": len(COST_DATA),
-    }
+    return {"status": "alive", "metros_loaded": len(COST_DATA)}
 
 
 # -------------------------------------------------
@@ -105,72 +188,74 @@ def health():
 async def generate_report(request: Request):
     payload = await request.json()
 
-    # 🔑 IMPORTANT CHANGE:
-    # Tally may send answers under different keys
-    data = payload.get("data") or payload.get("fields") or payload.get("answers")
+    # Extract answers robustly
+    answers, dbg = _extract_tally_answers(payload)
 
-    if not isinstance(data, dict):
+    # Log payload keys + parsed answer keys (Render logs)
+    print("TALLY PAYLOAD KEYS:", dbg.get("payload_keys"))
+    print("TALLY SHAPE:", dbg.get("shape"), "FIELDS_COUNT:", dbg.get("fields_count"))
+    print("TALLY ANSWER KEYS:", sorted(list(answers.keys())))
+
+    if not answers:
         raise HTTPException(
             status_code=400,
             detail={
-                "error": "Invalid Tally payload",
-                "payload_keys": list(payload.keys()),
+                "error": "Could not extract answers from Tally payload",
+                "debug": dbg,
+                "payload_keys": dbg.get("payload_keys"),
             },
         )
 
-    # 🔍 DEBUG: log exactly what Tally sent
-    print("TALLY RECEIVED KEYS:", sorted(list(data.keys())))
-
     try:
         household_type = pick(
-            data,
+            answers,
             ["household type", "household", "individual or couple"],
         )
 
         downsizing_raw = pick(
-            data,
+            answers,
             ["are you downsizing", "downsizing"],
         )
 
         net_income_raw = pick(
-            data,
+            answers,
             ["net monthly income", "monthly income", "income"],
         )
 
         fixed_costs_raw = pick(
-            data,
-            ["fixed monthly obligations", "monthly obligations", "fixed costs"],
+            answers,
+            ["fixed monthly obligations", "monthly obligations", "fixed costs", "obligations"],
         )
 
         savings_raw = pick(
-            data,
+            answers,
             ["liquid savings available", "savings", "cash savings"],
         )
 
         timeline = pick(
-            data,
+            answers,
             ["timeline", "move timeline"],
         )
 
         risk = pick(
-            data,
+            answers,
             ["risk tolerance", "risk"],
         )
 
         current_metro_label = pick(
-            data,
+            answers,
             ["current metro area", "current metro", "current location"],
         )
 
         target_labels = pick(
-            data,
-            ["metro areas you are considering", "target metros"],
+            answers,
+            ["metro areas you are considering", "target metros", "metros considering"],
             required=False,
         )
 
         email = pick(
-            data,
-            ["email address", "email"],
+            answers,
+            ["email address", "email", "e mail"],
         )
 
     except Exception as e:
@@ -179,21 +264,23 @@ async def generate_report(request: Request):
             detail={
                 "error": "Field mapping failed",
                 "reason": str(e),
-                "received_keys": sorted(list(data.keys())),
+                "received_answer_keys": sorted(list(answers.keys())),
             },
         )
 
-    # Normalize values
+    # Normalize
     downsizing = _as_bool(downsizing_raw)
     net_income = _as_float(net_income_raw)
     fixed_costs = _as_float(fixed_costs_raw)
     savings = _as_float(savings_raw)
 
+    # targets normalization
     if isinstance(target_labels, str):
         target_labels = [target_labels]
     if not isinstance(target_labels, list):
         target_labels = []
 
+    # Map metro label -> CBSA
     current_cbsa = label_or_cbsa_to_cbsa(current_metro_label)
     if not current_cbsa:
         raise HTTPException(
