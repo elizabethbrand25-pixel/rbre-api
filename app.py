@@ -10,6 +10,8 @@ Fixes included:
   - RAW mapped values (before parsing)
 - Unwrap Tally values (dict/list shapes) into primitives
 - Robust numeric/boolean parsing with clear 400 errors
+- ✅ Option 1 implemented: map Tally *metro option IDs* -> CBSA codes
+  - Supports both current_metro + target metros coming in as UUID option IDs
 """
 
 from __future__ import annotations
@@ -87,6 +89,13 @@ def _unwrap_value(v: Any) -> Any:
 
 
 def _as_bool(v: Any) -> bool:
+    """
+    Conservative boolean parsing:
+    - true if value is bool True
+    - true if string in {"yes","y","true","1","on"}
+    Everything else => False
+    NOTE: If Tally sends option UUIDs for yes/no, you should map those separately.
+    """
     v = _unwrap_value(v)
     if isinstance(v, bool):
         return v
@@ -183,17 +192,45 @@ for cbsa, prof in COST_DATA.items():
         LABEL_TO_CBSA[label.strip()] = cbsa
 
 
+# -------------------------------------------------
+# ✅ OPTION 1: Tally Metro Option ID -> CBSA mapping
+# -------------------------------------------------
+# Populate this with the option UUIDs Tally sends for your "Current Metro Area"
+# and "Metro Areas You Are Considering (Optional)" questions.
+#
+# Example (FAKE):
+#   "8d7dc6df-eead-4c54-87a0-a76e139387b3": "31080"
+#
+# You can build this once by logging RAW VALUES and then mapping each option id
+# to the correct CBSA code in your COST_DATA.
+TALLY_METRO_OPTION_TO_CBSA: Dict[str, str] = {
+    # "8d7dc6df-eead-4c54-87a0-a76e139387b3": "XXXXX",
+    # "fb1e6396-0983-4cb7-929c-b2825f6e2924": "YYYYY",
+}
+
+
 def label_or_cbsa_to_cbsa(x: Any) -> Optional[str]:
     """
-    Accept CBSA code directly or map metro label to CBSA.
+    Accept CBSA code directly, map metro label to CBSA, OR map Tally option-id to CBSA.
     If Tally returns a dict like {"label": "..."} we unwrap first.
     """
     x = _unwrap_value(x)
     if x is None:
         return None
+
     s = str(x).strip()
+
+    # ✅ NEW: option-id -> CBSA
+    if s in TALLY_METRO_OPTION_TO_CBSA:
+        cbsa = TALLY_METRO_OPTION_TO_CBSA[s]
+        # Guard: ensure mapping points to loaded dataset
+        return cbsa if cbsa in COST_DATA else None
+
+    # CBSA directly
     if s in COST_DATA:
         return s
+
+    # Metro label -> CBSA
     return LABEL_TO_CBSA.get(s)
 
 
@@ -313,19 +350,21 @@ async def generate_report(request: Request):
         )
 
     # Log raw mapped values (super helpful)
-    print("RAW VALUES:",
-          {
-              "household_type": household_type_raw,
-              "downsizing": downsizing_raw,
-              "net_income": net_income_raw,
-              "fixed_costs": fixed_costs_raw,
-              "savings": savings_raw,
-              "timeline": timeline_raw,
-              "risk": risk_raw,
-              "current_metro": current_metro_raw,
-              "targets": target_labels_raw,
-              "email": email_raw,
-          })
+    print(
+        "RAW VALUES:",
+        {
+            "household_type": household_type_raw,
+            "downsizing": downsizing_raw,
+            "net_income": net_income_raw,
+            "fixed_costs": fixed_costs_raw,
+            "savings": savings_raw,
+            "timeline": timeline_raw,
+            "risk": risk_raw,
+            "current_metro": current_metro_raw,
+            "targets": target_labels_raw,
+            "email": email_raw,
+        },
+    )
 
     # ---- Normalize values ----
     try:
@@ -367,19 +406,34 @@ async def generate_report(request: Request):
     else:
         target_labels = [str(targets_unwrapped).strip()] if str(targets_unwrapped).strip() else []
 
-    # Map metro label -> CBSA
+    # Map metro label/CBSA/option-id -> CBSA
     current_cbsa = label_or_cbsa_to_cbsa(current_metro_raw)
     if not current_cbsa:
+        # Provide a very explicit error that tells you what to add to the mapping
+        unwrapped = _unwrap_value(current_metro_raw)
+        maybe_option_id = str(unwrapped).strip() if unwrapped is not None else None
+
         raise HTTPException(
             status_code=400,
-            detail={"error": "Unknown current metro (label not found and not a CBSA code)", "value": _unwrap_value(current_metro_raw)},
+            detail={
+                "error": "Unknown current metro. Not a CBSA, not a metro_name label, and not in TALLY_METRO_OPTION_TO_CBSA.",
+                "value_unwrapped": unwrapped,
+                "hint": (
+                    "If this is a Tally option UUID, add it to TALLY_METRO_OPTION_TO_CBSA with the correct CBSA code."
+                ),
+                "missing_option_id": maybe_option_id,
+            },
         )
 
     target_cbsas: List[str] = []
+    unmapped_targets: List[str] = []
     for t in target_labels:
         cbsa = label_or_cbsa_to_cbsa(t)
         if cbsa:
             target_cbsas.append(cbsa)
+        else:
+            # keep track of what didn't map so you can fill the dict
+            unmapped_targets.append(str(_unwrap_value(t)).strip())
 
     # MVP JSON output (next step: plug in recommendation engine + PDF)
     return JSONResponse(
@@ -395,5 +449,6 @@ async def generate_report(request: Request):
             "risk_tolerance": risk_tolerance,
             "current_cbsa": current_cbsa,
             "target_cbsas": target_cbsas,
+            "unmapped_targets": unmapped_targets,  # handy for filling your mapping dict
         }
     )
