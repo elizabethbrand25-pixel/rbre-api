@@ -131,6 +131,7 @@ def health_check():
 # Tally webhook endpoint (JSON MVP)
 # -------------------------------------------------
 @app.post("/v1/report.json")
+print("TALLY RECEIVED KEYS:", sorted(list(data.keys())))
 async def generate_report(request: Request):
     """
     Receives a Tally webhook payload.
