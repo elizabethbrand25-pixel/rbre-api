@@ -44,22 +44,15 @@ def health_check():
 # -------------------------------------------------
 @app.post("/v1/report.json")
 async def generate_report(request: Request):
-    """
-    Receives a Tally webhook payload, maps it to engine input,
-    and returns a structured JSON response.
-    """
-
     payload = await request.json()
 
-    # Tally wraps answers inside "data"
     data = payload.get("data")
     if not isinstance(data, dict):
         raise HTTPException(status_code=400, detail="Invalid Tally payload")
 
-    # ---- Extract fields by QUESTION LABEL ----
     try:
         household_type = data.get("Household type")
-        downsizing = data.get("Are you downsizing?")
+        downsizing_raw = data.get("Are you downsizing?")
         net_income = float(data.get("Net monthly income"))
         fixed_costs = float(data.get("Fixed monthly obligations"))
         savings = float(data.get("Liquid savings available"))
@@ -67,7 +60,43 @@ async def generate_report(request: Request):
         risk = data.get("Risk tolerance")
         current_metro_label = data.get("Current metro area")
         target_labels = data.get("Metro areas you are considering (optional)", [])
-except Exception:
-    raise HTTPException(status_code=400, detail="Missing or invalid fields in Tally submission")
+        email = data.get("Email address")
+    except Exception:
+        raise HTTPException(
+            status_code=400,
+            detail="Missing or invalid fields in Tally submission"
+        )
 
+    downsizing = str(downsizing_raw).lower() == "yes"
 
+    if isinstance(target_labels, str):
+        target_labels = [target_labels]
+    if not isinstance(target_labels, list):
+        target_labels = []
+
+    if current_metro_label not in LABEL_TO_CBSA:
+        raise HTTPException(status_code=400, detail="Unknown current metro")
+
+    current_cbsa = LABEL_TO_CBSA[current_metro_label]
+
+    target_cbsas = [
+        LABEL_TO_CBSA[label]
+        for label in target_labels
+        if label in LABEL_TO_CBSA
+    ]
+
+    result = {
+        "household_type": household_type,
+        "downsizing": downsizing,
+        "net_monthly_income": net_income,
+        "fixed_monthly_obligations": fixed_costs,
+        "liquid_savings": savings,
+        "timeline": timeline,
+        "risk_tolerance": risk,
+        "current_cbsa": current_cbsa,
+        "target_cbsas": target_cbsas,
+        "email": email,
+        "status": "processed"
+    }
+
+    return JSONResponse(content=result)
