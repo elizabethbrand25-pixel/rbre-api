@@ -1,13 +1,9 @@
 """
-RBRE API (FastAPI) - Tally webhook friendly
+RBRE API – Tally-safe FastAPI app
 
-- Loads cost_data_metro.json at startup
-- Accepts Tally webhook payloads without requiring exact question wording
-- Maps metro LABEL -> CBSA (or accepts CBSA directly)
-- Returns JSON (MVP). Later you can add PDF/DocRaptor endpoints.
-
-Render start command:
-    uvicorn app:app --host 0.0.0.0 --port $PORT
+- Accepts Tally webhook payloads (data / fields / answers)
+- Logs exact keys received from Tally
+- Tolerant field mapping (no strict question text dependency)
 """
 
 from __future__ import annotations
@@ -15,7 +11,7 @@ from __future__ import annotations
 import json
 import os
 import re
-from typing import Any, Dict, Optional, List
+from typing import Any, Dict, List, Optional
 
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import JSONResponse
@@ -28,12 +24,10 @@ app = FastAPI(title="RBRE API", version="1.0")
 
 
 # -------------------------------------------------
-# Helpers: tolerant field mapping from Tally
+# Helper functions
 # -------------------------------------------------
 def _norm_key(s: str) -> str:
-    """Normalize keys so small differences in punctuation/case/spacing don't matter."""
     s = str(s).strip().lower()
-    s = re.sub(r"[\?\(\)\[\]\:\-]", " ", s)
     s = re.sub(r"[^a-z0-9\s]", " ", s)
     s = re.sub(r"\s+", " ", s).strip()
     return s
@@ -42,75 +36,49 @@ def _norm_key(s: str) -> str:
 def _as_bool(v: Any) -> bool:
     if isinstance(v, bool):
         return v
-    s = str(v).strip().lower()
-    return s in {"yes", "y", "true", "1", "on", "affirmative"}
+    return str(v).strip().lower() in {"yes", "y", "true", "1", "on"}
 
 
 def _as_float(v: Any) -> float:
-    # Handles "6,500" or "$6500"
-    s = str(v).strip().replace(",", "")
+    s = str(v).replace(",", "")
     s = re.sub(r"[^0-9.\-]", "", s)
-    if s in {"", "-", ".", "-."}:
-        raise ValueError(f"Cannot parse numeric value from {v!r}")
+    if s == "":
+        raise ValueError("Empty numeric value")
     return float(s)
 
 
-def _build_norm_map(data: Dict[str, Any]) -> Dict[str, str]:
-    """Map normalized keys -> original keys (first occurrence wins)."""
-    out: Dict[str, str] = {}
-    for k in data.keys():
-        nk = _norm_key(k)
-        if nk and nk not in out:
-            out[nk] = k
-    return out
-
-
 def pick(data: Dict[str, Any], aliases: List[str], required: bool = True) -> Optional[Any]:
-    """
-    Fetch a value from Tally 'data' dict by trying multiple aliases.
-    Matching is case/punctuation/space-insensitive.
-    """
-    if not isinstance(data, dict):
-        if required:
-            raise ValueError("Payload 'data' is not a dict.")
-        return None
+    norm_map = {_norm_key(k): k for k in data.keys()}
 
-    norm_map = _build_norm_map(data)
-    for a in aliases:
-        nk = _norm_key(a)
+    for alias in aliases:
+        nk = _norm_key(alias)
         if nk in norm_map:
             return data[norm_map[nk]]
 
     if required:
-        raise KeyError(f"Missing field. Tried aliases={aliases}")
+        raise KeyError(f"Missing field (aliases tried: {aliases})")
     return None
 
 
 # -------------------------------------------------
-# Load cost data at startup
+# Load metro cost data
 # -------------------------------------------------
 DATA_FILE = "cost_data_metro.json"
 
 if not os.path.exists(DATA_FILE):
-    # Raising here will prevent the app from starting (and Render will show import/start errors)
-    raise RuntimeError(
-        "cost_data_metro.json not found in the repo root. "
-        "Make sure it's committed to GitHub at the top level."
-    )
+    raise RuntimeError("cost_data_metro.json not found in repo root")
 
 with open(DATA_FILE, "r", encoding="utf-8") as f:
     COST_DATA: Dict[str, Dict[str, Any]] = json.load(f)
 
-# Build label -> CBSA lookup for Tally submissions
 LABEL_TO_CBSA: Dict[str, str] = {}
 for cbsa, prof in COST_DATA.items():
     label = prof.get("metro_name")
-    if isinstance(label, str) and label.strip():
+    if isinstance(label, str):
         LABEL_TO_CBSA[label.strip()] = cbsa
 
 
 def label_or_cbsa_to_cbsa(x: Any) -> Optional[str]:
-    """Accept CBSA directly or map a metro label to CBSA."""
     if x is None:
         return None
     s = str(x).strip()
@@ -123,208 +91,134 @@ def label_or_cbsa_to_cbsa(x: Any) -> Optional[str]:
 # Health check
 # -------------------------------------------------
 @app.get("/")
-def health_check():
-    return {"status": "alive", "metros_loaded": len(COST_DATA)}
+def health():
+    return {
+        "status": "alive",
+        "metros_loaded": len(COST_DATA),
+    }
 
 
 # -------------------------------------------------
-# Tally webhook endpoint (JSON MVP)
+# Tally webhook endpoint
 # -------------------------------------------------
 @app.post("/v1/report.json")
-print("TALLY RECEIVED KEYS:", sorted(list(data.keys())))
 async def generate_report(request: Request):
-    """
-    Receives a Tally webhook payload.
-    Tally typically sends: {"data": { "<question title>": <answer>, ... }, ...}
-
-    This endpoint maps various question title variants to the required fields.
-    """
     payload = await request.json()
-    data = payload.get("data")
+
+    # 🔑 IMPORTANT CHANGE:
+    # Tally may send answers under different keys
+    data = payload.get("data") or payload.get("fields") or payload.get("answers")
 
     if not isinstance(data, dict):
         raise HTTPException(
             status_code=400,
-            detail={"error": "Invalid Tally payload: expected payload.data dict", "payload_keys": list(payload.keys())},
+            detail={
+                "error": "Invalid Tally payload",
+                "payload_keys": list(payload.keys()),
+            },
         )
 
-    # ---- Pull fields using tolerant alias lists ----
+    # 🔍 DEBUG: log exactly what Tally sent
+    print("TALLY RECEIVED KEYS:", sorted(list(data.keys())))
+
     try:
         household_type = pick(
             data,
-            aliases=[
-                "Household type",
-                "household",
-                "household type (individual/couple)",
-                "individual or couple",
-                "household_type",
-            ],
-            required=True,
+            ["household type", "household", "individual or couple"],
         )
 
         downsizing_raw = pick(
             data,
-            aliases=[
-                "Are you downsizing?",
-                "downsizing",
-                "are you downsizing",
-                "downsizing?",
-                "downsizing status",
-                "downsizing_flag",
-            ],
-            required=True,
+            ["are you downsizing", "downsizing"],
         )
 
         net_income_raw = pick(
             data,
-            aliases=[
-                "Net monthly income",
-                "monthly income",
-                "net income",
-                "income (monthly)",
-                "net_monthly_income",
-            ],
-            required=True,
+            ["net monthly income", "monthly income", "income"],
         )
 
         fixed_costs_raw = pick(
             data,
-            aliases=[
-                "Fixed monthly obligations",
-                "fixed obligations",
-                "monthly obligations",
-                "monthly bills",
-                "fixed_monthly_obligations",
-            ],
-            required=True,
+            ["fixed monthly obligations", "monthly obligations", "fixed costs"],
         )
 
         savings_raw = pick(
             data,
-            aliases=[
-                "Liquid savings available",
-                "liquid savings",
-                "savings available",
-                "cash savings",
-                "liquid_savings",
-            ],
-            required=True,
+            ["liquid savings available", "savings", "cash savings"],
         )
 
         timeline = pick(
             data,
-            aliases=[
-                "Timeline",
-                "move timeline",
-                "how soon",
-                "timeline (tight/moderate/flexible)",
-            ],
-            required=True,
+            ["timeline", "move timeline"],
         )
 
-        risk_tolerance = pick(
+        risk = pick(
             data,
-            aliases=[
-                "Risk tolerance",
-                "risk",
-                "risk level",
-                "risk tolerance (low/medium/high)",
-            ],
-            required=True,
+            ["risk tolerance", "risk"],
         )
 
         current_metro_label = pick(
             data,
-            aliases=[
-                "Current metro area",
-                "current metro",
-                "current location",
-                "current cbsa",
-                "current_cbsa",
-            ],
-            required=True,
+            ["current metro area", "current metro", "current location"],
         )
 
         target_labels = pick(
             data,
-            aliases=[
-                "Metro areas you are considering (optional)",
-                "metros considering",
-                "target metros",
-                "target metro areas",
-                "target_cbsas",
-            ],
+            ["metro areas you are considering", "target metros"],
             required=False,
         )
 
         email = pick(
             data,
-            aliases=[
-                "Email address",
-                "email",
-                "e-mail",
-            ],
-            required=True,
+            ["email address", "email"],
         )
 
     except Exception as e:
         raise HTTPException(
             status_code=400,
             detail={
-                "error": "Could not map Tally fields to API inputs",
+                "error": "Field mapping failed",
                 "reason": str(e),
                 "received_keys": sorted(list(data.keys())),
             },
         )
 
-    # ---- Normalize types ----
-    try:
-        downsizing = _as_bool(downsizing_raw)
-        net_income = _as_float(net_income_raw)
-        fixed_costs = _as_float(fixed_costs_raw)
-        savings = _as_float(savings_raw)
-    except Exception as e:
-        raise HTTPException(status_code=400, detail={"error": "Invalid numeric/boolean value", "reason": str(e)})
+    # Normalize values
+    downsizing = _as_bool(downsizing_raw)
+    net_income = _as_float(net_income_raw)
+    fixed_costs = _as_float(fixed_costs_raw)
+    savings = _as_float(savings_raw)
 
-    # Targets can arrive as a single string, list, null, etc.
-    if target_labels is None:
-        target_labels_list: List[str] = []
-    elif isinstance(target_labels, str):
-        target_labels_list = [target_labels]
-    elif isinstance(target_labels, list):
-        target_labels_list = [str(x) for x in target_labels if x is not None]
-    else:
-        target_labels_list = []
+    if isinstance(target_labels, str):
+        target_labels = [target_labels]
+    if not isinstance(target_labels, list):
+        target_labels = []
 
-    # ---- Map metros to CBSA ----
     current_cbsa = label_or_cbsa_to_cbsa(current_metro_label)
     if not current_cbsa:
         raise HTTPException(
             status_code=400,
-            detail={"error": "Unknown current metro (label not found and not a CBSA code)", "value": current_metro_label},
+            detail={"error": "Unknown current metro", "value": current_metro_label},
         )
 
     target_cbsas: List[str] = []
-    for t in target_labels_list:
+    for t in target_labels:
         cbsa = label_or_cbsa_to_cbsa(t)
         if cbsa:
             target_cbsas.append(cbsa)
 
-    # -------------------------------------------------
-    # MVP RESPONSE (replace with your real engine later)
-    # -------------------------------------------------
-    result = {
-        "status": "processed",
-        "email": str(email).strip(),
-        "household_type": household_type,
-        "downsizing": downsizing,
-        "net_monthly_income": net_income,
-        "fixed_monthly_obligations": fixed_costs,
-        "liquid_savings": savings,
-        "timeline": timeline,
-        "risk_tolerance": risk_tolerance,
-        "current_cbsa": current_cbsa,
-        "target_cbsas": target_cbsas,
-    }
-
-    return JSONResponse(content=result)
+    return JSONResponse(
+        content={
+            "status": "processed",
+            "email": email,
+            "household_type": household_type,
+            "downsizing": downsizing,
+            "net_monthly_income": net_income,
+            "fixed_monthly_obligations": fixed_costs,
+            "liquid_savings": savings,
+            "timeline": timeline,
+            "risk_tolerance": risk,
+            "current_cbsa": current_cbsa,
+            "target_cbsas": target_cbsas,
+        }
+    )
