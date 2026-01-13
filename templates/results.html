@@ -6,148 +6,341 @@
   <title>Your Relocation Affordability | RBRE</title>
 
   <style>
-    :root{
-      --bg:#0b1220;
-      --panel:rgba(255,255,255,0.06);
-      --panel-strong:rgba(255,255,255,0.09);
-      --text:rgba(255,255,255,0.92);
-      --muted:rgba(255,255,255,0.68);
-      --faint:rgba(255,255,255,0.50);
-      --border:rgba(255,255,255,0.10);
+    /* -------------------------------------------------
+       FAILSAFE VISIBILITY (prevents “blank page”)
+    ------------------------------------------------- */
+    * { box-sizing: border-box; }
+    html, body { height: 100%; background: #0b1220; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color: rgba(255,255,255,0.92) !important;
+      line-height: 1.55;
+    }
+    a { color: rgba(255,255,255,0.92); }
 
-      --good:#34d399;
-      --caution:#fbbf24;
-      --risk:#fb7185;
+    /* -------------------------------------------------
+       PREMIUM, BUT “SAFE” CSS (minimal + reliable)
+    ------------------------------------------------- */
+    .wrap { max-width: 980px; margin: 0 auto; padding: 40px 18px 70px; min-height: 60vh; }
 
-      --shadow:0 18px 60px rgba(0,0,0,0.45);
-      --radius:18px;
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .brand { font-weight: 800; letter-spacing: 0.3px; opacity: 0.95; }
+    .chip {
+      font-size: 12px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.72);
+      white-space: nowrap;
     }
 
-    *{ box-sizing:border-box; }
-    body{
-      margin:0;
-      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-      background:
-        radial-gradient(1200px 700px at 20% 10%, rgba(99,102,241,0.20), transparent 55%),
-        radial-gradient(1200px 700px at 90% 30%, rgba(52,211,153,0.15), transparent 50%),
-        var(--bg);
-      color:var(--text);
-      line-height:1.55;
+    .hero {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      padding: 22px;
     }
 
-    .wrap{
-      max-width:980px;
-      margin:0 auto;
-      padding:42px 18px 72px;
+    .kicker {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.68);
     }
 
-    .brand{
-      font-weight:700;
-      letter-spacing:.4px;
-      margin-bottom:10px;
-      opacity:.95;
+    h1 {
+      margin: 10px 0 8px;
+      font-size: 32px;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
     }
 
-    .hero{
-      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:26px 22px;
+    .sub {
+      color: rgba(255,255,255,0.72);
+      max-width: 70ch;
+      margin: 0;
     }
 
-    .kicker{
-      font-size:12px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:var(--muted);
+    .grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    @media (max-width: 860px){
+      .grid { grid-template-columns: 1fr; }
+      h1 { font-size: 28px; }
+      .chip { display: none; }
     }
 
-    h1{
-      margin:8px 0;
-      font-size:34px;
-      letter-spacing:-.02em;
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      padding: 18px;
     }
 
-    .sub{
-      color:var(--muted);
-      max-width:70ch;
-      font-size:15.5px;
+    .divider { height: 1px; background: rgba(255,255,255,0.12); margin: 14px 0; }
+
+    .sectionTitle {
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.86);
+      margin: 0 0 10px;
     }
 
-    .grid{
-      display:grid;
-      grid-template-columns:1.2fr .8fr;
-      gap:16px;
-      margin-top:18px;
+    .verdictRow { display: flex; align-items: flex-start; gap: 12px; }
+    .dot { width: 10px; height: 10px; border-radius: 999px; margin-top: 6px; background: rgba(255,255,255,0.45); }
+    .vTitle { font-size: 18px; font-weight: 800; letter-spacing: -0.01em; }
+    .vMeta { color: rgba(255,255,255,0.72); font-size: 13px; margin-top: 2px; }
+
+    .tone-good .dot { background: #34d399; }
+    .tone-caution .dot { background: #fbbf24; }
+    .tone-risk .dot { background: #fb7185; }
+
+    .copy p { margin: 10px 0; font-size: 15.5px; }
+    .muted { color: rgba(255,255,255,0.72); }
+
+    .reasons { margin: 0; padding-left: 18px; color: rgba(255,255,255,0.76); }
+    .reasons li { margin: 8px 0; }
+    .reasons b { color: rgba(255,255,255,0.95); font-weight: 650; }
+
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 520px){ .stats { grid-template-columns: 1fr; } }
+
+    .stat {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 14px;
+    }
+    .label {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.68);
+    }
+    .value { font-size: 22px; font-weight: 850; margin-top: 6px; letter-spacing: -0.02em; }
+    .note { font-size: 13px; color: rgba(255,255,255,0.72); margin-top: 6px; }
+
+    .cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.92);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .btn.primary {
+      border-color: rgba(99,102,241,0.55);
+      background: rgba(99,102,241,0.22);
     }
 
-    @media(max-width:860px){
-      .grid{ grid-template-columns:1fr; }
-      h1{ font-size:30px; }
+    .foot {
+      font-size: 12.5px;
+      color: rgba(255,255,255,0.56);
+      margin-top: 14px;
     }
 
-    .card{
-      background:rgba(255,255,255,.05);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      padding:18px;
-    }
+    /* Optional: TEMP banner to prove template renders; set display:none when done */
+    .templateProof { display: none; }
+  </style>
+</head>
 
-    .verdictBadge{
-      display:flex;
-      gap:12px;
-      align-items:flex-start;
-      padding:12px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.04);
-      margin-bottom:12px;
-    }
+<body>
+  <!-- Set display:block temporarily if you ever suspect “blank page” again -->
+  <div class="templateProof" style="padding:14px 16px; background:#fff; color:#111827; font-weight:800;">
+    TEMPLATE IS RENDERING ✅
+  </div>
 
-    .dot{
-      width:10px;
-      height:10px;
-      border-radius:999px;
-      margin-top:6px;
-    }
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">RBRE</div>
+      <div class="chip">Personalized • {{ metro_name }}</div>
+    </div>
 
-    .tone-good .dot{ background:var(--good); }
-    .tone-caution .dot{ background:var(--caution); }
-    .tone-risk .dot{ background:var(--risk); }
+    <div class="hero">
+      <div class="kicker">Relocation Readiness</div>
+      <h1>Your Affordability Snapshot</h1>
+      <p class="sub">
+        You deserve a plan that feels steady — not just “possible.”
+        This page translates your inputs into a clear, supportive view of what the move could feel like month to month.
+      </p>
 
-    .badgeTitle{
-      font-weight:700;
-      font-size:16px;
-    }
+      <div class="grid">
+        <!-- LEFT: verdict + meaning -->
+        <div class="card">
+          {% if verdict == "Comfortable" %}
+            <div class="verdictRow tone-good">
+              <span class="dot"></span>
+              <div>
+                <div class="vTitle">Comfortable</div>
+                <div class="vMeta">Your plan has breathing room — enough margin to stay calm when life gets real.</div>
+              </div>
+            </div>
 
-    .badgeMeta{
-      font-size:13px;
-      color:var(--muted);
-    }
+            <div class="copy">
+              <p>
+                Based on what you shared, this move doesn’t just “work on paper” — it has the kind of balance that tends to
+                feel <b>stable</b> while you’re actually living it.
+              </p>
+              <p class="muted">
+                That matters because relocations always come with surprises: a month that costs more than expected,
+                a deposit that’s higher than planned, a stretch where you’re settling in. Your inputs suggest you can
+                absorb those moments without the move turning into constant stress.
+              </p>
+              <p>
+                If you move forward, your best protection is simple: keep housing close to your target and preserve your buffer.
+                That’s what keeps this feeling steady over time.
+              </p>
+            </div>
 
-    .copy p{
-      margin:10px 0;
-      font-size:15.5px;
-    }
+          {% elif verdict == "Tight" %}
+            <div class="verdictRow tone-caution">
+              <span class="dot"></span>
+              <div>
+                <div class="vTitle">Tight, but Possible</div>
+                <div class="vMeta">Feasible — and it will feel better with a little more cushion built in.</div>
+              </div>
+            </div>
 
-    .muted{ color:var(--muted); }
+            <div class="copy">
+              <p>
+                This move may still be within reach — and I want to name something important:
+                a “tight” result isn’t a judgment of you. It’s a signal that the plan is sensitive.
+              </p>
+              <p class="muted">
+                What that usually means in real life is: you’ll feel okay when things go as expected,
+                and you’ll feel pressure when they don’t. The goal here isn’t to make you second-guess yourself —
+                it’s to help you build enough margin so you can breathe.
+              </p>
+              <p>
+                The most powerful upgrades tend to be small: slightly lower housing, a little more time, or a stronger upfront cushion.
+                Those changes can turn “tight” into “steady” faster than you’d think.
+              </p>
+            </div>
 
-    .divider{
-      height:1px;
-      background:rgba(255,255,255,.10);
-      margin:16px 0;
-    }
+          {% else %}
+            <div class="verdictRow tone-risk">
+              <span class="dot"></span>
+              <div>
+                <div class="vTitle">High Strain</div>
+                <div class="vMeta">Under these assumptions, the move would likely feel stressful without changes.</div>
+              </div>
+            </div>
 
-    .sectionTitle{
-      font-size:13px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      margin-bottom:8px;
-      color:var(--text);
-      opacity:.9;
-    }
+            <div class="copy">
+              <p>
+                I’m going to be honest and careful: under the current assumptions, this move would likely place
+                <b>meaningful pressure</b> on your monthly life.
+              </p>
+              <p class="muted">
+                And that pressure isn’t just numbers — it can spill into your sense of safety. If the plan requires you to “hold your breath”
+                every month, it becomes harder to enjoy the new place you’re working toward.
+              </p>
+              <p>
+                This isn’t a dead end. It’s a signal that the plan needs protection. Adjusting housing range, timeline, or savings target can
+                often shift this into something far more supportive.
+              </p>
+            </div>
+          {% endif %}
 
-    .reasons{
-      padding-left:18px;
-      color:var(--muted);
+          <div class="divider"></div>
+
+          <div class="sectionTitle">Why you received this result</div>
+          <ul class="reasons">
+            <li><b>Housing:</b> {{ reasons.housing }}</li>
+            <li><b>Monthly buffer:</b> {{ reasons.buffer }}</li>
+            <li><b>Upfront costs:</b> {{ reasons.upfront }}</li>
+          </ul>
+
+          <div class="divider"></div>
+
+          <div class="sectionTitle">A gentle next step</div>
+          <div class="copy">
+            <p class="muted" style="margin-top:0;">
+              If you want, we can strengthen this plan without making it complicated.
+              The fastest wins are usually: tightening the housing target, extending the timeline slightly, or building a clearer upfront cushion.
+            </p>
+          </div>
+        </div>
+
+        <!-- RIGHT: stats + actions -->
+        <div class="card">
+          <div class="sectionTitle">Key Financial Highlights</div>
+
+          <div class="stats">
+            <div class="stat">
+              <div class="label">Monthly housing</div>
+              <div class="value">${{ housing_cost }}</div>
+              <div class="note">{{ housing_percent }}% of income</div>
+            </div>
+
+            <div class="stat">
+              <div class="label">Monthly buffer</div>
+              <div class="value">${{ monthly_buffer }}</div>
+              <div class="note">Remaining after core expenses</div>
+            </div>
+
+            <div class="stat">
+              <div class="label">Upfront needed</div>
+              <div class="value">${{ upfront_costs }}</div>
+              <div class="note">Deposits + relocation</div>
+            </div>
+
+            <div class="stat">
+              <div class="label">Upfront coverage</div>
+              <div class="value">
+                {% if coverage_ratio is not none %}
+                  {{ coverage_ratio }}×
+                {% else %}
+                  —
+                {% endif %}
+              </div>
+              <div class="note">Savings ÷ upfront needs</div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="sectionTitle">Your report</div>
+          <p class="sub" style="margin:0;">
+            Your full report is ready. Keep it for reference — especially when comparing options.
+          </p>
+
+          <div class="cta">
+            {% if pdf_url %}
+              <a class="btn primary" href="{{ pdf_url }}">Download PDF</a>
+            {% endif %}
+            {% if restart_url %}
+              <a class="btn" href="{{ restart_url }}">Run another estimate</a>
+            {% else %}
+              <a class="btn" href="/">Run another estimate</a>
+            {% endif %}
+          </div>
+
+          <p class="foot">
+            This estimate is based on the information you provided and typical planning assumptions.
+            It’s intended to support decisions — not replace professional financial advice.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
