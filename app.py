@@ -5,15 +5,17 @@ import os
 import re
 import traceback
 import uuid
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from io import BytesIO
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple, Literal
 
 import boto3
 import psycopg2
 import resend
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
+from fastapi.templating import Jinja2Templates
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 
@@ -24,6 +26,9 @@ from reportlab.pdfgen import canvas
 print("RBRE API BOOT CONFIRM: module imported (app.py)", flush=True)
 
 app = FastAPI(title="RBRE API", version="2.3")
+
+# Jinja templates (expects templates/results.html)
+templates = Jinja2Templates(directory="templates")
 
 
 # -------------------------------------------------
@@ -211,6 +216,13 @@ def _as_float(v: Any) -> float:
     return float(s)
 
 
+def _money(n: float) -> str:
+    try:
+        return f"{float(n):,.0f}"
+    except Exception:
+        return "0"
+
+
 # -------------------------------------------------
 # UUID -> LABEL resolution via field options metadata
 # -------------------------------------------------
@@ -364,6 +376,170 @@ def label_or_cbsa_to_cbsa(x: Any) -> Optional[str]:
     if s in COST_DATA:
         return s
     return METRO_LOOKUP.get(normalize_metro_name(s))
+
+
+def _get_metro_name(cbsa: Optional[str], fallback: str = "Your selected metro") -> str:
+    if cbsa and cbsa in COST_DATA:
+        name = COST_DATA[cbsa].get("metro_name")
+        if isinstance(name, str) and name.strip():
+            return name.strip()
+    return fallback
+
+
+def _extract_numeric_from_profile(profile: Dict[str, Any], candidate_keys: List[str]) -> Optional[float]:
+    """
+    Best-effort: looks for plausible housing cost fields in your cost_data_metro.json.
+    Returns the first parseable numeric value found.
+    """
+    for k in candidate_keys:
+        if k in profile and profile[k] is not None:
+            try:
+                return float(str(profile[k]).replace(",", "").strip())
+            except Exception:
+                continue
+    return None
+
+
+def estimate_housing_cost_for_cbsa(cbsa: str) -> float:
+    """
+    Best-effort estimate. We don't know your exact JSON schema here, so we try common keys.
+    If nothing exists, we fall back to 0.0 (and the verdict will lean conservative via buffer logic).
+    """
+    profile = COST_DATA.get(cbsa) or {}
+
+    candidates = [
+        # common names
+        "monthly_housing_cost",
+        "housing_cost",
+        "median_housing_cost",
+        "avg_housing_cost",
+        "median_rent",
+        "avg_rent",
+        "rent",
+        # HUD-esque / FMR-ish variants
+        "fmr_2br",
+        "fmr2br",
+        "two_bed_fmr",
+        "rent_2br",
+        "two_bed_rent",
+    ]
+
+    v = _extract_numeric_from_profile(profile, candidates)
+    if v is None:
+        return 0.0
+    return max(v, 0.0)
+
+
+# -------------------------------------------------
+# Verdict logic (Comfortable / Tight / High Risk)
+# -------------------------------------------------
+Signal = Literal["Good", "Caution", "Risk"]
+Verdict = Literal["Comfortable", "Tight", "High Risk"]
+
+
+@dataclass(frozen=True)
+class VerdictResult:
+    verdict: Verdict
+    housing_percent: float          # 0.0–1.0
+    monthly_buffer: float           # dollars
+    coverage_ratio: Optional[float] # savings / upfront_costs (None if upfront_costs <= 0)
+    signals: Dict[str, Signal]
+    reasons: Dict[str, str]
+
+
+def _safe_float(value: Any, default: float = 0.0) -> float:
+    try:
+        if value is None:
+            return default
+        return float(value)
+    except Exception:
+        return default
+
+
+def evaluate_verdict(
+    *,
+    gross_monthly_income: Any,
+    housing_cost: Any,
+    non_housing_costs: Any,
+    savings: Any,
+    upfront_costs: Any,
+) -> VerdictResult:
+    income = _safe_float(gross_monthly_income, 0.0)
+    housing = max(_safe_float(housing_cost, 0.0), 0.0)
+    non_housing = max(_safe_float(non_housing_costs, 0.0), 0.0)
+    sav = max(_safe_float(savings, 0.0), 0.0)
+    upfront = max(_safe_float(upfront_costs, 0.0), 0.0)
+
+    # Housing burden
+    housing_percent = (housing / income) if income > 0 else 1.0
+    if housing_percent <= 0.30:
+        housing_signal: Signal = "Good"
+        housing_reason = "Housing is within 30% of income (typical affordability guidance)."
+    elif housing_percent <= 0.40:
+        housing_signal = "Caution"
+        housing_reason = "Housing is 30–40% of income, which can feel tight month-to-month."
+    else:
+        housing_signal = "Risk"
+        housing_reason = "Housing exceeds 40% of income, which commonly leads to financial strain."
+
+    # Monthly buffer
+    monthly_buffer = income - (housing + non_housing)
+    if monthly_buffer >= 1000:
+        buffer_signal: Signal = "Good"
+        buffer_reason = "Monthly buffer is at least $1,000, providing a healthy cushion."
+    elif monthly_buffer >= 300:
+        buffer_signal = "Caution"
+        buffer_reason = "Monthly buffer is under $1,000; budgeting discipline will matter."
+    else:
+        buffer_signal = "Risk"
+        buffer_reason = "Monthly buffer is under $300, leaving little room for surprises."
+
+    # Upfront coverage
+    if upfront <= 0:
+        coverage_ratio = None
+        upfront_signal: Signal = "Good"
+        upfront_reason = "Upfront costs were not provided; treating upfront coverage as OK."
+    else:
+        coverage_ratio = sav / upfront
+        if coverage_ratio >= 1.25:
+            upfront_signal = "Good"
+            upfront_reason = "Savings cover upfront costs with extra cushion (≥ 1.25×)."
+        elif coverage_ratio >= 1.0:
+            upfront_signal = "Caution"
+            upfront_reason = "Savings cover upfront costs, but with little margin (1.0–1.24×)."
+        else:
+            upfront_signal = "Risk"
+            upfront_reason = "Savings do not fully cover upfront costs (< 1.0×)."
+
+    signals: Dict[str, Signal] = {
+        "housing": housing_signal,
+        "buffer": buffer_signal,
+        "upfront": upfront_signal,
+    }
+    reasons: Dict[str, str] = {
+        "housing": housing_reason,
+        "buffer": buffer_reason,
+        "upfront": upfront_reason,
+    }
+
+    risk_count = sum(1 for s in signals.values() if s == "Risk")
+    caution_count = sum(1 for s in signals.values() if s == "Caution")
+
+    if risk_count == 0 and caution_count <= 1:
+        verdict: Verdict = "Comfortable"
+    elif risk_count <= 1 and caution_count >= 1:
+        verdict = "Tight"
+    else:
+        verdict = "High Risk"
+
+    return VerdictResult(
+        verdict=verdict,
+        housing_percent=housing_percent,
+        monthly_buffer=monthly_buffer,
+        coverage_ratio=coverage_ratio,
+        signals=signals,
+        reasons=reasons,
+    )
 
 
 # -------------------------------------------------
@@ -662,7 +838,10 @@ async def generate_report(request: Request):
 
 
 @app.get("/results/{submission_id}", response_class=HTMLResponse)
-def results_page(submission_id: str):
+def results_page(request: Request, submission_id: str):
+    """
+    Renders templates/results.html (premium UI) instead of returning inline HTML.
+    """
     try:
         with db_conn() as conn:
             with conn.cursor() as cur:
@@ -681,37 +860,58 @@ def results_page(submission_id: str):
     if isinstance(results, str):
         results = json.loads(results)
 
-    pdf_link = f"{PUBLIC_BASE_URL.rstrip('/')}/results/{submission_id}/report.pdf"
+    # Choose a "primary" metro to display.
+    # If user selected targets, show the first target; otherwise show current.
+    target_cbsas = results.get("target_cbsas") or []
+    primary_cbsa = target_cbsas[0] if isinstance(target_cbsas, list) and target_cbsas else results.get("current_cbsa")
 
-    html = f"""
-    <html>
-      <head>
-        <title>RBRE Results</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </head>
-      <body style="font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 40px; max-width: 900px;">
-        <h1>RBRE Results</h1>
-        <p><strong>Submission ID:</strong> {submission_id}</p>
-        <p><strong>Email:</strong> {email}</p>
+    metro_name = _get_metro_name(primary_cbsa, fallback=str(inputs.get("current_metro_label") or "Your metro"))
 
-        <h2>Summary</h2>
-        <ul>
-          <li><strong>Current CBSA:</strong> {results.get("current_cbsa")}</li>
-          <li><strong>Targets:</strong> {", ".join(results.get("target_cbsas", [])) or "(none)"}</li>
-          <li><strong>Unmapped targets:</strong> {", ".join(results.get("unmapped_targets", [])) or "(none)"}</li>
-        </ul>
+    # Best-effort numbers for the verdict layer
+    net_income = float(results.get("net_monthly_income") or 0.0)
+    fixed_costs = float(results.get("fixed_monthly_obligations") or 0.0)
+    savings = float(results.get("liquid_savings") or 0.0)
 
-        <h2>Download</h2>
-        <p><a href="{pdf_link}">Download PDF report</a> (link valid ~1 hour)</p>
+    # Housing estimate from your metro profile (fallback 0.0 if unknown)
+    housing_cost = estimate_housing_cost_for_cbsa(primary_cbsa) if primary_cbsa else 0.0
 
-        <details style="margin-top: 18px;">
-          <summary style="cursor: pointer;">Show raw data</summary>
-          <pre style="background:#f6f6f6; padding:12px; border-radius:8px; overflow:auto;">{json.dumps({"inputs": inputs, "results": results}, indent=2)}</pre>
-        </details>
-      </body>
-    </html>
-    """
-    return HTMLResponse(content=html)
+    # Upfront estimate (simple + consistent): 2 months housing + $1,000 move friction
+    # You can refine this later once you’ve formalized your cost model.
+    upfront_costs = (housing_cost * 2.0) + 1000.0 if housing_cost > 0 else 0.0
+
+    verdict_result = evaluate_verdict(
+        gross_monthly_income=net_income,
+        housing_cost=housing_cost,
+        non_housing_costs=fixed_costs,
+        savings=savings,
+        upfront_costs=upfront_costs,
+    )
+
+    pdf_url = f"{PUBLIC_BASE_URL.rstrip('/')}/results/{submission_id}/report.pdf"
+
+    return templates.TemplateResponse(
+        "results.html",
+        {
+            "request": request,
+
+            # display context
+            "metro_name": metro_name,
+            "pdf_url": pdf_url,
+            "restart_url": "/",
+
+            # verdict layer
+            "verdict": verdict_result.verdict,
+            "reasons": verdict_result.reasons,
+            "signals": verdict_result.signals,
+
+            # formatted numbers for UI
+            "housing_cost": _money(housing_cost),
+            "housing_percent": round(verdict_result.housing_percent * 100.0, 1),
+            "monthly_buffer": _money(verdict_result.monthly_buffer),
+            "upfront_costs": _money(upfront_costs),
+            "coverage_ratio": (round(verdict_result.coverage_ratio, 2) if verdict_result.coverage_ratio is not None else None),
+        },
+    )
 
 
 @app.get("/results/{submission_id}/report.pdf")
@@ -736,3 +936,4 @@ def report_pdf(submission_id: str):
         raise HTTPException(status_code=500, detail={"error": "Presign failed", "reason": str(e)})
 
     return RedirectResponse(url=url, status_code=302)
+
