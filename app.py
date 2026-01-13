@@ -63,6 +63,10 @@ async def log_every_request(request: Request, call_next):
 # -------------------------------------------------
 # Environment / Config
 # -------------------------------------------------
+@app.get("/_debug/html", response_class=HTMLResponse)
+def debug_html():
+    return HTMLResponse("<h1>RBRE debug HTML is working</h1><p>If you see this, HTML responses render fine.</p>")
+
 DATABASE_URL = (os.getenv("DATABASE_URL") or "").strip()
 
 S3_ENDPOINT_URL = (os.getenv("S3_ENDPOINT_URL") or "").strip() or None
