@@ -59,13 +59,18 @@ async def log_every_request(request: Request, call_next):
     print(f"DONE {request.method} {request.url.path} -> {resp.status_code}", flush=True)
     return resp
 
+from fastapi.responses import HTMLResponse
+
+@app.get("/_debug/html", response_class=HTMLResponse)
+def debug_html():
+    return HTMLResponse(
+        "<h1>RBRE debug HTML is working</h1>"
+        "<p>If you see this, HTML responses render fine.</p>"
+    )
 
 # -------------------------------------------------
 # Environment / Config
 # -------------------------------------------------
-@app.get("/_debug/html", response_class=HTMLResponse)
-def debug_html():
-    return HTMLResponse("<h1>RBRE debug HTML is working</h1><p>If you see this, HTML responses render fine.</p>")
 
 DATABASE_URL = (os.getenv("DATABASE_URL") or "").strip()
 
