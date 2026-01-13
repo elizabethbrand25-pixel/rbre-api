@@ -14,18 +14,24 @@ import boto3
 import psycopg2
 import resend
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
+from fastapi.responses import (
+    HTMLResponse,
+    JSONResponse,
+    RedirectResponse,
+    PlainTextResponse,
+)
 from fastapi.templating import Jinja2Templates
+from jinja2 import TemplateNotFound
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 
 
 # -------------------------------------------------
-# ✅ BOOT CONFIRM (module import)
+# ✅ BOOT CONFIRM
 # -------------------------------------------------
 print("RBRE API BOOT CONFIRM: module imported (app.py)", flush=True)
 
-app = FastAPI(title="RBRE API", version="2.3")
+app = FastAPI(title="RBRE API", version="2.4")
 
 # Jinja templates (expects templates/results.html)
 templates = Jinja2Templates(directory="templates")
@@ -59,19 +65,26 @@ async def log_every_request(request: Request, call_next):
     print(f"DONE {request.method} {request.url.path} -> {resp.status_code}", flush=True)
     return resp
 
-from fastapi.responses import HTMLResponse
+
+# -------------------------------------------------
+# ✅ Debug routes (for blank-page diagnosis)
+# -------------------------------------------------
+@app.get("/_debug/ping", response_class=PlainTextResponse)
+def debug_ping():
+    return PlainTextResponse("pong")
+
 
 @app.get("/_debug/html", response_class=HTMLResponse)
 def debug_html():
     return HTMLResponse(
-        "<h1>RBRE debug HTML is working</h1>"
-        "<p>If you see this, HTML responses render fine.</p>"
+        "<h1>RBRE debug HTML works</h1>"
+        "<p>If you see this, HTML responses are rendering correctly.</p>"
     )
+
 
 # -------------------------------------------------
 # Environment / Config
 # -------------------------------------------------
-
 DATABASE_URL = (os.getenv("DATABASE_URL") or "").strip()
 
 S3_ENDPOINT_URL = (os.getenv("S3_ENDPOINT_URL") or "").strip() or None
@@ -164,7 +177,6 @@ def send_results_email(to_email: str, submission_id: str, results_url: str) -> N
         )
         print("EMAIL: Sent via Resend", {"to": to_email, "resp": resp}, flush=True)
     except Exception as e:
-        # Do not fail webhook
         print("EMAIL: Failed to send", {"to": to_email, "err": repr(e)}, flush=True)
 
 
@@ -396,10 +408,6 @@ def _get_metro_name(cbsa: Optional[str], fallback: str = "Your selected metro") 
 
 
 def _extract_numeric_from_profile(profile: Dict[str, Any], candidate_keys: List[str]) -> Optional[float]:
-    """
-    Best-effort: looks for plausible housing cost fields in your cost_data_metro.json.
-    Returns the first parseable numeric value found.
-    """
     for k in candidate_keys:
         if k in profile and profile[k] is not None:
             try:
@@ -411,13 +419,12 @@ def _extract_numeric_from_profile(profile: Dict[str, Any], candidate_keys: List[
 
 def estimate_housing_cost_for_cbsa(cbsa: str) -> float:
     """
-    Best-effort estimate. We don't know your exact JSON schema here, so we try common keys.
-    If nothing exists, we fall back to 0.0 (and the verdict will lean conservative via buffer logic).
+    Best-effort estimate. Tries common key names.
+    If you want this 100% correct, tell me your JSON schema and we’ll pin the exact field.
     """
     profile = COST_DATA.get(cbsa) or {}
 
     candidates = [
-        # common names
         "monthly_housing_cost",
         "housing_cost",
         "median_housing_cost",
@@ -425,7 +432,6 @@ def estimate_housing_cost_for_cbsa(cbsa: str) -> float:
         "median_rent",
         "avg_rent",
         "rent",
-        # HUD-esque / FMR-ish variants
         "fmr_2br",
         "fmr2br",
         "two_bed_fmr",
@@ -449,9 +455,9 @@ Verdict = Literal["Comfortable", "Tight", "High Risk"]
 @dataclass(frozen=True)
 class VerdictResult:
     verdict: Verdict
-    housing_percent: float          # 0.0–1.0
-    monthly_buffer: float           # dollars
-    coverage_ratio: Optional[float] # savings / upfront_costs (None if upfront_costs <= 0)
+    housing_percent: float
+    monthly_buffer: float
+    coverage_ratio: Optional[float]
     signals: Dict[str, Signal]
     reasons: Dict[str, str]
 
@@ -654,7 +660,7 @@ def ensure_schema():
 def health():
     return {
         "status": "alive",
-        "version": "2.3",
+        "version": "2.4",
         "email_enabled": _email_enabled(),
         "metros_loaded": len(COST_DATA),
         "metro_lookup_loaded": len(METRO_LOOKUP),
@@ -849,8 +855,11 @@ async def generate_report(request: Request):
 @app.get("/results/{submission_id}", response_class=HTMLResponse)
 def results_page(request: Request, submission_id: str):
     """
-    Renders templates/results.html (premium UI) instead of returning inline HTML.
+    Renders templates/results.html (premium UI).
+    If the template is missing in deploy, falls back to a simple HTML response
+    so you never get a “blank page” again.
     """
+    # DB fetch
     try:
         with db_conn() as conn:
             with conn.cursor() as cur:
@@ -869,23 +878,20 @@ def results_page(request: Request, submission_id: str):
     if isinstance(results, str):
         results = json.loads(results)
 
-    # Choose a "primary" metro to display.
-    # If user selected targets, show the first target; otherwise show current.
+    # Pick a "primary" metro for display (first target if present, else current)
     target_cbsas = results.get("target_cbsas") or []
     primary_cbsa = target_cbsas[0] if isinstance(target_cbsas, list) and target_cbsas else results.get("current_cbsa")
 
     metro_name = _get_metro_name(primary_cbsa, fallback=str(inputs.get("current_metro_label") or "Your metro"))
 
-    # Best-effort numbers for the verdict layer
+    # Numbers for verdict
     net_income = float(results.get("net_monthly_income") or 0.0)
     fixed_costs = float(results.get("fixed_monthly_obligations") or 0.0)
     savings = float(results.get("liquid_savings") or 0.0)
 
-    # Housing estimate from your metro profile (fallback 0.0 if unknown)
     housing_cost = estimate_housing_cost_for_cbsa(primary_cbsa) if primary_cbsa else 0.0
 
-    # Upfront estimate (simple + consistent): 2 months housing + $1,000 move friction
-    # You can refine this later once you’ve formalized your cost model.
+    # Simple upfront estimate: 2 months housing + $1,000 friction
     upfront_costs = (housing_cost * 2.0) + 1000.0 if housing_cost > 0 else 0.0
 
     verdict_result = evaluate_verdict(
@@ -898,29 +904,77 @@ def results_page(request: Request, submission_id: str):
 
     pdf_url = f"{PUBLIC_BASE_URL.rstrip('/')}/results/{submission_id}/report.pdf"
 
-    return templates.TemplateResponse(
-        "results.html",
-        {
-            "request": request,
+    context = {
+        "request": request,
+        "metro_name": metro_name,
+        "pdf_url": pdf_url,
+        "restart_url": "/",
+        "verdict": verdict_result.verdict,
+        "reasons": verdict_result.reasons,
+        "signals": verdict_result.signals,
+        "housing_cost": _money(housing_cost) if housing_cost else "—",
+        "housing_percent": round(verdict_result.housing_percent * 100.0, 1) if net_income > 0 and housing_cost else "—",
+        "monthly_buffer": _money(verdict_result.monthly_buffer) if net_income else "—",
+        "upfront_costs": _money(upfront_costs) if upfront_costs else "—",
+        "coverage_ratio": (round(verdict_result.coverage_ratio, 2) if verdict_result.coverage_ratio is not None else None),
+        "submission_id": submission_id,  # handy if you want it in the template
+        "email": email,                  # handy if you want it in the template
+    }
 
-            # display context
-            "metro_name": metro_name,
-            "pdf_url": pdf_url,
-            "restart_url": "/",
+    # Try to render premium template; fall back safely if missing
+    try:
+        resp = templates.TemplateResponse("results.html", context)
+        # Helpful diagnostic: if you're seeing "blank", confirm we actually output content
+        # (Starlette will render later; this still helps confirm route is hit)
+        print("RESULTS_PAGE_RENDER: template=results.html verdict=", verdict_result.verdict, flush=True)
+        return resp
+    except TemplateNotFound:
+        print("TEMPLATE MISSING: templates/results.html not found in deploy. Using fallback HTML.", flush=True)
+    except Exception as e:
+        print("TEMPLATE RENDER ERROR:", repr(e), flush=True)
+        print(traceback.format_exc(), flush=True)
 
-            # verdict layer
-            "verdict": verdict_result.verdict,
-            "reasons": verdict_result.reasons,
-            "signals": verdict_result.signals,
+    # Fallback HTML (never blank)
+    html = f"""
+    <html>
+      <head>
+        <title>RBRE Results</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
+      <body style="font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 40px; max-width: 900px;">
+        <h1>RBRE Results (Fallback)</h1>
+        <p><strong>Metro:</strong> {metro_name}</p>
+        <p><strong>Verdict:</strong> {verdict_result.verdict}</p>
 
-            # formatted numbers for UI
-            "housing_cost": _money(housing_cost),
-            "housing_percent": round(verdict_result.housing_percent * 100.0, 1),
-            "monthly_buffer": _money(verdict_result.monthly_buffer),
-            "upfront_costs": _money(upfront_costs),
-            "coverage_ratio": (round(verdict_result.coverage_ratio, 2) if verdict_result.coverage_ratio is not None else None),
-        },
-    )
+        <h2>Why</h2>
+        <ul>
+          <li><strong>Housing:</strong> {verdict_result.reasons.get("housing")}</li>
+          <li><strong>Buffer:</strong> {verdict_result.reasons.get("buffer")}</li>
+          <li><strong>Upfront:</strong> {verdict_result.reasons.get("upfront")}</li>
+        </ul>
+
+        <h2>Numbers</h2>
+        <ul>
+          <li><strong>Monthly Housing:</strong> {_money(housing_cost) if housing_cost else "—"}</li>
+          <li><strong>Housing %:</strong> {round(verdict_result.housing_percent * 100.0, 1) if net_income > 0 and housing_cost else "—"}</li>
+          <li><strong>Monthly Buffer:</strong> {_money(verdict_result.monthly_buffer) if net_income else "—"}</li>
+          <li><strong>Upfront Needed:</strong> {_money(upfront_costs) if upfront_costs else "—"}</li>
+          <li><strong>Upfront Coverage:</strong> {round(verdict_result.coverage_ratio, 2) if verdict_result.coverage_ratio is not None else "—"}</li>
+        </ul>
+
+        <h2>Download</h2>
+        <p><a href="{pdf_url}">Download PDF report</a> (link valid ~1 hour)</p>
+
+        <hr />
+        <p style="color:#666;font-size:12px;">
+          If you're seeing this fallback, it means <code>templates/results.html</code> was not found or failed to render on the server.
+          Confirm the file exists and is committed to git.
+        </p>
+      </body>
+    </html>
+    """
+    print("RESULTS_PAGE_FALLBACK_HTML_LEN:", len(html), flush=True)
+    return HTMLResponse(content=html)
 
 
 @app.get("/results/{submission_id}/report.pdf")
@@ -945,4 +999,3 @@ def report_pdf(submission_id: str):
         raise HTTPException(status_code=500, detail={"error": "Presign failed", "reason": str(e)})
 
     return RedirectResponse(url=url, status_code=302)
-
